@@ -4,7 +4,7 @@ import { useToast } from "@/hooks/use-toast";
 import { backendConfig, getApiUrl } from "@/config/backend";
 
 export const useImageGeneration = () => {
-  const [prompt, setPrompt] = useState("Extreme close-up of a single tiger eye, direct frontal view. Detailed iris and pupil. Sharp focus on eye texture and color. Natural lighting to capture authentic eye shine and depth. The word \"FLUX\" is painted over it in big, white brush strokes with visible texture.");
+  const [prompt, setPrompt] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
