@@ -223,7 +223,7 @@ export const ComfyUITab = () => {
   }, []);
 
   const draw = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
-    if (!isDrawing || !contextRef.current || !canvasRef.current) return;
+    if (!isDrawing || !contextRef.current || !canvasRef.current || !originalImageRef.current) return;
     
     const rect = canvasRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -232,13 +232,34 @@ export const ComfyUITab = () => {
     const context = contextRef.current;
     
     if (brushColor === 'white') {
-      // White brush creates a mask (white areas)
-      context.globalCompositeOperation = 'source-over';
-      context.fillStyle = 'rgba(255, 255, 255, 0.8)';
-    } else {
-      // Black brush erases the mask
-      context.globalCompositeOperation = 'source-over';
+      // Erase - make transparent
+      context.globalCompositeOperation = 'destination-out';
       context.fillStyle = 'rgba(0, 0, 0, 1)';
+    } else {
+      // Restore - paint original image back
+      context.globalCompositeOperation = 'source-over';
+      
+      // Create a temporary canvas to get the original image data at this position
+      const tempCanvas = document.createElement('canvas');
+      const tempCtx = tempCanvas.getContext('2d');
+      if (tempCtx) {
+        tempCanvas.width = originalImageRef.current.width;
+        tempCanvas.height = originalImageRef.current.height;
+        tempCtx.drawImage(originalImageRef.current, 0, 0);
+        
+        // Draw a circle/square of the original image
+        context.save();
+        context.beginPath();
+        if (brushType === 'round') {
+          context.arc(x, y, brushSize / 2, 0, 2 * Math.PI);
+        } else {
+          context.rect(x - brushSize / 2, y - brushSize / 2, brushSize, brushSize);
+        }
+        context.clip();
+        context.drawImage(tempCanvas, 0, 0);
+        context.restore();
+        return;
+      }
     }
     
     if (brushType === 'round') {
@@ -442,20 +463,20 @@ export const ComfyUITab = () => {
               </div>
               
               <div className="flex gap-2">
-                <Button
-                  variant={brushColor === 'black' ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setBrushColor('black')}
-                >
-                  Black (Erase)
-                </Button>
-                <Button
-                  variant={brushColor === 'white' ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setBrushColor('white')}
-                >
-                  White (Mask)
-                </Button>
+                 <Button
+                   variant={brushColor === 'black' ? 'default' : 'outline'}
+                   size="sm"
+                   onClick={() => setBrushColor('black')}
+                 >
+                   Restore
+                 </Button>
+                 <Button
+                   variant={brushColor === 'white' ? 'default' : 'outline'}
+                   size="sm"
+                   onClick={() => setBrushColor('white')}
+                 >
+                   Erase
+                 </Button>
               </div>
               
               <div className="flex items-center gap-2">
