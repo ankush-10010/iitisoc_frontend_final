@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { toast } from 'sonner';
 import { BACKEND_COMFYUI_URL } from '@/config/backend_comfyui';
 
@@ -27,11 +28,12 @@ export const ComfyUITab = () => {
   const [progress, setProgress] = useState(0);
   
   // Canvas editing state
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [brushType, setBrushType] = useState<'round' | 'square'>('round');
   const [brushColor, setBrushColor] = useState<'black' | 'white'>('black');
   const [brushSize, setBrushSize] = useState(10);
   const [isDrawing, setIsDrawing] = useState(false);
+  const [editedImageData, setEditedImageData] = useState<string | null>(null);
   
   const wsRef = useRef<WebSocket | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -190,18 +192,25 @@ export const ComfyUITab = () => {
     if (!file) return;
     
     setDestinationImage(file);
+    setEditedImageData(null); // Reset edited data when new image is selected
+  }, []);
+
+  const openEditor = useCallback(() => {
+    if (!destinationImage) return;
     
-    // Load image for editing
     const img = new Image();
-    img.onload = () => setupCanvas(img);
-    img.src = URL.createObjectURL(file);
-  }, [setupCanvas]);
+    img.onload = () => {
+      setupCanvas(img);
+      setIsEditorOpen(true);
+    };
+    img.src = URL.createObjectURL(destinationImage);
+  }, [destinationImage, setupCanvas]);
 
   const startDrawing = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
-    if (!contextRef.current || !isEditing) return;
+    if (!contextRef.current) return;
     setIsDrawing(true);
     draw(e);
-  }, [isEditing]);
+  }, []);
 
   const draw = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
     if (!isDrawing || !contextRef.current || !canvasRef.current) return;
@@ -211,8 +220,16 @@ export const ComfyUITab = () => {
     const y = e.clientY - rect.top;
     
     const context = contextRef.current;
-    context.globalCompositeOperation = brushColor === 'black' ? 'source-over' : 'destination-out';
-    context.fillStyle = brushColor;
+    
+    if (brushColor === 'white') {
+      // White brush creates a mask (white areas)
+      context.globalCompositeOperation = 'source-over';
+      context.fillStyle = 'rgba(255, 255, 255, 0.8)';
+    } else {
+      // Black brush erases the mask
+      context.globalCompositeOperation = 'source-over';
+      context.fillStyle = 'rgba(0, 0, 0, 1)';
+    }
     
     if (brushType === 'round') {
       context.beginPath();
@@ -231,6 +248,32 @@ export const ComfyUITab = () => {
     if (!originalImageRef.current) return;
     setupCanvas(originalImageRef.current);
   }, [setupCanvas]);
+
+  const saveEditedImage = useCallback(() => {
+    if (!canvasRef.current) return;
+    
+    const editedData = canvasRef.current.toDataURL();
+    setEditedImageData(editedData);
+    
+    // Convert canvas to blob and create a new File
+    canvasRef.current.toBlob((blob) => {
+      if (blob && destinationImage) {
+        const editedFile = new File([blob], destinationImage.name, { type: 'image/png' });
+        setDestinationImage(editedFile);
+      }
+    });
+    
+    setIsEditorOpen(false);
+    toast.success('Image edited successfully!');
+  }, [destinationImage]);
+
+  // Custom cursor style based on brush size
+  const getCursorStyle = useCallback(() => {
+    const size = Math.max(brushSize, 8); // Minimum visible size
+    return {
+      cursor: `url("data:image/svg+xml,%3csvg width='${size}' height='${size}' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='${size/2}' cy='${size/2}' r='${size/2-1}' fill='none' stroke='%23000' stroke-width='1'/%3e%3c/svg%3e") ${size/2} ${size/2}, crosshair`
+    };
+  }, [brushSize]);
 
   return (
     <div className="flex gap-6">
@@ -255,86 +298,28 @@ export const ComfyUITab = () => {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <Button
-                    onClick={() => setIsEditing(!isEditing)}
-                    variant={isEditing ? "default" : "outline"}
+                    onClick={openEditor}
+                    variant="default"
                     size="sm"
                   >
-                    {isEditing ? 'Stop Editing' : 'Edit Mask'}
+                    Edit Mask
                   </Button>
-                  {isEditing && (
-                    <Button onClick={resetCanvas} variant="outline" size="sm">
-                      Reset
-                    </Button>
-                  )}
                 </div>
                 
-                {isEditing && (
-                  <div className="space-y-3 p-4 bg-muted/20 rounded-lg border border-border/20">
-                    <div className="flex gap-2">
-                      <Button
-                        variant={brushType === 'round' ? 'default' : 'outline'}
-                        size="sm"
-                        onClick={() => setBrushType('round')}
-                      >
-                        Round
-                      </Button>
-                      <Button
-                        variant={brushType === 'square' ? 'default' : 'outline'}
-                        size="sm"
-                        onClick={() => setBrushType('square')}
-                      >
-                        Square
-                      </Button>
+                {/* Display the current image (edited or original) */}
+                <div className="relative">
+                  <img
+                    src={editedImageData || URL.createObjectURL(destinationImage)}
+                    alt="Destination"
+                    className="max-w-full border border-border/20 rounded-lg"
+                    style={{ maxHeight: '400px' }}
+                  />
+                  {editedImageData && (
+                    <div className="absolute top-2 left-2 bg-green-500/80 text-white px-2 py-1 rounded text-xs">
+                      Edited
                     </div>
-                    
-                    <div className="flex gap-2">
-                      <Button
-                        variant={brushColor === 'black' ? 'default' : 'outline'}
-                        size="sm"
-                        onClick={() => setBrushColor('black')}
-                      >
-                        Black
-                      </Button>
-                      <Button
-                        variant={brushColor === 'white' ? 'default' : 'outline'}
-                        size="sm"
-                        onClick={() => setBrushColor('white')}
-                      >
-                        White
-                      </Button>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label className="text-sm">Brush Size: {brushSize}px</Label>
-                      <Slider
-                        value={[brushSize]}
-                        onValueChange={(value) => setBrushSize(value[0])}
-                        max={50}
-                        min={1}
-                        step={1}
-                        className="w-full"
-                      />
-                      <Input
-                        type="number"
-                        value={brushSize}
-                        onChange={(e) => setBrushSize(Number(e.target.value))}
-                        min={1}
-                        max={50}
-                        className="w-20 h-8"
-                      />
-                    </div>
-                  </div>
-                )}
-                
-                <canvas
-                  ref={canvasRef}
-                  onMouseDown={startDrawing}
-                  onMouseMove={draw}
-                  onMouseUp={stopDrawing}
-                  onMouseLeave={stopDrawing}
-                  className={`max-w-full border border-border/20 rounded-lg ${isEditing ? 'cursor-crosshair' : ''}`}
-                  style={{ maxHeight: '400px' }}
-                />
+                  )}
+                </div>
               </div>
             )}
           </CardContent>
@@ -399,6 +384,111 @@ export const ComfyUITab = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Image Editor Modal */}
+      <Dialog open={isEditorOpen} onOpenChange={setIsEditorOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-auto">
+          <DialogHeader>
+            <DialogTitle>Edit Image Mask</DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-4">
+            {/* Editor Controls */}
+            <div className="flex flex-wrap items-center gap-4 p-4 bg-muted/20 rounded-lg border border-border/20">
+              <div className="flex gap-2">
+                <Button
+                  variant={brushType === 'round' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setBrushType('round')}
+                >
+                  Round
+                </Button>
+                <Button
+                  variant={brushType === 'square' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setBrushType('square')}
+                >
+                  Square
+                </Button>
+              </div>
+              
+              <div className="flex gap-2">
+                <Button
+                  variant={brushColor === 'black' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setBrushColor('black')}
+                >
+                  Black (Erase)
+                </Button>
+                <Button
+                  variant={brushColor === 'white' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setBrushColor('white')}
+                >
+                  White (Mask)
+                </Button>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <Label className="text-sm">Brush Size: {brushSize}px</Label>
+                <div className="w-32">
+                  <Slider
+                    value={[brushSize]}
+                    onValueChange={(value) => setBrushSize(value[0])}
+                    max={50}
+                    min={1}
+                    step={1}
+                  />
+                </div>
+                <Input
+                  type="number"
+                  value={brushSize}
+                  onChange={(e) => setBrushSize(Number(e.target.value))}
+                  min={1}
+                  max={50}
+                  className="w-20 h-8"
+                />
+              </div>
+              
+              <Button onClick={resetCanvas} variant="outline" size="sm">
+                Reset
+              </Button>
+            </div>
+
+            {/* Canvas Container */}
+            <div className="flex justify-center overflow-auto bg-muted/10 rounded-lg p-4">
+              <canvas
+                ref={canvasRef}
+                onMouseDown={startDrawing}
+                onMouseMove={draw}
+                onMouseUp={stopDrawing}
+                onMouseLeave={stopDrawing}
+                className="max-w-full border border-border/20 rounded-lg"
+                style={{
+                  maxHeight: '500px',
+                  ...getCursorStyle()
+                }}
+              />
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex justify-end gap-2">
+              <Button
+                variant="outline"
+                onClick={() => setIsEditorOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={saveEditedImage}
+                className="bg-green-600 hover:bg-green-700"
+              >
+                Save Changes
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
