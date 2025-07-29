@@ -307,13 +307,32 @@ export const ComfyUITab = () => {
             {destinationImage && (
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <Button
-                    onClick={openEditor}
-                    variant="default"
-                    size="sm"
-                  >
-                    Edit Mask
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={openEditor}
+                      variant="default"
+                      size="sm"
+                    >
+                      Edit Mask
+                    </Button>
+                    {editedImageData && (
+                      <Button
+                        onClick={() => {
+                          const link = document.createElement('a');
+                          link.href = editedImageData;
+                          link.download = `edited_${destinationImage?.name || 'image'}.png`;
+                          document.body.appendChild(link);
+                          link.click();
+                          document.body.removeChild(link);
+                          toast.success('Edited image saved!');
+                        }}
+                        variant="outline"
+                        size="sm"
+                      >
+                        Save Edited Image
+                      </Button>
+                    )}
+                  </div>
                 </div>
                 
                 {/* Display the current image (edited or original) */}
