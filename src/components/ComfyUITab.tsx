@@ -196,14 +196,24 @@ export const ComfyUITab = () => {
   }, []);
 
   const openEditor = useCallback(() => {
-    if (!destinationImage) return;
+    if (!destinationImage) {
+      toast.error('Please select a destination image first');
+      return;
+    }
     
-    const img = new Image();
-    img.onload = () => {
-      setupCanvas(img);
-      setIsEditorOpen(true);
-    };
-    img.src = URL.createObjectURL(destinationImage);
+    setIsEditorOpen(true);
+    
+    // Small delay to ensure dialog is open and canvas is rendered
+    setTimeout(() => {
+      const img = new Image();
+      img.onload = () => {
+        setupCanvas(img);
+      };
+      img.onerror = () => {
+        toast.error('Failed to load image for editing');
+      };
+      img.src = URL.createObjectURL(destinationImage);
+    }, 100);
   }, [destinationImage, setupCanvas]);
 
   const startDrawing = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
