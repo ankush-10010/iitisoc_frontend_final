@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PlaygroundInputSection from "./playground/PlaygroundInputSection";
 import PlaygroundResultSection from "./playground/PlaygroundResultSection";
 
@@ -49,9 +49,14 @@ const PlaygroundContent = ({
   onImageError,
   onError
 }: PlaygroundContentProps) => {
-  const [generatedImageState, setGeneratedImage] = useState<string | null>(generatedImage || null);
+  const [generatedImageState, setGeneratedImageState] = useState<string | null>(null);
   const [autoGenMetadata, setAutoGenMetadata] = useState<any>(null);
   const [selectedModel, setSelectedModel] = useState<string>("SDXL Base");
+
+  // Sync local state with prop changes
+  useEffect(() => {
+    setGeneratedImageState(generatedImage);
+  }, [generatedImage]);
 
   const handleGenerate = () => {
     if (typeof onGenerate === 'function') {
@@ -78,7 +83,7 @@ const PlaygroundContent = ({
         onGuidanceScaleChange={onGuidanceScaleChange}
         onLoraScalesChange={onLoraScalesChange}
         onError={onError}
-        setGeneratedImage={setGeneratedImage}
+        setGeneratedImage={setGeneratedImageState}
         setAutoGenMetadata={setAutoGenMetadata}
         selectedModel={selectedModel}
         setSelectedModel={setSelectedModel}

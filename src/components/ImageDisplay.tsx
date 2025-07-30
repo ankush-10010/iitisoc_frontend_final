@@ -41,6 +41,7 @@ const ImageDisplay = ({ isGenerating, generatedImage, onImageLoad, onImageError 
             </div>
           ) : generatedImage ? (
             <img 
+              key={generatedImage}
               src={generatedImage} 
               alt="Generated image"
               className="w-full h-full object-cover rounded-lg animate-in fade-in-0 scale-in-95 duration-700"
