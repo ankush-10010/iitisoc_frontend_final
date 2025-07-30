@@ -102,6 +102,40 @@ magic-control-canvas/
 - Verify the backend URL is correctly updated in both TypeScript files
 - Make sure all required Python packages are installed
 
+## Deployment
+
+### Deploy to Vercel
+
+This project is fully configured for Vercel deployment:
+
+1. **Quick Deploy**: Click the button below to deploy directly to Vercel:
+   [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/YOUR_USERNAME/YOUR_REPO_NAME)
+
+2. **Manual Deployment**:
+   ```sh
+   # Install Vercel CLI
+   npm i -g vercel
+   
+   # Deploy to Vercel
+   vercel
+   ```
+
+3. **Environment Variables**: 
+   If you're using external APIs, configure these in your Vercel dashboard:
+   - `VITE_BACKEND_URL` - Your backend API URL
+   - Any other environment variables your app needs
+
+4. **Custom Domain**: 
+   After deployment, you can add a custom domain in your Vercel project settings.
+
+### Vercel Configuration
+
+The project includes:
+- `vercel.json` - Vercel deployment configuration
+- Automatic SPA routing with fallback to `index.html`
+- Optimized static asset caching
+- Compatible with Vite's build output
+
 ## Contributing
 Feel free to fork the repository and submit pull requests. For major changes, please open an issue first to discuss what you would like to change.
 

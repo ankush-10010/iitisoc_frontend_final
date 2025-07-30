@@ -8,6 +8,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { toast } from 'sonner';
 import { BACKEND_COMFYUI_URL } from '@/config/backend_comfyui';
 
+type WorkflowJSON = Record<string, any>;
+
 const WORKFLOW_JSON: WorkflowJSON = {
   "102": {
     "inputs": {
