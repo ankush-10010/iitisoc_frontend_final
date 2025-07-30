@@ -8,15 +8,1677 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { toast } from 'sonner';
 import { BACKEND_COMFYUI_URL } from '@/config/backend_comfyui';
 
-const WORKFLOW_JSON = {
-  "1": { "inputs": { "image": "shoppingwatch.webp" }, "class_type": "LoadImage", "_meta": { "title": "Insert object" } },
-  "2": { "inputs": { "image": "clipspace/clipspace-mask-260828.39999997616.png [input]" }, "class_type": "LoadImage", "_meta": { "title": "Insert hand" } },
-  "5": { "inputs": { "image": ["40", 1] }, "class_type": "GetImageSize+", "_meta": { "title": "🔧 Get Image Size" } },
-  "6": { "inputs": { "width": 16384, "height": ["5", 1], "interpolation": "lanczos", "method": "keep proportion", "condition": "always", "multiple_of": 0, "image": ["126", 0] }, "class_type": "ImageResize+", "_meta": { "title": "🔧 Image Resize" } },
-  "7": { "inputs": { "direction": "right", "match_image_size": false, "image1": ["6", 0], "image2": ["40", 1] }, "class_type": "ImageConcanate", "_meta": { "title": "Image Concatenate" } },
-  "8": { "inputs": { "images": ["7", 0] }, "class_type": "PreviewImage", "_meta": { "title": "Preview Image" } },
-  "37": { "inputs": { "text": "a photograph of a watch on a hand with detailed text on watch" }, "class_type": "Text Multiline", "_meta": { "title": "Prompt 1" } },
-  "38": { "inputs": { "text": "The hand is in a natural, elegant pose, with visible skin texture and subtle veins. The lighting is professional and studio-grade, creating soft shadows that define the contours of the watch and hand, highlighting reflections on metallic surfaces. Masterpiece, best quality, 8k UHD, sharp focus, extreme detail, super-resolution, professional studio photography." }, "class_type": "Text Multiline", "_meta": { "title": "Additional prompt" } }
+const WORKFLOW_JSON: WorkflowJSON = {
+  "102": {
+    "inputs": {
+      "image": [
+        "181",
+        0
+      ]
+    },
+    "class_type": "GetImageSize+",
+    "_meta": {
+      "title": "🔧 Get Image Size"
+    }
+  },
+  "103": {
+    "inputs": {
+      "direction": "right",
+      "match_image_size": false,
+      "image1": [
+        "125",
+        0
+      ],
+      "image2": [
+        "110",
+        0
+      ]
+    },
+    "class_type": "ImageConcanate",
+    "_meta": {
+      "title": "Image Concatenate"
+    }
+  },
+  "105": {
+    "inputs": {
+      "image": [
+        "123",
+        0
+      ]
+    },
+    "class_type": "GetImageSize+",
+    "_meta": {
+      "title": "🔧 Get Image Size"
+    }
+  },
+  "106": {
+    "inputs": {
+      "image_strength": "high",
+      "conditioning": [
+        "111",
+        0
+      ],
+      "style_model": [
+        "152",
+        0
+      ],
+      "clip_vision_output": [
+        "153",
+        0
+      ]
+    },
+    "class_type": "StyleModelApplySimple",
+    "_meta": {
+      "title": "StyleModelApplySimple"
+    }
+  },
+  "107": {
+    "inputs": {
+      "vae_name": "ae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "108": {
+    "inputs": {
+      "delimiter": ", ",
+      "clean_whitespace": "true",
+      "text_a": [
+        "172",
+        0
+      ],
+      "text_b": [
+        "173",
+        0
+      ]
+    },
+    "class_type": "Text Concatenate",
+    "_meta": {
+      "title": "Text Concatenate"
+    }
+  },
+  "110": {
+    "inputs": {
+      "mask": [
+        "183",
+        2
+      ]
+    },
+    "class_type": "MaskToImage",
+    "_meta": {
+      "title": "Convert Mask to Image"
+    }
+  },
+  "111": {
+    "inputs": {
+      "text": [
+        "108",
+        0
+      ],
+      "clip": [
+        "174",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "112": {
+    "inputs": {
+      "unet_name": "flux1-fill-dev-fp8.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "115": {
+    "inputs": {
+      "channel": "red",
+      "image": [
+        "103",
+        0
+      ]
+    },
+    "class_type": "ImageToMask",
+    "_meta": {
+      "title": "Convert Image to Mask"
+    }
+  },
+  "116": {
+    "inputs": {
+      "images": [
+        "103",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "117": {
+    "inputs": {
+      "model": [
+        "129",
+        0
+      ],
+      "conditioning": [
+        "169",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "BasicGuider"
+    }
+  },
+  "120": {
+    "inputs": {
+      "sampler_name": "dpmpp_2m"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "121": {
+    "inputs": {
+      "conditioning_to": [
+        "111",
+        0
+      ],
+      "conditioning_from": [
+        "106",
+        0
+      ]
+    },
+    "class_type": "ConditioningConcat",
+    "_meta": {
+      "title": "Conditioning (Concat)"
+    }
+  },
+  "123": {
+    "inputs": {
+      "direction": "right",
+      "match_image_size": false,
+      "image1": [
+        "181",
+        0
+      ],
+      "image2": [
+        "183",
+        1
+      ]
+    },
+    "class_type": "ImageConcanate",
+    "_meta": {
+      "title": "Image Concatenate"
+    }
+  },
+  "125": {
+    "inputs": {
+      "panel_width": [
+        "102",
+        0
+      ],
+      "panel_height": [
+        "102",
+        1
+      ],
+      "fill_color": "black",
+      "fill_color_hex": "#000000"
+    },
+    "class_type": "CR Color Panel",
+    "_meta": {
+      "title": "🌁 CR Color Panel"
+    }
+  },
+  "127": {
+    "inputs": {
+      "expand": 8,
+      "incremental_expandrate": 0,
+      "tapered_corners": false,
+      "flip_input": false,
+      "blur_radius": 8,
+      "lerp_alpha": 1,
+      "decay_factor": 1,
+      "fill_holes": false,
+      "mask": [
+        "115",
+        0
+      ]
+    },
+    "class_type": "GrowMaskWithBlur",
+    "_meta": {
+      "title": "Grow Mask With Blur"
+    }
+  },
+  "128": {
+    "inputs": {
+      "model": [
+        "174",
+        0
+      ]
+    },
+    "class_type": "DifferentialDiffusion",
+    "_meta": {
+      "title": "Differential Diffusion"
+    }
+  },
+  "129": {
+    "inputs": {
+      "max_shift": 1.15,
+      "base_shift": 0.5,
+      "width": [
+        "105",
+        0
+      ],
+      "height": [
+        "105",
+        1
+      ],
+      "model": [
+        "128",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingFlux",
+    "_meta": {
+      "title": "ModelSamplingFlux"
+    }
+  },
+  "134": {
+    "inputs": {
+      "image": [
+        "183",
+        1
+      ]
+    },
+    "class_type": "GetImageSize+",
+    "_meta": {
+      "title": "🔧 Get Image Size"
+    }
+  },
+  "135": {
+    "inputs": {
+      "mask": [
+        "127",
+        0
+      ]
+    },
+    "class_type": "MaskToImage",
+    "_meta": {
+      "title": "Convert Mask to Image"
+    }
+  },
+  "136": {
+    "inputs": {
+      "width": [
+        "134",
+        0
+      ],
+      "height": [
+        "134",
+        1
+      ],
+      "position": "right-center",
+      "x_offset": 0,
+      "y_offset": 0,
+      "image": [
+        "135",
+        0
+      ]
+    },
+    "class_type": "ImageCrop+",
+    "_meta": {
+      "title": "🔧 Image Crop"
+    }
+  },
+  "137": {
+    "inputs": {
+      "brightness": 1.05,
+      "contrast": 0.98,
+      "saturation": 1.05,
+      "image": [
+        "139",
+        0
+      ]
+    },
+    "class_type": "LayerColor: BrightnessContrastV2",
+    "_meta": {
+      "title": "LayerColor: Brightness Contrast V2"
+    }
+  },
+  "138": {
+    "inputs": {
+      "channel": "red",
+      "image": [
+        "136",
+        0
+      ]
+    },
+    "class_type": "ImageToMask",
+    "_meta": {
+      "title": "Convert Image to Mask"
+    }
+  },
+  "139": {
+    "inputs": {
+      "width": [
+        "134",
+        0
+      ],
+      "height": [
+        "134",
+        1
+      ],
+      "position": "right-center",
+      "x_offset": 0,
+      "y_offset": 0,
+      "image": [
+        "157",
+        0
+      ]
+    },
+    "class_type": "ImageCrop+",
+    "_meta": {
+      "title": "🔧 Image Crop"
+    }
+  },
+  "141": {
+    "inputs": {
+      "noise": [
+        "163",
+        0
+      ],
+      "guider": [
+        "117",
+        0
+      ],
+      "sampler": [
+        "120",
+        0
+      ],
+      "sigmas": [
+        "176",
+        0
+      ],
+      "latent_image": [
+        "160",
+        2
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced"
+    }
+  },
+  "151": {
+    "inputs": {
+      "clip_name": "sigclip_vision_patch14_384.safetensors"
+    },
+    "class_type": "CLIPVisionLoader",
+    "_meta": {
+      "title": "Load CLIP Vision"
+    }
+  },
+  "152": {
+    "inputs": {
+      "style_model_name": "flux1-redux-dev.safetensors"
+    },
+    "class_type": "StyleModelLoader",
+    "_meta": {
+      "title": "Load Style Model"
+    }
+  },
+  "153": {
+    "inputs": {
+      "crop": "none",
+      "clip_vision": [
+        "151",
+        0
+      ],
+      "image": [
+        "190",
+        0
+      ]
+    },
+    "class_type": "CLIPVisionEncode",
+    "_meta": {
+      "title": "CLIP Vision Encode"
+    }
+  },
+  "156": {
+    "inputs": {
+      "model_type": "flux",
+      "rel_l1_thresh": 0.4,
+      "start_percent": 0,
+      "end_percent": 1,
+      "cache_device": "cuda",
+      "model": [
+        "112",
+        0
+      ]
+    },
+    "class_type": "TeaCache",
+    "_meta": {
+      "title": "TeaCache"
+    }
+  },
+  "157": {
+    "inputs": {
+      "samples": [
+        "141",
+        0
+      ],
+      "vae": [
+        "107",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "160": {
+    "inputs": {
+      "noise_mask": false,
+      "positive": [
+        "121",
+        0
+      ],
+      "negative": [
+        "121",
+        0
+      ],
+      "vae": [
+        "107",
+        0
+      ],
+      "pixels": [
+        "123",
+        0
+      ],
+      "mask": [
+        "127",
+        0
+      ]
+    },
+    "class_type": "InpaintModelConditioning",
+    "_meta": {
+      "title": "InpaintModelConditioning"
+    }
+  },
+  "163": {
+    "inputs": {
+      "noise_seed": 26538952335765
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "RandomNoise"
+    }
+  },
+  "165": {
+    "inputs": {
+      "clip_name1": "t5xxl_fp8_e4m3fn.safetensors",
+      "clip_name2": "clip_l.safetensors",
+      "type": "flux",
+      "device": "cpu"
+    },
+    "class_type": "DualCLIPLoader",
+    "_meta": {
+      "title": "DualCLIPLoader"
+    }
+  },
+  "169": {
+    "inputs": {
+      "guidance": 30,
+      "conditioning": [
+        "160",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance",
+    "_meta": {
+      "title": "FluxGuidance"
+    }
+  },
+  "170": {
+    "inputs": {
+      "mask": [
+        "200",
+        1
+      ]
+    },
+    "class_type": "MaskToImage",
+    "_meta": {
+      "title": "Convert Mask to Image"
+    }
+  },
+  "171": {
+    "inputs": {
+      "channel": "red",
+      "image": [
+        "185",
+        0
+      ]
+    },
+    "class_type": "ImageToMask",
+    "_meta": {
+      "title": "Convert Image to Mask"
+    }
+  },
+  "172": {
+    "inputs": {
+      "text": "The hand is in a natural, elegant pose, with visible skin texture and subtle veins. The lighting is professional and studio-grade, creating soft shadows that define the contours of the watch and hand, highlighting reflections on metallic surfaces. Masterpiece, best quality, 8k UHD, sharp focus, extreme detail, super-resolution, professional studio photography."
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Additional prompt"
+    }
+  },
+  "173": {
+    "inputs": {
+      "text": "a photograph of a watch on a hand with detailed text on watch"
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Prompt 1"
+    }
+  },
+  "174": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "lora_1": {
+        "on": false,
+        "lora": "comfyui_portrait_lora64.safetensors",
+        "strength": 0.6
+      },
+      "lora_2": {
+        "on": false,
+        "lora": "Phlux.safetensors",
+        "strength": 0.6
+      },
+      "lora_3": {
+        "on": false,
+        "lora": "diffusion_pytorch_model.safetensors",
+        "strength": 0.6
+      },
+      "lora_4": {
+        "on": true,
+        "lora": "comfyui_portrait_lora64.safetensors",
+        "strength": 0.6
+      },
+      "lora_5": {
+        "on": true,
+        "lora": "pytorch_lora_weights.safetensors",
+        "strength": 0.6
+      },
+      "➕ Add Lora": "",
+      "model": [
+        "156",
+        0
+      ],
+      "clip": [
+        "165",
+        0
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "Power Lora Loader (rgthree)"
+    }
+  },
+  "176": {
+    "inputs": {
+      "scheduler": "sgm_uniform",
+      "steps": 10,
+      "denoise": 1,
+      "model": [
+        "129",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "BasicScheduler"
+    }
+  },
+  "178": {
+    "inputs": {
+      "stitcher": [
+        "183",
+        0
+      ],
+      "inpainted_image": [
+        "191",
+        0
+      ]
+    },
+    "class_type": "InpaintStitchImproved",
+    "_meta": {
+      "title": "✂️ Inpaint Stitch (Improved)"
+    }
+  },
+  "179": {
+    "inputs": {
+      "image": [
+        "183",
+        1
+      ]
+    },
+    "class_type": "GetImageSize+",
+    "_meta": {
+      "title": "🔧 Get Image Size"
+    }
+  },
+  "181": {
+    "inputs": {
+      "width": 16384,
+      "height": [
+        "179",
+        1
+      ],
+      "interpolation": "lanczos",
+      "method": "keep proportion",
+      "condition": "always",
+      "multiple_of": 0,
+      "image": [
+        "190",
+        0
+      ]
+    },
+    "class_type": "ImageResize+",
+    "_meta": {
+      "title": "🔧 Image Resize"
+    }
+  },
+  "183": {
+    "inputs": {
+      "downscale_algorithm": "bilinear",
+      "upscale_algorithm": "bicubic",
+      "preresize": false,
+      "preresize_mode": "ensure minimum resolution",
+      "preresize_min_width": 1024,
+      "preresize_min_height": 1024,
+      "preresize_max_width": 16384,
+      "preresize_max_height": 16384,
+      "mask_fill_holes": true,
+      "mask_expand_pixels": 0,
+      "mask_invert": false,
+      "mask_blend_pixels": 32,
+      "mask_hipass_filter": 0.1,
+      "extend_for_outpainting": false,
+      "extend_up_factor": 1,
+      "extend_down_factor": 1,
+      "extend_left_factor": 1,
+      "extend_right_factor": 1,
+      "context_from_mask_extend_factor": 1.2000000000000002,
+      "output_resize_to_target_size": true,
+      "output_target_width": 1080,
+      "output_target_height": 1080,
+      "output_padding": "128",
+      "image": [
+        "184",
+        0
+      ],
+      "mask": [
+        "171",
+        0
+      ]
+    },
+    "class_type": "InpaintCropImproved",
+    "_meta": {
+      "title": "✂️ Inpaint Crop (Improved)"
+    }
+  },
+  "184": {
+    "inputs": {
+      "upscale_model": "4x_NMKD-Siax_200k.pth",
+      "resampling_method": "lanczos",
+      "supersample": "true",
+      "image": [
+        "200",
+        0
+      ]
+    },
+    "class_type": "CR Upscale Image",
+    "_meta": {
+      "title": "🔍 CR Upscale Image"
+    }
+  },
+  "185": {
+    "inputs": {
+      "upscale_model": "4x_NMKD-Siax_200k.pth",
+      "resampling_method": "lanczos",
+      "supersample": "true",
+      "image": [
+        "170",
+        0
+      ]
+    },
+    "class_type": "CR Upscale Image",
+    "_meta": {
+      "title": "🔍 CR Upscale Image"
+    }
+  },
+  "186": {
+    "inputs": {
+      "upscale_model": "4x_NMKD-Siax_200k.pth",
+      "resampling_method": "lanczos",
+      "supersample": "true",
+      "image": [
+        "178",
+        0
+      ]
+    },
+    "class_type": "CR Upscale Image",
+    "_meta": {
+      "title": "🔍 CR Upscale Image"
+    }
+  },
+  "187": {
+    "inputs": {
+      "image": "pexels-pixabay-68201.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Insert object"
+    }
+  },
+  "190": {
+    "inputs": {
+      "upscale_model": "4x_NMKD-Siax_200k.pth",
+      "resampling_method": "lanczos",
+      "supersample": "true",
+      "image": [
+        "187",
+        0
+      ]
+    },
+    "class_type": "CR Upscale Image",
+    "_meta": {
+      "title": "🔍 CR Upscale Image"
+    }
+  },
+  "191": {
+    "inputs": {
+      "x": 0,
+      "y": 0,
+      "resize_source": false,
+      "destination": [
+        "183",
+        1
+      ],
+      "source": [
+        "137",
+        0
+      ],
+      "mask": [
+        "138",
+        0
+      ]
+    },
+    "class_type": "ImageCompositeMasked",
+    "_meta": {
+      "title": "ImageCompositeMasked"
+    }
+  },
+  "192": {
+    "inputs": {
+      "images": [
+        "191",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "196": {
+    "inputs": {
+      "images": [
+        "178",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "197": {
+    "inputs": {
+      "tile_size": 512,
+      "overlap": 64,
+      "temporal_size": 64,
+      "temporal_overlap": 8
+    },
+    "class_type": "VAEDecodeTiled",
+    "_meta": {
+      "title": "VAE Decode (Tiled)"
+    }
+  },
+  "200": {
+    "inputs": {
+      "image": "clipspace/clipspace-mask-250497.5.png [input]"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Insert hand"
+    }
+  },
+  "204": {
+    "inputs": {
+      "image": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "GetImageSize+",
+    "_meta": {
+      "title": "🔧 Get Image Size"
+    }
+  },
+  "205": {
+    "inputs": {
+      "direction": "right",
+      "match_image_size": false,
+      "image1": [
+        "234",
+        0
+      ],
+      "image2": [
+        "211",
+        0
+      ]
+    },
+    "class_type": "ImageConcanate",
+    "_meta": {
+      "title": "Image Concatenate"
+    }
+  },
+  "207": {
+    "inputs": {
+      "image": [
+        "232",
+        0
+      ]
+    },
+    "class_type": "GetImageSize+",
+    "_meta": {
+      "title": "🔧 Get Image Size"
+    }
+  },
+  "208": {
+    "inputs": {
+      "image_strength": "high",
+      "conditioning": [
+        "214",
+        0
+      ],
+      "style_model": [
+        "152",
+        0
+      ],
+      "clip_vision_output": [
+        "272",
+        0
+      ]
+    },
+    "class_type": "StyleModelApplySimple",
+    "_meta": {
+      "title": "StyleModelApplySimple"
+    }
+  },
+  "210": {
+    "inputs": {
+      "delimiter": ", ",
+      "clean_whitespace": "true",
+      "text_a": [
+        "279",
+        0
+      ],
+      "text_b": [
+        "315",
+        1
+      ]
+    },
+    "class_type": "Text Concatenate",
+    "_meta": {
+      "title": "Text Concatenate"
+    }
+  },
+  "211": {
+    "inputs": {
+      "mask": [
+        "258",
+        2
+      ]
+    },
+    "class_type": "MaskToImage",
+    "_meta": {
+      "title": "Convert Mask to Image"
+    }
+  },
+  "212": {
+    "inputs": {
+      "image": [
+        "258",
+        1
+      ]
+    },
+    "class_type": "GetImageSize+",
+    "_meta": {
+      "title": "🔧 Get Image Size"
+    }
+  },
+  "213": {
+    "inputs": {
+      "width": 16384,
+      "height": [
+        "212",
+        1
+      ],
+      "interpolation": "lanczos",
+      "method": "keep proportion",
+      "condition": "always",
+      "multiple_of": 0,
+      "image": [
+        "319",
+        1
+      ]
+    },
+    "class_type": "ImageResize+",
+    "_meta": {
+      "title": "🔧 Image Resize"
+    }
+  },
+  "214": {
+    "inputs": {
+      "text": [
+        "210",
+        0
+      ],
+      "clip": [
+        "174",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "221": {
+    "inputs": {
+      "channel": "red",
+      "image": [
+        "205",
+        0
+      ]
+    },
+    "class_type": "ImageToMask",
+    "_meta": {
+      "title": "Convert Image to Mask"
+    }
+  },
+  "222": {
+    "inputs": {
+      "images": [
+        "205",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "223": {
+    "inputs": {
+      "guidance": 50,
+      "conditioning": [
+        "239",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance",
+    "_meta": {
+      "title": "FluxGuidance"
+    }
+  },
+  "224": {
+    "inputs": {
+      "model": [
+        "238",
+        0
+      ],
+      "conditioning": [
+        "223",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "BasicGuider"
+    }
+  },
+  "225": {
+    "inputs": {
+      "noise_seed": 417342623106817
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "RandomNoise"
+    }
+  },
+  "229": {
+    "inputs": {
+      "sampler_name": "dpmpp_2m"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "230": {
+    "inputs": {
+      "conditioning_to": [
+        "214",
+        0
+      ],
+      "conditioning_from": [
+        "208",
+        0
+      ]
+    },
+    "class_type": "ConditioningConcat",
+    "_meta": {
+      "title": "Conditioning (Concat)"
+    }
+  },
+  "232": {
+    "inputs": {
+      "direction": "right",
+      "match_image_size": false,
+      "image1": [
+        "213",
+        0
+      ],
+      "image2": [
+        "258",
+        1
+      ]
+    },
+    "class_type": "ImageConcanate",
+    "_meta": {
+      "title": "Image Concatenate"
+    }
+  },
+  "234": {
+    "inputs": {
+      "panel_width": [
+        "204",
+        0
+      ],
+      "panel_height": [
+        "204",
+        1
+      ],
+      "fill_color": "black",
+      "fill_color_hex": "#000000"
+    },
+    "class_type": "CR Color Panel",
+    "_meta": {
+      "title": "🌁 CR Color Panel"
+    }
+  },
+  "236": {
+    "inputs": {
+      "expand": 8,
+      "incremental_expandrate": 0,
+      "tapered_corners": false,
+      "flip_input": false,
+      "blur_radius": 8,
+      "lerp_alpha": 1,
+      "decay_factor": 1,
+      "fill_holes": false,
+      "mask": [
+        "221",
+        0
+      ]
+    },
+    "class_type": "GrowMaskWithBlur",
+    "_meta": {
+      "title": "Grow Mask With Blur"
+    }
+  },
+  "238": {
+    "inputs": {
+      "max_shift": 1.15,
+      "base_shift": 0.5,
+      "width": [
+        "207",
+        0
+      ],
+      "height": [
+        "207",
+        1
+      ],
+      "model": [
+        "128",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingFlux",
+    "_meta": {
+      "title": "ModelSamplingFlux"
+    }
+  },
+  "239": {
+    "inputs": {
+      "noise_mask": false,
+      "positive": [
+        "230",
+        0
+      ],
+      "negative": [
+        "230",
+        0
+      ],
+      "vae": [
+        "107",
+        0
+      ],
+      "pixels": [
+        "232",
+        0
+      ],
+      "mask": [
+        "236",
+        0
+      ]
+    },
+    "class_type": "InpaintModelConditioning",
+    "_meta": {
+      "title": "InpaintModelConditioning"
+    }
+  },
+  "245": {
+    "inputs": {
+      "image": [
+        "258",
+        1
+      ]
+    },
+    "class_type": "GetImageSize+",
+    "_meta": {
+      "title": "🔧 Get Image Size"
+    }
+  },
+  "246": {
+    "inputs": {
+      "mask": [
+        "236",
+        0
+      ]
+    },
+    "class_type": "MaskToImage",
+    "_meta": {
+      "title": "Convert Mask to Image"
+    }
+  },
+  "247": {
+    "inputs": {
+      "width": [
+        "245",
+        0
+      ],
+      "height": [
+        "245",
+        1
+      ],
+      "position": "right-center",
+      "x_offset": 0,
+      "y_offset": 0,
+      "image": [
+        "246",
+        0
+      ]
+    },
+    "class_type": "ImageCrop+",
+    "_meta": {
+      "title": "🔧 Image Crop"
+    }
+  },
+  "249": {
+    "inputs": {
+      "channel": "red",
+      "image": [
+        "247",
+        0
+      ]
+    },
+    "class_type": "ImageToMask",
+    "_meta": {
+      "title": "Convert Image to Mask"
+    }
+  },
+  "251": {
+    "inputs": {
+      "width": [
+        "245",
+        0
+      ],
+      "height": [
+        "245",
+        1
+      ],
+      "position": "right-center",
+      "x_offset": 0,
+      "y_offset": 0,
+      "image": [
+        "278",
+        0
+      ]
+    },
+    "class_type": "ImageCrop+",
+    "_meta": {
+      "title": "🔧 Image Crop"
+    }
+  },
+  "253": {
+    "inputs": {
+      "noise": [
+        "225",
+        0
+      ],
+      "guider": [
+        "224",
+        0
+      ],
+      "sampler": [
+        "229",
+        0
+      ],
+      "sigmas": [
+        "270",
+        0
+      ],
+      "latent_image": [
+        "239",
+        2
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced"
+    }
+  },
+  "258": {
+    "inputs": {
+      "downscale_algorithm": "bilinear",
+      "upscale_algorithm": "bicubic",
+      "preresize": false,
+      "preresize_mode": "ensure minimum resolution",
+      "preresize_min_width": 1024,
+      "preresize_min_height": 1024,
+      "preresize_max_width": 16384,
+      "preresize_max_height": 16384,
+      "mask_fill_holes": true,
+      "mask_expand_pixels": 0,
+      "mask_invert": false,
+      "mask_blend_pixels": 32,
+      "mask_hipass_filter": 0.1,
+      "extend_for_outpainting": false,
+      "extend_up_factor": 1,
+      "extend_down_factor": 1,
+      "extend_left_factor": 1,
+      "extend_right_factor": 1,
+      "context_from_mask_extend_factor": 1.2000000000000002,
+      "output_resize_to_target_size": true,
+      "output_target_width": 1080,
+      "output_target_height": 1080,
+      "output_padding": "128",
+      "image": [
+        "186",
+        0
+      ],
+      "mask": [
+        "312",
+        0
+      ]
+    },
+    "class_type": "InpaintCropImproved",
+    "_meta": {
+      "title": "✂️ Inpaint Crop (Improved)"
+    }
+  },
+  "262": {
+    "inputs": {
+      "stitcher": [
+        "258",
+        0
+      ],
+      "inpainted_image": [
+        "273",
+        0
+      ]
+    },
+    "class_type": "InpaintStitchImproved",
+    "_meta": {
+      "title": "✂️ Inpaint Stitch (Improved)"
+    }
+  },
+  "270": {
+    "inputs": {
+      "scheduler": "sgm_uniform",
+      "steps": 30,
+      "denoise": 1,
+      "model": [
+        "238",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "BasicScheduler"
+    }
+  },
+  "272": {
+    "inputs": {
+      "crop": "none",
+      "clip_vision": [
+        "151",
+        0
+      ],
+      "image": [
+        "319",
+        1
+      ]
+    },
+    "class_type": "CLIPVisionEncode",
+    "_meta": {
+      "title": "CLIP Vision Encode"
+    }
+  },
+  "273": {
+    "inputs": {
+      "x": 0,
+      "y": 0,
+      "resize_source": false,
+      "destination": [
+        "258",
+        1
+      ],
+      "source": [
+        "251",
+        0
+      ],
+      "mask": [
+        "249",
+        0
+      ]
+    },
+    "class_type": "ImageCompositeMasked",
+    "_meta": {
+      "title": "ImageCompositeMasked"
+    }
+  },
+  "277": {
+    "inputs": {
+      "images": [
+        "273",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "278": {
+    "inputs": {
+      "samples": [
+        "253",
+        0
+      ],
+      "vae": [
+        "107",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "279": {
+    "inputs": {
+      "text": "The text is to be filled in correct masked regions with high quality, ultra detailed, 8k, smooth and sharpened text features in both regions."
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Additional prompt"
+    }
+  },
+  "282": {
+    "inputs": {
+      "images": [
+        "232",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "287": {
+    "inputs": {
+      "mask": [
+        "312",
+        0
+      ]
+    },
+    "class_type": "MaskPreview+",
+    "_meta": {
+      "title": "🔧 Mask Preview"
+    }
+  },
+  "289": {
+    "inputs": {
+      "images": [
+        "319",
+        1
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "307": {
+    "inputs": {
+      "upscale_model": "4x_NMKD-Siax_200k.pth",
+      "resampling_method": "lanczos",
+      "supersample": "true",
+      "image": [
+        "262",
+        0
+      ]
+    },
+    "class_type": "CR Upscale Image",
+    "_meta": {
+      "title": "🔍 CR Upscale Image"
+    }
+  },
+  "308": {
+    "inputs": {
+      "images": [
+        "324",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Final Image"
+    }
+  },
+  "309": {
+    "inputs": {
+      "images": [
+        "123",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "312": {
+    "inputs": {
+      "dp": 1.2,
+      "param1": 100,
+      "param2": 80,
+      "min_dist_factor": 0.2,
+      "min_radius_factor": 0.010000000000000002,
+      "max_radius_factor": 0.4,
+      "bg_red": 220,
+      "bg_green": 220,
+      "bg_blue": 220,
+      "image": [
+        "186",
+        0
+      ]
+    },
+    "class_type": "WatchDetector",
+    "_meta": {
+      "title": "Watch Detector"
+    }
+  },
+  "314": {
+    "inputs": {
+      "any_value": [
+        "315",
+        1
+      ]
+    },
+    "class_type": "Show any to JSON [Crystools]",
+    "_meta": {
+      "title": "🪛 Show any to JSON"
+    }
+  },
+  "315": {
+    "inputs": {
+      "lang": "en",
+      "images": [
+        "187",
+        0
+      ]
+    },
+    "class_type": "OcrImageText",
+    "_meta": {
+      "title": "OcrImageText"
+    }
+  },
+  "316": {
+    "inputs": {
+      "images": [
+        "312",
+        1
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "317": {
+    "inputs": {
+      "mask": [
+        "319",
+        0
+      ]
+    },
+    "class_type": "MaskPreview+",
+    "_meta": {
+      "title": "🔧 Mask Preview"
+    }
+  },
+  "318": {
+    "inputs": {
+      "upscale_model": "4x_NMKD-Siax_200k.pth",
+      "resampling_method": "lanczos",
+      "supersample": "true",
+      "image": [
+        "187",
+        0
+      ]
+    },
+    "class_type": "CR Upscale Image",
+    "_meta": {
+      "title": "🔍 CR Upscale Image"
+    }
+  },
+  "319": {
+    "inputs": {
+      "dp": 1.2,
+      "param1": 100,
+      "param2": 80,
+      "min_dist_factor": 0.2,
+      "min_radius_factor": 0.1,
+      "max_radius_factor": 0.4000000000000001,
+      "bg_red": 220,
+      "bg_green": 220,
+      "bg_blue": 220,
+      "image": [
+        "318",
+        0
+      ]
+    },
+    "class_type": "WatchDetector",
+    "_meta": {
+      "title": "Watch Detector"
+    }
+  },
+  "322": {
+    "inputs": {
+      "model_name": "4x_NMKD-Siax_200k.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "Load Upscale Model"
+    }
+  },
+  "324": {
+    "inputs": {
+      "upscale_model": [
+        "322",
+        0
+      ],
+      "image": [
+        "307",
+        0
+      ]
+    },
+    "class_type": "ImageUpscaleWithModel",
+    "_meta": {
+      "title": "Upscale Image (using Model)"
+    }
+  }
 };
 
 export const ComfyUITab = () => {
@@ -26,7 +1688,7 @@ export const ComfyUITab = () => {
   const [status, setStatus] = useState('Status: Waiting for input...');
   const [resultImage, setResultImage] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
-  
+
   // Canvas editing state
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [brushType, setBrushType] = useState<'round' | 'square'>('round');
@@ -34,7 +1696,7 @@ export const ComfyUITab = () => {
   const [brushSize, setBrushSize] = useState(10);
   const [isDrawing, setIsDrawing] = useState(false);
   const [editedImageData, setEditedImageData] = useState<string | null>(null);
-  
+
   const wsRef = useRef<WebSocket | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
@@ -84,7 +1746,7 @@ export const ComfyUITab = () => {
       client_id: clientId,
       prompt: workflowObject,
     };
-    
+
     updateStatus('Queueing prompt...');
     return fetch(`${BACKEND_COMFYUI_URL}/prompt`, {
       method: 'POST',
@@ -95,11 +1757,12 @@ export const ComfyUITab = () => {
 
   const startGeneration = useCallback(async () => {
     if (!destinationImage || !objectImage) {
-      updateStatus('Error: Please select both images.', true);
+      updateStatus('Error: Please select both a destination and object image.', true);
       return;
     }
 
     setIsGenerating(true);
+    setResultImage(null); // Reset previous result
     setProgress(0);
 
     try {
@@ -107,10 +1770,11 @@ export const ComfyUITab = () => {
       const objFileInfo = await uploadImage(objectImage);
       updateStatus('Uploads complete. Preparing workflow...');
 
+      // Pass the dynamic prompts to the workflow
       const modifiedWorkflow = getModifiedWorkflow(WORKFLOW_JSON, destFileInfo.name, objFileInfo.name);
-      
+
       const clientId = Math.random().toString(36).substring(7);
-      const wsUrl = BACKEND_COMFYUI_URL.replace('https', 'wss');
+      const wsUrl = BACKEND_COMFYUI_URL.replace(/^http/, 'ws');
       const ws = new WebSocket(`${wsUrl}/ws?clientId=${clientId}`);
       wsRef.current = ws;
 
@@ -119,41 +1783,53 @@ export const ComfyUITab = () => {
       };
 
       ws.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        if (data.type === 'progress') {
-          const { value, max } = data.data;
-          const progressPercent = ((value / max) * 100);
-          setProgress(progressPercent);
-          updateStatus(`Generating... ${progressPercent.toFixed(0)}%`);
-        } else if (data.type === 'executed') {
-          updateStatus('Execution complete! Fetching image...');
-          const output = data.data.output;
-          
-          let finalImageNodeOutput = null;
-          if (output.images && output.images.length > 0) {
-            finalImageNodeOutput = output;
-          } else {
-            finalImageNodeOutput = output['8'] || output['7'] || Object.values(output).find((o: any) => o.images);
-          }
+        try {
+          const data = JSON.parse(event.data);
 
-          if (finalImageNodeOutput && finalImageNodeOutput.images && finalImageNodeOutput.images.length > 0) {
-            const finalImage = finalImageNodeOutput.images[0]; 
-            const imageUrl = `${BACKEND_COMFYUI_URL}/view?filename=${encodeURIComponent(finalImage.filename)}&subfolder=${encodeURIComponent(finalImage.subfolder)}&type=${finalImage.type}`;
-            
-            setResultImage(imageUrl);
-            updateStatus('Done!');
-            setProgress(100);
-            toast.success('Image generated successfully!');
-          } else {
-            updateStatus('Error: Could not find final image in output.', true);
-            console.log("Full output:", output);
+          if (data.type === 'executed') {
+            const executedNodeId = data.data.node;
+
+            // Dynamically find the ID of the node titled "Final Image"
+            const finalNodeId = Object.keys(WORKFLOW_JSON).find(
+              id => (WORKFLOW_JSON as any)[id]._meta?.title === 'Final Image'
+            );
+
+            // Check if the executed node is our final target node
+            if (executedNodeId === finalNodeId) {
+              const output = data.data?.output;
+
+              if (output && output.images && output.images.length > 0) {
+                // SUCCESS!
+                updateStatus('Execution complete! Fetching image...');
+                const finalImage = output.images[0];
+                const imageUrl = `${BACKEND_COMFYUI_URL}/view?filename=${encodeURIComponent(finalImage.filename)}&subfolder=${encodeURIComponent(finalImage.subfolder)}&type=${finalImage.type}`;
+
+                setResultImage(imageUrl);
+                updateStatus('Done!');
+                setProgress(100);
+                toast.success("Image generated successfully!");
+              } else {
+                // This case should ideally not be hit with the new logic
+                updateStatus(`Error: Final node ${finalNodeId} executed, but no image was found in the output.`, true);
+                console.error("The final data packet was received but could not be parsed correctly:", data);
+              }
+
+              ws.close(); // Close the connection after getting the result
+            }
+          } else if (data.type === 'progress') {
+            const { value, max } = data.data;
+            const progressValue = Math.round((value / max) * 100);
+            setProgress(progressValue);
+            updateStatus(`Generating... ${progressValue}%`);
+          } else if (data.type === 'execution_error') {
+            updateStatus(`Server Error: ${JSON.stringify(data.data)}`, true);
           }
-          ws.close();
-        } else if (data.type === 'execution_error') {
-          updateStatus(`Server Error: ${JSON.stringify(data.data)}`, true);
+        } catch (e) {
+          console.error("Error processing WebSocket message:", e);
+          console.error("The problematic raw message was:", event.data);
         }
       };
-      
+
       ws.onclose = () => {
         setIsGenerating(false);
       };
@@ -175,11 +1851,11 @@ export const ComfyUITab = () => {
   // Canvas setup and drawing functions
   const setupCanvas = useCallback((image: HTMLImageElement) => {
     if (!canvasRef.current) return;
-    
+
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
     if (!context) return;
-    
+
     canvas.width = image.width;
     canvas.height = image.height;
     context.drawImage(image, 0, 0);
@@ -190,7 +1866,7 @@ export const ComfyUITab = () => {
   const handleDestinationImageChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    
+
     setDestinationImage(file);
     setEditedImageData(null); // Reset edited data when new image is selected
   }, []);
@@ -200,9 +1876,9 @@ export const ComfyUITab = () => {
       toast.error('Please select a destination image first');
       return;
     }
-    
+
     setIsEditorOpen(true);
-    
+
     // Small delay to ensure dialog is open and canvas is rendered
     setTimeout(() => {
       const img = new Image();
@@ -224,55 +1900,60 @@ export const ComfyUITab = () => {
 
   const draw = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
     if (!isDrawing || !contextRef.current || !canvasRef.current || !originalImageRef.current) return;
-    
-    const rect = canvasRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
+
     const context = contextRef.current;
-    
-    if (brushColor === 'white') {
-      // Erase - make transparent
+    const { x, y } = getBrushPosition(e);
+
+    if (brushColor === 'white') { // Erase logic
+      // This operation makes the existing canvas content transparent wherever we draw a new shape.
       context.globalCompositeOperation = 'destination-out';
-      context.fillStyle = 'rgba(0, 0, 0, 1)';
-    } else {
-      // Restore - paint original image back
-      context.globalCompositeOperation = 'source-over';
-      
-      // Create a temporary canvas to get the original image data at this position
-      const tempCanvas = document.createElement('canvas');
-      const tempCtx = tempCanvas.getContext('2d');
-      if (tempCtx) {
-        tempCanvas.width = originalImageRef.current.width;
-        tempCanvas.height = originalImageRef.current.height;
-        tempCtx.drawImage(originalImageRef.current, 0, 0);
-        
-        // Draw a circle/square of the original image
-        context.save();
-        context.beginPath();
-        if (brushType === 'round') {
-          context.arc(x, y, brushSize / 2, 0, 2 * Math.PI);
-        } else {
-          context.rect(x - brushSize / 2, y - brushSize / 2, brushSize, brushSize);
-        }
-        context.clip();
-        context.drawImage(tempCanvas, 0, 0);
-        context.restore();
-        return;
-      }
-    }
-    
-    if (brushType === 'round') {
+      context.fillStyle = '#000'; // The color does not matter, only the alpha.
+
       context.beginPath();
-      context.arc(x, y, brushSize / 2, 0, 2 * Math.PI);
+      if (brushType === 'round') {
+        context.arc(x, y, brushSize / 2, 0, 2 * Math.PI);
+      } else {
+        context.rect(x - brushSize / 2, y - brushSize / 2, brushSize, brushSize);
+      }
       context.fill();
-    } else {
-      context.fillRect(x - brushSize / 2, y - brushSize / 2, brushSize, brushSize);
+
+    } else { // Restore logic
+      // Set the operation back to default to draw the original image over the current content.
+      context.globalCompositeOperation = 'source-over';
+
+      // We use save/clip/restore to ensure we only draw the original image
+      // within the brush's bounds.
+      context.save();
+      context.beginPath();
+      if (brushType === 'round') {
+        context.arc(x, y, brushSize / 2, 0, 2 * Math.PI);
+      } else {
+        context.rect(x - brushSize / 2, y - brushSize / 2, brushSize, brushSize);
+      }
+      context.clip();
+      context.drawImage(originalImageRef.current, 0, 0);
+      context.restore();
     }
   }, [isDrawing, brushColor, brushType, brushSize]);
-
+  const getBrushPosition = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (!canvasRef.current) return { x: 0, y: 0 };
+    const rect = canvasRef.current.getBoundingClientRect();
+    // This calculates the correct mouse position relative to the canvas,
+    // accounting for any scaling or resizing of the canvas element in the CSS.
+    const scaleX = canvasRef.current.width / rect.width;
+    const scaleY = canvasRef.current.height / rect.height;
+    return {
+      x: (e.clientX - rect.left) * scaleX,
+      y: (e.clientY - rect.top) * scaleY,
+    };
+  }, []);
   const stopDrawing = useCallback(() => {
     setIsDrawing(false);
+    // IMPORTANT: Reset composite operation to default after drawing is finished.
+    if (contextRef.current) {
+      contextRef.current.globalCompositeOperation = 'source-over';
+    }
+    contextRef.current?.beginPath();
   }, []);
 
   const resetCanvas = useCallback(() => {
@@ -281,28 +1962,87 @@ export const ComfyUITab = () => {
   }, [setupCanvas]);
 
   const saveEditedImage = useCallback(() => {
-    if (!canvasRef.current) return;
-    
-    const editedData = canvasRef.current.toDataURL();
-    setEditedImageData(editedData);
-    
-    // Convert canvas to blob and create a new File
-    canvasRef.current.toBlob((blob) => {
-      if (blob && destinationImage) {
-        const editedFile = new File([blob], destinationImage.name, { type: 'image/png' });
-        setDestinationImage(editedFile);
+    if (!canvasRef.current || !originalImageRef.current || !destinationImage) {
+      toast.error("Cannot save, required image data is missing.");
+      return;
+    }
+
+    // For the UI preview, we still want to show the version with transparency
+    const previewDataUrl = canvasRef.current.toDataURL('image/png');
+    // Make sure you have a state setter like setEditedImageData or setEditedImageDataUrl
+    // For this example, I'll assume it's called setEditedImageData
+    if (typeof setEditedImageData !== 'undefined') {
+      setEditedImageData(previewDataUrl);
+    }
+
+
+    // --- Start of Final, Pixel-by-Pixel Saving Logic ---
+
+    try {
+      // 1. Create two in-memory canvases: one for the original image, one for the mask.
+      const originalCanvas = document.createElement('canvas');
+      const originalCtx = originalCanvas.getContext('2d', { willReadFrequently: true });
+      const maskCanvas = document.createElement('canvas');
+      const maskCtx = maskCanvas.getContext('2d', { willReadFrequently: true });
+
+      if (!originalCtx || !maskCtx) {
+        toast.error("Could not create processing canvases.");
+        return;
       }
-    });
-    
+
+      const width = originalImageRef.current.naturalWidth;
+      const height = originalImageRef.current.naturalHeight;
+
+      // 2. Prepare the original image data
+      originalCanvas.width = width;
+      originalCanvas.height = height;
+      originalCtx.drawImage(originalImageRef.current, 0, 0);
+      const originalImageData = originalCtx.getImageData(0, 0, width, height);
+
+      // 3. Prepare the mask data from the user's edited canvas
+      maskCanvas.width = width;
+      maskCanvas.height = height;
+      maskCtx.drawImage(canvasRef.current, 0, 0);
+      const maskImageData = maskCtx.getImageData(0, 0, width, height);
+
+      // 4. Manually combine the data: Use RGB from original, but Alpha from the mask.
+      // This is the key step. We loop through every pixel.
+      for (let i = 0; i < originalImageData.data.length; i += 4) {
+        // Get the alpha value from the mask (at position i+3)
+        const alpha = maskImageData.data[i + 3];
+        // Apply the mask's alpha to the original image's data
+        originalImageData.data[i + 3] = alpha;
+      }
+
+      // 5. Put the newly combined pixel data back onto the original canvas
+      originalCtx.putImageData(originalImageData, 0, 0);
+
+      // 6. Convert the final, perfected canvas to a Blob for saving
+      originalCanvas.toBlob((blob) => {
+        if (blob) {
+          const finalFile = new File([blob], destinationImage.name, { type: 'image/png' });
+          setDestinationImage(finalFile);
+          toast.success('Mask perfected! Ready for generation.');
+        } else {
+          toast.error('Failed to create final image blob.');
+        }
+      }, 'image/png');
+
+    } catch (e) {
+      console.error("Error during mask processing:", e);
+      toast.error("An error occurred while processing the mask.");
+    }
+
+    // --- End of Final Saving Logic ---
+
     setIsEditorOpen(false);
-    toast.success('Image edited successfully!');
   }, [destinationImage]);
 
   // Custom cursor style based on brush size
   const getCursorStyle = useCallback(() => {
     const size = Math.max(brushSize, 8); // Minimum visible size
     return {
-      cursor: `url("data:image/svg+xml,%3csvg width='${size}' height='${size}' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='${size/2}' cy='${size/2}' r='${size/2-1}' fill='none' stroke='%23000' stroke-width='1'/%3e%3c/svg%3e") ${size/2} ${size/2}, crosshair`
+      cursor: `url("data:image/svg+xml,%3csvg width='${size}' height='${size}' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='${size / 2}' cy='${size / 2}' r='${size / 2 - 1}' fill='none' stroke='%23000' stroke-width='1'/%3e%3c/svg%3e") ${size / 2} ${size / 2}, crosshair`
     };
   }, [brushSize]);
 
@@ -324,7 +2064,7 @@ export const ComfyUITab = () => {
                 className="mt-2 bg-background/50 border-border/20"
               />
             </div>
-            
+
             {destinationImage && (
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
@@ -355,7 +2095,7 @@ export const ComfyUITab = () => {
                     )}
                   </div>
                 </div>
-                
+
                 {/* Display the current image (edited or original) */}
                 <div className="relative">
                   <img
@@ -399,9 +2139,9 @@ export const ComfyUITab = () => {
           <CardContent className="p-6 flex flex-col h-full">
             <div className="flex-1">
               {resultImage ? (
-                <img 
-                  src={resultImage} 
-                  alt="Generated" 
+                <img
+                  src={resultImage}
+                  alt="Generated"
                   className="max-w-full rounded-lg border border-border/20 shadow-lg"
                 />
               ) : (
@@ -410,15 +2150,15 @@ export const ComfyUITab = () => {
                 </div>
               )}
             </div>
-            
+
             <div className="space-y-4 mt-6">
               <div className="text-sm text-foreground/80 font-mono whitespace-pre-wrap bg-muted/20 p-3 rounded-md border border-border/20">
                 {status}
               </div>
               {progress > 0 && (
                 <div className="w-full bg-muted/20 rounded-full h-2">
-                  <div 
-                    className="bg-primary h-2 rounded-full transition-all duration-300" 
+                  <div
+                    className="bg-primary h-2 rounded-full transition-all duration-300"
                     style={{ width: `${progress}%` }}
                   />
                 </div>
@@ -441,7 +2181,7 @@ export const ComfyUITab = () => {
           <DialogHeader>
             <DialogTitle>Edit Image Mask</DialogTitle>
           </DialogHeader>
-          
+
           <div className="space-y-4">
             {/* Editor Controls */}
             <div className="flex flex-wrap items-center gap-4 p-4 bg-muted/20 rounded-lg border border-border/20">
@@ -461,24 +2201,24 @@ export const ComfyUITab = () => {
                   Square
                 </Button>
               </div>
-              
+
               <div className="flex gap-2">
-                 <Button
-                   variant={brushColor === 'black' ? 'default' : 'outline'}
-                   size="sm"
-                   onClick={() => setBrushColor('black')}
-                 >
-                   Restore
-                 </Button>
-                 <Button
-                   variant={brushColor === 'white' ? 'default' : 'outline'}
-                   size="sm"
-                   onClick={() => setBrushColor('white')}
-                 >
-                   Erase
-                 </Button>
+                <Button
+                  variant={brushColor === 'black' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setBrushColor('black')}
+                >
+                  Restore
+                </Button>
+                <Button
+                  variant={brushColor === 'white' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setBrushColor('white')}
+                >
+                  Erase
+                </Button>
               </div>
-              
+
               <div className="flex items-center gap-2">
                 <Label className="text-sm">Brush Size: {brushSize}px</Label>
                 <div className="w-32">
@@ -499,7 +2239,7 @@ export const ComfyUITab = () => {
                   className="w-20 h-8"
                 />
               </div>
-              
+
               <Button onClick={resetCanvas} variant="outline" size="sm">
                 Reset
               </Button>
