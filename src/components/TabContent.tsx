@@ -76,7 +76,7 @@ const TabContent = ({
               className="data-[state=active]:bg-purple-600/20 data-[state=active]:text-purple-300 text-slate-400"
             >
               <Palette className="w-4 h-4 mr-2" />
-              In/Outpainting
+              Inpainting
             </TabsTrigger>
             <TabsTrigger 
               value="img2img" 
@@ -90,7 +90,7 @@ const TabContent = ({
               className="data-[state=active]:bg-purple-600/20 data-[state=active]:text-purple-300 text-slate-400"
             >
               <Workflow className="w-4 h-4 mr-2" />
-              ComfyUI
+              TryOn
             </TabsTrigger>
           </TabsList>
 
