@@ -28,7 +28,7 @@ const Img2ImgPage = () => {
         />
       </div>
       <AppHeader />
-      <div className="min-h-screen bg-transparent relative z-10">
+      <div className="font-pixel min-h-screen bg-transparent relative z-10">
         <div className="container mx-auto p-4 pt-20">
           
 
