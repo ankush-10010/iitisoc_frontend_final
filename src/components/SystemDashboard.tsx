@@ -34,7 +34,7 @@ const SystemDashboard = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 p-4">
+      <div className="">
         <div className="container mx-auto">
           <Card className="bg-red-900/20 border-red-700">
             <CardContent className="p-6">
