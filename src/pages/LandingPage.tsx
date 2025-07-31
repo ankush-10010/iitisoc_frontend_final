@@ -200,7 +200,7 @@ const LandingPage = () => {
                 icon: Palette,
                 title: "Text to Image",
                 description: "Generate stunning images from text prompts with advanced AI models and creative control.",
-                tab: "playground"
+                tab: "txt2img"
               },
               {
                 icon: Image,
