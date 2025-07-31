@@ -15,7 +15,8 @@ const LandingPage = () => {
   }, []);
 
   const navigateToTab = (tab: string) => {
-    navigate(`/app?tab=${tab}`);
+    // All tabs are inside playground, so navigate to playground with the specific tab
+    navigate(`/app?tab=playground&subtab=${tab}`);
   };
 
   return (
@@ -99,23 +100,30 @@ const LandingPage = () => {
           >
             Powered by Advanced AI Models
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[1, 2, 3, 4, 5, 6].map((index) => (
-              <div
-                key={index}
-                className="aspect-square bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-lg backdrop-blur-sm border border-white/10"
-                style={{
-                  transform: `translateY(${Math.max(0, (scrollY - 800) * (0.05 * index))}px) scale(${Math.min(1, Math.max(0.8, 1 - (scrollY - 1000) / 2000))})`,
-                  opacity: Math.min(1, Math.max(0, (scrollY - 600) / 600))
-                }}
-              >
-                <div className="w-full h-full flex items-center justify-center">
-                  <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center">
-                    <Image className="w-8 h-8 text-white" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center justify-items-center">
+            {[1, 2, 3, 4, 5, 6].map((index) => {
+              const imageThreshold = 600 + (index - 1) * 100; // Sequential appearance
+              const isVisible = scrollY > imageThreshold;
+              const imageProgress = Math.min(1, Math.max(0, (scrollY - imageThreshold) / 200));
+              
+              return (
+                <div
+                  key={index}
+                  className="aspect-square bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-lg backdrop-blur-sm border border-white/10 w-full max-w-xs"
+                  style={{
+                    transform: `translateY(${isVisible ? 0 : 50}px) scale(${isVisible ? 1 : 0.8})`,
+                    opacity: imageProgress,
+                    transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
+                  }}
+                >
+                  <div className="w-full h-full flex items-center justify-center">
+                    <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center">
+                      <Image className="w-8 h-8 text-white" />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -167,16 +175,21 @@ const LandingPage = () => {
                 description: "Virtual try-on technology that brings fashion and e-commerce to life.",
                 tab: "tryon"
               }
-            ].map((item, index) => (
-              <Card
-                key={item.title}
-                className="bg-black/40 border-white/10 backdrop-blur-sm hover:bg-black/60 transition-all duration-300 cursor-pointer group"
-                style={{
-                  transform: `translateY(${Math.max(0, (scrollY - 1400) * (-0.1 * (index + 1)))}px)`,
-                  opacity: Math.min(1, Math.max(0, (scrollY - 1200) / 600))
-                }}
-                onClick={() => navigateToTab(item.tab)}
-              >
+            ].map((item, index) => {
+              const cardThreshold = 1400 + (index * 100); // Sequential appearance
+              const cardProgress = Math.min(1, Math.max(0, (scrollY - cardThreshold) / 300));
+              
+              return (
+                <Card
+                  key={item.title}
+                  className="bg-black/40 border-white/10 backdrop-blur-sm hover:bg-black/60 transition-all duration-300 cursor-pointer group"
+                  style={{
+                    transform: `translateY(${cardProgress < 1 ? 30 : 0}px)`,
+                    opacity: cardProgress,
+                    transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
+                  }}
+                  onClick={() => navigateToTab(item.tab)}
+                >
                 <CardContent className="p-8">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -191,9 +204,10 @@ const LandingPage = () => {
                       </p>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
+                 </CardContent>
+               </Card>
+              );
+             })}
           </div>
         </div>
       </section>

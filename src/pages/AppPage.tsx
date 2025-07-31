@@ -38,8 +38,25 @@ const AppPage = () => {
 
   useEffect(() => {
     const tabParam = searchParams.get('tab');
+    const subtabParam = searchParams.get('subtab');
+    
     if (tabParam) {
       setActiveTab(tabParam);
+    }
+    
+    // Map subtab names to the correct playground sub-tabs
+    if (subtabParam) {
+      const subtabMapping: { [key: string]: string } = {
+        'txt2img': 'txtTOimg',
+        'img2img': 'imgTOimg', 
+        'inpainting': 'inpainting',
+        'tryon': 'tryon'
+      };
+      
+      const mappedSubtab = subtabMapping[subtabParam];
+      if (mappedSubtab) {
+        setActiveSubTab(mappedSubtab);
+      }
     }
   }, [searchParams]);
 
