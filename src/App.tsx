@@ -8,6 +8,7 @@ import AppPage from "./pages/AppPage";
 import Txt2ImgPage from "./pages/Txt2ImgPage";
 import Img2ImgPage from "./pages/Img2ImgPage";
 import InpaintingPage from "./pages/InpaintingPage";
+import TryOnPage from "./pages/TryOnPage";
 
 import NotFound from "./pages/NotFound";
 
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/txt2img" element={<Txt2ImgPage />} />
           <Route path="/img2img" element={<Img2ImgPage />} />
           <Route path="/inpainting" element={<InpaintingPage />} />
+          <Route path="/tryon" element={<TryOnPage />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

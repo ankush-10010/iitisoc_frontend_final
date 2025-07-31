@@ -50,7 +50,7 @@ const AppPage = () => {
         'txt2img': 'txtTOimg',
         'img2img': 'imgTOimg', 
         'inpainting': 'inpainting',
-        'tryon': 'tryon'
+        'tryon': 'comfyui'
       };
       
       const mappedSubtab = subtabMapping[subtabParam];
