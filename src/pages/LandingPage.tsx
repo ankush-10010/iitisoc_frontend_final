@@ -6,13 +6,54 @@ import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
   const [scrollY, setScrollY] = useState(0);
+  const [isCollageSticky, setIsCollageSticky] = useState(false);
+  const [visibleImages, setVisibleImages] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setScrollY(currentScrollY);
+      
+      // Collage section starts at 600px
+      const collageStartThreshold = 600;
+      const collageEndThreshold = collageStartThreshold + 1200; // Give enough time for all images
+      
+      if (currentScrollY >= collageStartThreshold && currentScrollY < collageEndThreshold && visibleImages < 6) {
+        setIsCollageSticky(true);
+        // Prevent further scrolling
+        window.scrollTo(0, collageStartThreshold);
+        // Show images based on time elapsed in sticky mode
+        const timeInSticky = Date.now() % 3000; // Reset every 3 seconds for demo
+        const newVisibleImages = Math.min(6, Math.floor(timeInSticky / 500) + 1);
+        setVisibleImages(newVisibleImages);
+      } else if (visibleImages >= 6 && currentScrollY >= collageStartThreshold) {
+        setIsCollageSticky(false);
+      }
+    };
+    
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    
+    // Auto-progress images when sticky
+    let interval: NodeJS.Timeout;
+    if (isCollageSticky && visibleImages < 6) {
+      interval = setInterval(() => {
+        setVisibleImages(prev => {
+          if (prev < 6) {
+            return prev + 1;
+          } else {
+            setIsCollageSticky(false);
+            return prev;
+          }
+        });
+      }, 500); // Show one image every 500ms
+    }
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (interval) clearInterval(interval);
+    };
+  }, [isCollageSticky, visibleImages]);
 
   const navigateToTab = (tab: string) => {
     // All tabs are inside playground, so navigate to playground with the specific tab
@@ -89,22 +130,25 @@ const LandingPage = () => {
       </section>
 
       {/* Image Collage Section */}
-      <section className="relative z-10 py-20 px-6">
-        <div className="max-w-6xl mx-auto">
+      <section 
+        className={`relative z-10 ${isCollageSticky ? 'h-screen flex items-center' : 'py-20'} px-6`}
+        style={{
+          position: isCollageSticky ? 'sticky' : 'relative',
+          top: isCollageSticky ? 0 : 'auto'
+        }}
+      >
+        <div className="max-w-6xl mx-auto w-full">
           <h2 
             className="text-4xl font-bold text-white text-center mb-16"
             style={{
-              transform: `translateY(${Math.max(0, (scrollY - 600) * -0.1)}px)`,
-              opacity: Math.min(1, Math.max(0, (scrollY - 400) / 400))
+              opacity: isCollageSticky ? 1 : Math.min(1, Math.max(0, (scrollY - 400) / 400))
             }}
           >
             Powered by Advanced AI Models
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center justify-items-center">
             {[1, 2, 3, 4, 5, 6].map((index) => {
-              const imageThreshold = 600 + (index - 1) * 100; // Sequential appearance
-              const isVisible = scrollY > imageThreshold;
-              const imageProgress = Math.min(1, Math.max(0, (scrollY - imageThreshold) / 200));
+              const isVisible = index <= visibleImages;
               
               return (
                 <div
@@ -112,8 +156,8 @@ const LandingPage = () => {
                   className="aspect-square bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-lg backdrop-blur-sm border border-white/10 w-full max-w-xs"
                   style={{
                     transform: `translateY(${isVisible ? 0 : 50}px) scale(${isVisible ? 1 : 0.8})`,
-                    opacity: imageProgress,
-                    transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
+                    opacity: isVisible ? 1 : 0,
+                    transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)'
                   }}
                 >
                   <div className="w-full h-full flex items-center justify-center">
@@ -134,7 +178,8 @@ const LandingPage = () => {
           <h2 
             className="text-4xl font-bold text-white text-center mb-4"
             style={{
-              opacity: Math.min(1, Math.max(0, (scrollY - 1200) / 400))
+              opacity: visibleImages >= 6 ? 1 : 0,
+              transition: 'opacity 0.6s ease-in-out'
             }}
           >
             AI Image Generation Applications
@@ -142,7 +187,8 @@ const LandingPage = () => {
           <p 
             className="text-gray-300 text-center mb-16 max-w-3xl mx-auto"
             style={{
-              opacity: Math.min(1, Math.max(0, (scrollY - 1300) / 400))
+              opacity: visibleImages >= 6 ? 1 : 0,
+              transition: 'opacity 0.6s ease-in-out 0.2s'
             }}
           >
             Our AI technology transforms ordinary prompts into extraordinary visuals that enhance 
@@ -176,17 +222,17 @@ const LandingPage = () => {
                 tab: "tryon"
               }
             ].map((item, index) => {
-              const cardThreshold = 1400 + (index * 100); // Sequential appearance
-              const cardProgress = Math.min(1, Math.max(0, (scrollY - cardThreshold) / 300));
+              const isCardVisible = visibleImages >= 6;
+              const cardDelay = index * 0.2; // Stagger the cards
               
               return (
                 <Card
                   key={item.title}
                   className="bg-black/40 border-white/10 backdrop-blur-sm hover:bg-black/60 transition-all duration-300 cursor-pointer group"
                   style={{
-                    transform: `translateY(${cardProgress < 1 ? 30 : 0}px)`,
-                    opacity: cardProgress,
-                    transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
+                    transform: `translateY(${isCardVisible ? 0 : 30}px)`,
+                    opacity: isCardVisible ? 1 : 0,
+                    transition: `all 0.8s cubic-bezier(0.4, 0, 0.2, 1) ${cardDelay}s`
                   }}
                   onClick={() => navigateToTab(item.tab)}
                 >
