@@ -56,8 +56,7 @@ const LandingPage = () => {
   }, [isCollageSticky, visibleImages]);
 
   const navigateToTab = (tab: string) => {
-    // All tabs are inside playground, so navigate to playground with the specific tab
-    navigate(`/app?tab=playground&subtab=${tab}`);
+    navigate(`/${tab}`);
   };
 
   return (

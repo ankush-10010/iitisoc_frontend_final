@@ -5,6 +5,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import AppPage from "./pages/AppPage";
+import Txt2ImgPage from "./pages/Txt2ImgPage";
+import Img2ImgPage from "./pages/Img2ImgPage";
+import InpaintingPage from "./pages/InpaintingPage";
+import TryOnPage from "./pages/TryOnPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -18,6 +22,10 @@ const App = () => (
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/app" element={<AppPage />} />
+          <Route path="/txt2img" element={<Txt2ImgPage />} />
+          <Route path="/img2img" element={<Img2ImgPage />} />
+          <Route path="/inpainting" element={<InpaintingPage />} />
+          <Route path="/tryon" element={<TryOnPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
