@@ -1,11 +1,19 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AppHeader from "@/components/AppHeader";
 import ErrorManager from "@/components/ErrorManager";
 import { useErrorManager } from "@/hooks/useErrorManager";
 import Img2ImgTab from "@/components/Img2ImgTab";
+import { Button } from "@/components/ui/button";
+import { Monitor } from "lucide-react";
 
 const Img2ImgPage = () => {
+  const navigate = useNavigate();
   const { errors, addError, clearError, clearAllErrors } = useErrorManager();
+
+  const handleSystemDashboard = () => {
+    navigate('/systemdashboard');
+  };
 
   return (
     <>
@@ -25,9 +33,18 @@ const Img2ImgPage = () => {
           <AppHeader />
 
           <div className="w-full">
-            <div className="mb-6">
-              <h1 className="text-3xl font-bold text-white mb-2">Image to Image</h1>
-              <p className="text-gray-300">Transform existing images with AI-powered modifications and style transfers.</p>
+            <div className="mb-6 flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-bold text-white mb-2">Image to Image</h1>
+                <p className="text-gray-300">Transform existing images with AI-powered modifications and style transfers.</p>
+              </div>
+              <Button
+                onClick={handleSystemDashboard}
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium transition-all bg-purple-600/20 text-purple-300 hover:bg-purple-600/30"
+              >
+                <Monitor className="w-4 h-4 mr-2" />
+                System Dashboard
+              </Button>
             </div>
 
             <Img2ImgTab onError={addError} />
