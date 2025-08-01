@@ -8,9 +8,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { toast } from 'sonner';
 import { BACKEND_COMFYUI_URL } from '@/config/backend_comfyui';
 
-type WorkflowJSON = Record<string, any>;
-
-const WORKFLOW_JSON: WorkflowJSON = {
+type WorkflowJSON1 = Record<string, any>;
+type WorkflowJSON2=Record<string,any>;
+const WORKFLOW_JSON_1: WorkflowJSON1 = {
   "102": {
     "inputs": {
       "image": [
@@ -57,7 +57,7 @@ const WORKFLOW_JSON: WorkflowJSON = {
     "inputs": {
       "image_strength": "high",
       "conditioning": [
-        "111",
+        "327",
         0
       ],
       "style_model": [
@@ -83,24 +83,6 @@ const WORKFLOW_JSON: WorkflowJSON = {
       "title": "Load VAE"
     }
   },
-  "108": {
-    "inputs": {
-      "delimiter": ", ",
-      "clean_whitespace": "true",
-      "text_a": [
-        "172",
-        0
-      ],
-      "text_b": [
-        "173",
-        0
-      ]
-    },
-    "class_type": "Text Concatenate",
-    "_meta": {
-      "title": "Text Concatenate"
-    }
-  },
   "110": {
     "inputs": {
       "mask": [
@@ -111,22 +93,6 @@ const WORKFLOW_JSON: WorkflowJSON = {
     "class_type": "MaskToImage",
     "_meta": {
       "title": "Convert Mask to Image"
-    }
-  },
-  "111": {
-    "inputs": {
-      "text": [
-        "108",
-        0
-      ],
-      "clip": [
-        "174",
-        1
-      ]
-    },
-    "class_type": "CLIPTextEncode",
-    "_meta": {
-      "title": "CLIP Text Encode (Prompt)"
     }
   },
   "112": {
@@ -192,7 +158,7 @@ const WORKFLOW_JSON: WorkflowJSON = {
   "121": {
     "inputs": {
       "conditioning_to": [
-        "111",
+        "327",
         0
       ],
       "conditioning_from": [
@@ -264,7 +230,7 @@ const WORKFLOW_JSON: WorkflowJSON = {
   "128": {
     "inputs": {
       "model": [
-        "174",
+        "156",
         0
       ]
     },
@@ -286,7 +252,7 @@ const WORKFLOW_JSON: WorkflowJSON = {
         1
       ],
       "model": [
-        "128",
+        "345",
         0
       ]
     },
@@ -520,23 +486,11 @@ const WORKFLOW_JSON: WorkflowJSON = {
   },
   "163": {
     "inputs": {
-      "noise_seed": 26538952335765
+      "noise_seed": 919599298518172
     },
     "class_type": "RandomNoise",
     "_meta": {
       "title": "RandomNoise"
-    }
-  },
-  "165": {
-    "inputs": {
-      "clip_name1": "t5xxl_fp8_e4m3fn.safetensors",
-      "clip_name2": "clip_l.safetensors",
-      "type": "flux",
-      "device": "cpu"
-    },
-    "class_type": "DualCLIPLoader",
-    "_meta": {
-      "title": "DualCLIPLoader"
     }
   },
   "169": {
@@ -552,98 +506,10 @@ const WORKFLOW_JSON: WorkflowJSON = {
       "title": "FluxGuidance"
     }
   },
-  "170": {
-    "inputs": {
-      "mask": [
-        "200",
-        1
-      ]
-    },
-    "class_type": "MaskToImage",
-    "_meta": {
-      "title": "Convert Mask to Image"
-    }
-  },
-  "171": {
-    "inputs": {
-      "channel": "red",
-      "image": [
-        "185",
-        0
-      ]
-    },
-    "class_type": "ImageToMask",
-    "_meta": {
-      "title": "Convert Image to Mask"
-    }
-  },
-  "172": {
-    "inputs": {
-      "text": "The hand is in a natural, elegant pose, with visible skin texture and subtle veins. The lighting is professional and studio-grade, creating soft shadows that define the contours of the watch and hand, highlighting reflections on metallic surfaces. Masterpiece, best quality, 8k UHD, sharp focus, extreme detail, super-resolution, professional studio photography."
-    },
-    "class_type": "Text Multiline",
-    "_meta": {
-      "title": "Additional prompt"
-    }
-  },
-  "173": {
-    "inputs": {
-      "text": "a photograph of a watch on a hand with detailed text on watch"
-    },
-    "class_type": "Text Multiline",
-    "_meta": {
-      "title": "Prompt 1"
-    }
-  },
-  "174": {
-    "inputs": {
-      "PowerLoraLoaderHeaderWidget": {
-        "type": "PowerLoraLoaderHeaderWidget"
-      },
-      "lora_1": {
-        "on": false,
-        "lora": "comfyui_portrait_lora64.safetensors",
-        "strength": 0.6
-      },
-      "lora_2": {
-        "on": false,
-        "lora": "Phlux.safetensors",
-        "strength": 0.6
-      },
-      "lora_3": {
-        "on": false,
-        "lora": "diffusion_pytorch_model.safetensors",
-        "strength": 0.6
-      },
-      "lora_4": {
-        "on": true,
-        "lora": "comfyui_portrait_lora64.safetensors",
-        "strength": 0.6
-      },
-      "lora_5": {
-        "on": true,
-        "lora": "pytorch_lora_weights.safetensors",
-        "strength": 0.6
-      },
-      "➕ Add Lora": "",
-      "model": [
-        "156",
-        0
-      ],
-      "clip": [
-        "165",
-        0
-      ]
-    },
-    "class_type": "Power Lora Loader (rgthree)",
-    "_meta": {
-      "title": "Power Lora Loader (rgthree)"
-    }
-  },
   "176": {
     "inputs": {
       "scheduler": "sgm_uniform",
-      "steps": 10,
+      "steps": 20,
       "denoise": 1,
       "model": [
         "129",
@@ -726,51 +592,21 @@ const WORKFLOW_JSON: WorkflowJSON = {
       "extend_right_factor": 1,
       "context_from_mask_extend_factor": 1.2000000000000002,
       "output_resize_to_target_size": true,
-      "output_target_width": 1080,
-      "output_target_height": 1080,
-      "output_padding": "128",
+      "output_target_width": 258,
+      "output_target_height": 258,
+      "output_padding": "64",
       "image": [
-        "184",
+        "200",
         0
       ],
       "mask": [
-        "171",
-        0
+        "200",
+        1
       ]
     },
     "class_type": "InpaintCropImproved",
     "_meta": {
       "title": "✂️ Inpaint Crop (Improved)"
-    }
-  },
-  "184": {
-    "inputs": {
-      "upscale_model": "4x_NMKD-Siax_200k.pth",
-      "resampling_method": "lanczos",
-      "supersample": "true",
-      "image": [
-        "200",
-        0
-      ]
-    },
-    "class_type": "CR Upscale Image",
-    "_meta": {
-      "title": "🔍 CR Upscale Image"
-    }
-  },
-  "185": {
-    "inputs": {
-      "upscale_model": "4x_NMKD-Siax_200k.pth",
-      "resampling_method": "lanczos",
-      "supersample": "true",
-      "image": [
-        "170",
-        0
-      ]
-    },
-    "class_type": "CR Upscale Image",
-    "_meta": {
-      "title": "🔍 CR Upscale Image"
     }
   },
   "186": {
@@ -790,7 +626,7 @@ const WORKFLOW_JSON: WorkflowJSON = {
   },
   "187": {
     "inputs": {
-      "image": "pexels-pixabay-68201.jpg"
+      "image": "pexels-pixabay-68201 (2).jpg"
     },
     "class_type": "LoadImage",
     "_meta": {
@@ -847,33 +683,9 @@ const WORKFLOW_JSON: WorkflowJSON = {
       "title": "Preview Image"
     }
   },
-  "196": {
-    "inputs": {
-      "images": [
-        "178",
-        0
-      ]
-    },
-    "class_type": "PreviewImage",
-    "_meta": {
-      "title": "Preview Image"
-    }
-  },
-  "197": {
-    "inputs": {
-      "tile_size": 512,
-      "overlap": 64,
-      "temporal_size": 64,
-      "temporal_overlap": 8
-    },
-    "class_type": "VAEDecodeTiled",
-    "_meta": {
-      "title": "VAE Decode (Tiled)"
-    }
-  },
   "200": {
     "inputs": {
-      "image": "clipspace/clipspace-mask-250497.5.png [input]"
+      "image": "clipspace/clipspace-mask-340120.90000003576.png [input]"
     },
     "class_type": "LoadImage",
     "_meta": {
@@ -926,7 +738,7 @@ const WORKFLOW_JSON: WorkflowJSON = {
     "inputs": {
       "image_strength": "high",
       "conditioning": [
-        "214",
+        "327",
         0
       ],
       "style_model": [
@@ -941,24 +753,6 @@ const WORKFLOW_JSON: WorkflowJSON = {
     "class_type": "StyleModelApplySimple",
     "_meta": {
       "title": "StyleModelApplySimple"
-    }
-  },
-  "210": {
-    "inputs": {
-      "delimiter": ", ",
-      "clean_whitespace": "true",
-      "text_a": [
-        "279",
-        0
-      ],
-      "text_b": [
-        "315",
-        1
-      ]
-    },
-    "class_type": "Text Concatenate",
-    "_meta": {
-      "title": "Text Concatenate"
     }
   },
   "211": {
@@ -1004,22 +798,6 @@ const WORKFLOW_JSON: WorkflowJSON = {
     "class_type": "ImageResize+",
     "_meta": {
       "title": "🔧 Image Resize"
-    }
-  },
-  "214": {
-    "inputs": {
-      "text": [
-        "210",
-        0
-      ],
-      "clip": [
-        "174",
-        1
-      ]
-    },
-    "class_type": "CLIPTextEncode",
-    "_meta": {
-      "title": "CLIP Text Encode (Prompt)"
     }
   },
   "221": {
@@ -1078,7 +856,7 @@ const WORKFLOW_JSON: WorkflowJSON = {
   },
   "225": {
     "inputs": {
-      "noise_seed": 417342623106817
+      "noise_seed": 58511487100677
     },
     "class_type": "RandomNoise",
     "_meta": {
@@ -1097,7 +875,7 @@ const WORKFLOW_JSON: WorkflowJSON = {
   "230": {
     "inputs": {
       "conditioning_to": [
-        "214",
+        "327",
         0
       ],
       "conditioning_from": [
@@ -1179,7 +957,7 @@ const WORKFLOW_JSON: WorkflowJSON = {
         1
       ],
       "model": [
-        "128",
+        "345",
         0
       ]
     },
@@ -1350,8 +1128,8 @@ const WORKFLOW_JSON: WorkflowJSON = {
       "extend_right_factor": 1,
       "context_from_mask_extend_factor": 1.2000000000000002,
       "output_resize_to_target_size": true,
-      "output_target_width": 1080,
-      "output_target_height": 1080,
+      "output_target_width": 720,
+      "output_target_height": 720,
       "output_padding": "128",
       "image": [
         "186",
@@ -1438,18 +1216,6 @@ const WORKFLOW_JSON: WorkflowJSON = {
       "title": "ImageCompositeMasked"
     }
   },
-  "277": {
-    "inputs": {
-      "images": [
-        "273",
-        0
-      ]
-    },
-    "class_type": "PreviewImage",
-    "_meta": {
-      "title": "Preview Image"
-    }
-  },
   "278": {
     "inputs": {
       "samples": [
@@ -1464,15 +1230,6 @@ const WORKFLOW_JSON: WorkflowJSON = {
     "class_type": "VAEDecode",
     "_meta": {
       "title": "VAE Decode"
-    }
-  },
-  "279": {
-    "inputs": {
-      "text": "The text is to be filled in correct masked regions with high quality, ultra detailed, 8k, smooth and sharpened text features in both regions."
-    },
-    "class_type": "Text Multiline",
-    "_meta": {
-      "title": "Additional prompt"
     }
   },
   "282": {
@@ -1511,21 +1268,6 @@ const WORKFLOW_JSON: WorkflowJSON = {
       "title": "Preview Image"
     }
   },
-  "307": {
-    "inputs": {
-      "upscale_model": "4x_NMKD-Siax_200k.pth",
-      "resampling_method": "lanczos",
-      "supersample": "true",
-      "image": [
-        "262",
-        0
-      ]
-    },
-    "class_type": "CR Upscale Image",
-    "_meta": {
-      "title": "🔍 CR Upscale Image"
-    }
-  },
   "308": {
     "inputs": {
       "images": [
@@ -1535,7 +1277,7 @@ const WORKFLOW_JSON: WorkflowJSON = {
     },
     "class_type": "PreviewImage",
     "_meta": {
-      "title": "Final Image"
+      "title": "Final Image Upscale Last"
     }
   },
   "309": {
@@ -1571,31 +1313,6 @@ const WORKFLOW_JSON: WorkflowJSON = {
       "title": "Watch Detector"
     }
   },
-  "314": {
-    "inputs": {
-      "any_value": [
-        "315",
-        1
-      ]
-    },
-    "class_type": "Show any to JSON [Crystools]",
-    "_meta": {
-      "title": "🪛 Show any to JSON"
-    }
-  },
-  "315": {
-    "inputs": {
-      "lang": "en",
-      "images": [
-        "187",
-        0
-      ]
-    },
-    "class_type": "OcrImageText",
-    "_meta": {
-      "title": "OcrImageText"
-    }
-  },
   "316": {
     "inputs": {
       "images": [
@@ -1620,21 +1337,6 @@ const WORKFLOW_JSON: WorkflowJSON = {
       "title": "🔧 Mask Preview"
     }
   },
-  "318": {
-    "inputs": {
-      "upscale_model": "4x_NMKD-Siax_200k.pth",
-      "resampling_method": "lanczos",
-      "supersample": "true",
-      "image": [
-        "187",
-        0
-      ]
-    },
-    "class_type": "CR Upscale Image",
-    "_meta": {
-      "title": "🔍 CR Upscale Image"
-    }
-  },
   "319": {
     "inputs": {
       "dp": 1.2,
@@ -1647,7 +1349,7 @@ const WORKFLOW_JSON: WorkflowJSON = {
       "bg_green": 220,
       "bg_blue": 220,
       "image": [
-        "318",
+        "190",
         0
       ]
     },
@@ -1672,7 +1374,7 @@ const WORKFLOW_JSON: WorkflowJSON = {
         0
       ],
       "image": [
-        "307",
+        "262",
         0
       ]
     },
@@ -1680,12 +1382,88 @@ const WORKFLOW_JSON: WorkflowJSON = {
     "_meta": {
       "title": "Upscale Image (using Model)"
     }
+  },
+  "327": {
+    "inputs": {
+      "filename": "prompt_conditioning.safetensors"
+    },
+    "class_type": "LoadConditioningNode",
+    "_meta": {
+      "title": "Load Conditioning"
+    }
+  },
+  "333": {
+    "inputs": {
+      "model_name": "4x_NMKD-Siax_200k.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "Load Upscale Model"
+    }
+  },
+  "334": {
+    "inputs": {
+      "upscale_model": [
+        "333",
+        0
+      ],
+      "image": [
+        "178",
+        0
+      ]
+    },
+    "class_type": "ImageUpscaleWithModel",
+    "_meta": {
+      "title": "Upscale Image (using Model)"
+    }
+  },
+  "335": {
+    "inputs": {
+      "images": [
+        "334",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Image Pipeline 1"
+    }
+  },
+  "344": {
+    "inputs": {
+      "lora_name": "comfyui_portrait_lora64.safetensors",
+      "strength_model": 0.8000000000000002,
+      "model": [
+        "128",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoraLoaderModelOnly"
+    }
+  },
+  "345": {
+    "inputs": {
+      "lora_name": "pytorch_lora_weights.safetensors",
+      "strength_model": 0.6000000000000001,
+      "model": [
+        "344",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoraLoaderModelOnly"
+    }
   }
 };
+const WORKFLOW_JSON_2: WorkflowJSON2={};
 
 export const ComfyUITab = () => {
   const [destinationImage, setDestinationImage] = useState<File | null>(null);
   const [objectImage, setObjectImage] = useState<File | null>(null);
+  const [selectedAccessory, setSelectedAccessory] = useState<string>('watch');
   const [isGenerating, setIsGenerating] = useState(false);
   const [status, setStatus] = useState('Status: Waiting for input...');
   const [resultImage, setResultImage] = useState<string | null>(null);
@@ -1731,17 +1509,21 @@ export const ComfyUITab = () => {
   const getModifiedWorkflow = useCallback((workflow: any, destinationImageName: string, objectImageName: string) => {
     const updatedWorkflow = JSON.parse(JSON.stringify(workflow));
 
+    // Different node titles based on selected accessory
+    const destinationNodeTitle = selectedAccessory === 'watch' ? "Insert hand" : "Insert destination";
+    const objectNodeTitle = selectedAccessory === 'watch' ? "Insert object" : "Insert accessory";
+
     let destinationNodeId, objectNodeId;
     for (const id in updatedWorkflow) {
-      if (updatedWorkflow[id]._meta?.title === "Insert hand") destinationNodeId = id;
-      if (updatedWorkflow[id]._meta?.title === "Insert object") objectNodeId = id;
+      if (updatedWorkflow[id]._meta?.title === destinationNodeTitle) destinationNodeId = id;
+      if (updatedWorkflow[id]._meta?.title === objectNodeTitle) objectNodeId = id;
     }
 
     if (destinationNodeId) updatedWorkflow[destinationNodeId].inputs.image = destinationImageName;
     if (objectNodeId) updatedWorkflow[objectNodeId].inputs.image = objectImageName;
 
     return updatedWorkflow;
-  }, []);
+  }, [selectedAccessory]);
 
   const queuePrompt = useCallback((clientId: string, workflowObject: any) => {
     const payload = {
@@ -1772,8 +1554,9 @@ export const ComfyUITab = () => {
       const objFileInfo = await uploadImage(objectImage);
       updateStatus('Uploads complete. Preparing workflow...');
 
-      // Pass the dynamic prompts to the workflow
-      const modifiedWorkflow = getModifiedWorkflow(WORKFLOW_JSON, destFileInfo.name, objFileInfo.name);
+      // Choose workflow based on selected accessory
+      const selectedWorkflow = selectedAccessory === 'watch' ? WORKFLOW_JSON_1 : WORKFLOW_JSON_2;
+      const modifiedWorkflow = getModifiedWorkflow(selectedWorkflow, destFileInfo.name, objFileInfo.name);
 
       const clientId = Math.random().toString(36).substring(7);
       const wsUrl = BACKEND_COMFYUI_URL.replace(/^http/, 'ws');
@@ -1792,8 +1575,9 @@ export const ComfyUITab = () => {
             const executedNodeId = data.data.node;
 
             // Dynamically find the ID of the node titled "Final Image"
-            const finalNodeId = Object.keys(WORKFLOW_JSON).find(
-              id => (WORKFLOW_JSON as any)[id]._meta?.title === 'Final Image'
+            const currentWorkflow = selectedAccessory === 'watch' ? WORKFLOW_JSON_1 : WORKFLOW_JSON_2;
+            const finalNodeId = Object.keys(currentWorkflow).find(
+              id => (currentWorkflow as any)[id]._meta?.title === 'Final Image Upscale Last'
             );
 
             // Check if the executed node is our final target node
@@ -1848,7 +1632,7 @@ export const ComfyUITab = () => {
       setIsGenerating(false);
       setProgress(0);
     }
-  }, [destinationImage, objectImage, uploadImage, getModifiedWorkflow, queuePrompt, updateStatus]);
+  }, [destinationImage, objectImage, selectedAccessory, uploadImage, getModifiedWorkflow, queuePrompt, updateStatus]);
 
   // Canvas setup and drawing functions
   const setupCanvas = useCallback((image: HTMLImageElement) => {
@@ -2055,8 +1839,33 @@ export const ComfyUITab = () => {
         <Card className="border-border/20 bg-card/50 backdrop-blur-sm">
           <CardContent className="p-6 space-y-4">
             <div>
+              <Label htmlFor="accessory-select" className="text-foreground font-medium">
+                Select Accessory Type
+              </Label>
+              <select
+                id="accessory-select"
+                value={selectedAccessory}
+                onChange={(e) => setSelectedAccessory(e.target.value)}
+                className="mt-2 w-full px-3 py-2 bg-background/50 border border-border/20 rounded-md text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              >
+                <option value="watch">Watch</option>
+                <option value="cap">Cap</option>
+                <option value="bracelet">Bracelet</option>
+              </select>
+              <p className="text-sm text-foreground/60 mt-1">
+                {selectedAccessory === 'watch' 
+                  ? 'Using specialized watch insertion workflow' 
+                  : 'Using general accessory insertion workflow'}
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-border/20 bg-card/50 backdrop-blur-sm">
+          <CardContent className="p-6 space-y-4">
+            <div>
               <Label htmlFor="destination-image" className="text-foreground font-medium">
-                Destination Image (with mask)
+                {selectedAccessory === 'watch' ? 'Hand Image (with mask)' : 'Destination Image (with mask)'}
               </Label>
               <Input
                 id="destination-image"
@@ -2065,6 +1874,11 @@ export const ComfyUITab = () => {
                 onChange={handleDestinationImageChange}
                 className="mt-2 bg-background/50 border-border/20"
               />
+              <p className="text-sm text-foreground/60 mt-1">
+                {selectedAccessory === 'watch' 
+                  ? 'Upload an image of a hand where you want to place the watch'
+                  : `Upload an image where you want to place the ${selectedAccessory}`}
+              </p>
             </div>
 
             {destinationImage && (
@@ -2121,7 +1935,7 @@ export const ComfyUITab = () => {
           <CardContent className="p-6 space-y-4">
             <div>
               <Label htmlFor="object-image" className="text-foreground font-medium">
-                Object to Insert
+                {selectedAccessory.charAt(0).toUpperCase() + selectedAccessory.slice(1)} to Insert
               </Label>
               <Input
                 id="object-image"
@@ -2130,6 +1944,9 @@ export const ComfyUITab = () => {
                 onChange={(e) => setObjectImage(e.target.files?.[0] || null)}
                 className="mt-2 bg-background/50 border-border/20"
               />
+              <p className="text-sm text-foreground/60 mt-1">
+                Upload an image of the {selectedAccessory} you want to insert
+              </p>
             </div>
           </CardContent>
         </Card>
