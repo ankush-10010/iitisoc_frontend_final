@@ -2231,7 +2231,7 @@ const WORKFLOW_JSON_2: WorkflowJSON2={
 export const ComfyUITab = () => {
   const [destinationImage, setDestinationImage] = useState<File | null>(null);
   const [objectImage, setObjectImage] = useState<File | null>(null);
-  const [selectedAccessory, setSelectedAccessory] = useState<string>('watch');
+  const [selectedAccessory, setSelectedAccessory] = useState<string>('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [status, setStatus] = useState('Status: Waiting for input...');
   const [resultImage, setResultImage] = useState<string | null>(null);
@@ -2600,11 +2600,12 @@ export const ComfyUITab = () => {
     };
   }, [brushSize]);
 
+
   return (
     <div className="flex gap-6">
       {/* Left side - Image inputs stacked vertically */}
       <div className="flex-1 space-y-6">
-        <Card className="border-border/20 bg-card/50 backdrop-blur-sm">
+        <Card className="bg-slate-800/50 border-slate-700">
           <CardContent className="p-6 space-y-4">
             <div>
               <Label htmlFor="accessory-select" className="text-foreground font-medium">
@@ -2616,6 +2617,7 @@ export const ComfyUITab = () => {
                 onChange={(e) => setSelectedAccessory(e.target.value)}
                 className="mt-2 w-full px-3 py-2 bg-background/50 border border-border/20 rounded-md text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
               >
+                <option value="">--Select an accessory--</option>
                 <option value="watch">Watch</option>
                 <option value="cap">Cap</option>
                 <option value="bracelet">Bracelet</option>
@@ -2629,7 +2631,7 @@ export const ComfyUITab = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-border/20 bg-card/50 backdrop-blur-sm">
+        <Card className="bg-slate-800/50 border-slate-700">
           <CardContent className="p-6 space-y-4">
             <div>
               <Label htmlFor="destination-image" className="text-foreground font-medium">
@@ -2699,7 +2701,7 @@ export const ComfyUITab = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-border/20 bg-card/50 backdrop-blur-sm">
+        <Card className="bg-slate-800/50 border-slate-700">
           <CardContent className="p-6 space-y-4">
             <div>
               <Label htmlFor="object-image" className="text-foreground font-medium">
@@ -2722,7 +2724,7 @@ export const ComfyUITab = () => {
 
       {/* Right side - Result section */}
       <div className="flex-1">
-        <Card className="border-border/20 bg-card/50 backdrop-blur-sm h-full">
+        <Card className="bg-slate-800/50 border-slate-700">
           <CardContent className="p-6 flex flex-col h-full">
             <div className="flex-1">
               {resultImage ? (
@@ -2732,14 +2734,14 @@ export const ComfyUITab = () => {
                   className="max-w-full rounded-lg border border-border/20 shadow-lg"
                 />
               ) : (
-                <div className="flex items-center justify-center h-64 border-2 border-dashed border-border/20 rounded-lg">
+                <div className="flex items-center justify-center h-[340px] border-2 border-dashed border-border/20 rounded-lg transition-all hover:border-red-700 hover:shadow-lg hover:shadow-red-700/40">
                   <p className="text-foreground/60">Generated image will appear here</p>
                 </div>
               )}
             </div>
 
-            <div className="space-y-4 mt-6">
-              <div className="text-sm text-foreground/80 font-mono whitespace-pre-wrap bg-muted/20 p-3 rounded-md border border-border/20">
+            <div className="space-y-2 mt-6">
+              <div className="text-sm text-foreground/80 font-mono whitespace-pre-wrap bg-muted/20 px-3 py-1 rounded-md border border-border/20">
                 {status}
               </div>
               {progress > 0 && (
@@ -2802,7 +2804,7 @@ export const ComfyUITab = () => {
                   size="sm"
                   onClick={() => setBrushColor('white')}
                 >
-                  Erase
+                  Mask
                 </Button>
               </div>
 
