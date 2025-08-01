@@ -2724,7 +2724,7 @@ export const ComfyUITab = () => {
 
       {/* Right side - Result section */}
       <div className="flex-1">
-        <Card className="bg-slate-800/50 border-slate-400">
+        <Card className="bg-slate-800/50 border-slate-700">
           <CardContent className="p-6 flex flex-col h-full">
             <div className="flex-1">
               {resultImage ? (
