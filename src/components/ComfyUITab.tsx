@@ -10,7 +10,7 @@ import { BACKEND_COMFYUI_URL } from '@/config/backend_comfyui';
 
 type WorkflowJSON1 = Record<string, any>;
 type WorkflowJSON2=Record<string,any>;
-const WORKFLOW_JSON_1: WorkflowJSON1 = {
+const WORKFLOW_JSON_1: WorkflowJSON1 ={
   "102": {
     "inputs": {
       "image": [
@@ -1277,7 +1277,7 @@ const WORKFLOW_JSON_1: WorkflowJSON1 = {
     },
     "class_type": "PreviewImage",
     "_meta": {
-      "title": "Final Image Upscale Last"
+      "title": "Final Output"
     }
   },
   "309": {
@@ -1458,12 +1458,780 @@ const WORKFLOW_JSON_1: WorkflowJSON1 = {
     }
   }
 };
-const WORKFLOW_JSON_2: WorkflowJSON2={};
+const WORKFLOW_JSON_2: WorkflowJSON2={
+  "1": {
+    "inputs": {
+      "image": [
+        "35",
+        0
+      ]
+    },
+    "class_type": "GetImageSize+",
+    "_meta": {
+      "title": "🔧 Get Image Size"
+    }
+  },
+  "2": {
+    "inputs": {
+      "direction": "right",
+      "match_image_size": false,
+      "image1": [
+        "15",
+        0
+      ],
+      "image2": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "ImageConcanate",
+    "_meta": {
+      "title": "Image Concatenate"
+    }
+  },
+  "3": {
+    "inputs": {
+      "image": [
+        "41",
+        0
+      ]
+    },
+    "class_type": "GetImageSize+",
+    "_meta": {
+      "title": "🔧 Get Image Size"
+    }
+  },
+  "4": {
+    "inputs": {
+      "image_strength": "high",
+      "conditioning": [
+        "58",
+        0
+      ],
+      "style_model": [
+        "49",
+        0
+      ],
+      "clip_vision_output": [
+        "38",
+        0
+      ]
+    },
+    "class_type": "StyleModelApplySimple",
+    "_meta": {
+      "title": "StyleModelApplySimple"
+    }
+  },
+  "6": {
+    "inputs": {
+      "mask": [
+        "74",
+        2
+      ]
+    },
+    "class_type": "MaskToImage",
+    "_meta": {
+      "title": "Convert Mask to Image"
+    }
+  },
+  "7": {
+    "inputs": {
+      "channel": "red",
+      "image": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "ImageToMask",
+    "_meta": {
+      "title": "Convert Image to Mask"
+    }
+  },
+  "8": {
+    "inputs": {
+      "images": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "9": {
+    "inputs": {
+      "model": [
+        "17",
+        0
+      ],
+      "conditioning": [
+        "69",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "BasicGuider"
+    }
+  },
+  "12": {
+    "inputs": {
+      "sampler_name": "dpmpp_2m"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "13": {
+    "inputs": {
+      "conditioning_to": [
+        "58",
+        0
+      ],
+      "conditioning_from": [
+        "4",
+        0
+      ]
+    },
+    "class_type": "ConditioningConcat",
+    "_meta": {
+      "title": "Conditioning (Concat)"
+    }
+  },
+  "15": {
+    "inputs": {
+      "panel_width": [
+        "1",
+        0
+      ],
+      "panel_height": [
+        "1",
+        1
+      ],
+      "fill_color": "black",
+      "fill_color_hex": "#000000"
+    },
+    "class_type": "CR Color Panel",
+    "_meta": {
+      "title": "🌁 CR Color Panel"
+    }
+  },
+  "16": {
+    "inputs": {
+      "expand": 8,
+      "incremental_expandrate": 0,
+      "tapered_corners": false,
+      "flip_input": false,
+      "blur_radius": 8,
+      "lerp_alpha": 0.24000000000000005,
+      "decay_factor": 1,
+      "fill_holes": false,
+      "mask": [
+        "7",
+        0
+      ]
+    },
+    "class_type": "GrowMaskWithBlur",
+    "_meta": {
+      "title": "Grow Mask With Blur"
+    }
+  },
+  "17": {
+    "inputs": {
+      "max_shift": 1.15,
+      "base_shift": 0.5,
+      "width": [
+        "3",
+        0
+      ],
+      "height": [
+        "3",
+        1
+      ],
+      "model": [
+        "73",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingFlux",
+    "_meta": {
+      "title": "ModelSamplingFlux"
+    }
+  },
+  "19": {
+    "inputs": {
+      "image": [
+        "74",
+        1
+      ]
+    },
+    "class_type": "GetImageSize+",
+    "_meta": {
+      "title": "🔧 Get Image Size"
+    }
+  },
+  "20": {
+    "inputs": {
+      "mask": [
+        "16",
+        0
+      ]
+    },
+    "class_type": "MaskToImage",
+    "_meta": {
+      "title": "Convert Mask to Image"
+    }
+  },
+  "21": {
+    "inputs": {
+      "width": [
+        "19",
+        0
+      ],
+      "height": [
+        "19",
+        1
+      ],
+      "position": "right-center",
+      "x_offset": 0,
+      "y_offset": 0,
+      "image": [
+        "20",
+        0
+      ]
+    },
+    "class_type": "ImageCrop+",
+    "_meta": {
+      "title": "🔧 Image Crop"
+    }
+  },
+  "22": {
+    "inputs": {
+      "brightness": 1.05,
+      "contrast": 0.98,
+      "saturation": 1.05,
+      "image": [
+        "24",
+        0
+      ]
+    },
+    "class_type": "LayerColor: BrightnessContrastV2",
+    "_meta": {
+      "title": "LayerColor: Brightness Contrast V2"
+    }
+  },
+  "23": {
+    "inputs": {
+      "channel": "red",
+      "image": [
+        "21",
+        0
+      ]
+    },
+    "class_type": "ImageToMask",
+    "_meta": {
+      "title": "Convert Image to Mask"
+    }
+  },
+  "24": {
+    "inputs": {
+      "width": [
+        "19",
+        0
+      ],
+      "height": [
+        "19",
+        1
+      ],
+      "position": "right-center",
+      "x_offset": 0,
+      "y_offset": 0,
+      "image": [
+        "66",
+        0
+      ]
+    },
+    "class_type": "ImageCrop+",
+    "_meta": {
+      "title": "🔧 Image Crop"
+    }
+  },
+  "26": {
+    "inputs": {
+      "noise": [
+        "68",
+        0
+      ],
+      "guider": [
+        "9",
+        0
+      ],
+      "sampler": [
+        "12",
+        0
+      ],
+      "sigmas": [
+        "78",
+        0
+      ],
+      "latent_image": [
+        "33",
+        2
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced"
+    }
+  },
+  "33": {
+    "inputs": {
+      "noise_mask": false,
+      "positive": [
+        "13",
+        0
+      ],
+      "negative": [
+        "13",
+        0
+      ],
+      "vae": [
+        "51",
+        0
+      ],
+      "pixels": [
+        "41",
+        0
+      ],
+      "mask": [
+        "16",
+        0
+      ]
+    },
+    "class_type": "InpaintModelConditioning",
+    "_meta": {
+      "title": "InpaintModelConditioning"
+    }
+  },
+  "35": {
+    "inputs": {
+      "width": 16384,
+      "height": [
+        "40",
+        1
+      ],
+      "interpolation": "lanczos",
+      "method": "keep proportion",
+      "condition": "always",
+      "multiple_of": 0,
+      "image": [
+        "75",
+        0
+      ]
+    },
+    "class_type": "ImageResize+",
+    "_meta": {
+      "title": "🔧 Image Resize"
+    }
+  },
+  "36": {
+    "inputs": {
+      "x": 0,
+      "y": 0,
+      "resize_source": false,
+      "destination": [
+        "74",
+        1
+      ],
+      "source": [
+        "22",
+        0
+      ],
+      "mask": [
+        "23",
+        0
+      ]
+    },
+    "class_type": "ImageCompositeMasked",
+    "_meta": {
+      "title": "ImageCompositeMasked"
+    }
+  },
+  "38": {
+    "inputs": {
+      "crop": "none",
+      "clip_vision": [
+        "47",
+        0
+      ],
+      "image": [
+        "75",
+        0
+      ]
+    },
+    "class_type": "CLIPVisionEncode",
+    "_meta": {
+      "title": "CLIP Vision Encode"
+    }
+  },
+  "39": {
+    "inputs": {
+      "unet_name": "flux1-fill-dev-fp8.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "40": {
+    "inputs": {
+      "image": [
+        "74",
+        1
+      ]
+    },
+    "class_type": "GetImageSize+",
+    "_meta": {
+      "title": "🔧 Get Image Size"
+    }
+  },
+  "41": {
+    "inputs": {
+      "direction": "right",
+      "match_image_size": false,
+      "image1": [
+        "35",
+        0
+      ],
+      "image2": [
+        "74",
+        1
+      ]
+    },
+    "class_type": "ImageConcanate",
+    "_meta": {
+      "title": "Image Concatenate"
+    }
+  },
+  "47": {
+    "inputs": {
+      "clip_name": "sigclip_vision_patch14_384.safetensors"
+    },
+    "class_type": "CLIPVisionLoader",
+    "_meta": {
+      "title": "Load CLIP Vision"
+    }
+  },
+  "49": {
+    "inputs": {
+      "style_model_name": "flux1-redux-dev.safetensors"
+    },
+    "class_type": "StyleModelLoader",
+    "_meta": {
+      "title": "Load Style Model"
+    }
+  },
+  "51": {
+    "inputs": {
+      "vae_name": "ae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "56": {
+    "inputs": {
+      "images": [
+        "41",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "57": {
+    "inputs": {
+      "model_type": "flux",
+      "rel_l1_thresh": 0.4,
+      "start_percent": 0,
+      "end_percent": 1,
+      "cache_device": "cuda",
+      "model": [
+        "39",
+        0
+      ]
+    },
+    "class_type": "TeaCache",
+    "_meta": {
+      "title": "TeaCache"
+    }
+  },
+  "58": {
+    "inputs": {
+      "filename": "prompt_conditioning.safetensors"
+    },
+    "class_type": "LoadConditioningNode",
+    "_meta": {
+      "title": "Load Conditioning"
+    }
+  },
+  "60": {
+    "inputs": {
+      "upscale_model": "4x_NMKD-Siax_200k.pth",
+      "resampling_method": "lanczos",
+      "supersample": "true",
+      "image": [
+        "61",
+        0
+      ]
+    },
+    "class_type": "CR Upscale Image",
+    "_meta": {
+      "title": "🔍 CR Upscale Image"
+    }
+  },
+  "61": {
+    "inputs": {
+      "stitcher": [
+        "74",
+        0
+      ],
+      "inpainted_image": [
+        "36",
+        0
+      ]
+    },
+    "class_type": "InpaintStitchImproved",
+    "_meta": {
+      "title": "✂️ Inpaint Stitch (Improved)"
+    }
+  },
+  "62": {
+    "inputs": {
+      "model_name": "4x_NMKD-Siax_200k.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "Load Upscale Model"
+    }
+  },
+  "63": {
+    "inputs": {
+      "upscale_model": [
+        "62",
+        0
+      ],
+      "image": [
+        "61",
+        0
+      ]
+    },
+    "class_type": "ImageUpscaleWithModel",
+    "_meta": {
+      "title": "Upscale Image (using Model)"
+    }
+  },
+  "66": {
+    "inputs": {
+      "samples": [
+        "26",
+        0
+      ],
+      "vae": [
+        "51",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "68": {
+    "inputs": {
+      "noise_seed": 771836408692557
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "RandomNoise"
+    }
+  },
+  "69": {
+    "inputs": {
+      "guidance": 30,
+      "conditioning": [
+        "33",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance",
+    "_meta": {
+      "title": "FluxGuidance"
+    }
+  },
+  "70": {
+    "inputs": {
+      "images": [
+        "36",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "71": {
+    "inputs": {
+      "model": [
+        "57",
+        0
+      ]
+    },
+    "class_type": "DifferentialDiffusion",
+    "_meta": {
+      "title": "Differential Diffusion"
+    }
+  },
+  "72": {
+    "inputs": {
+      "lora_name": "comfyui_portrait_lora64.safetensors",
+      "strength_model": 0.8000000000000002,
+      "model": [
+        "71",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoraLoaderModelOnly"
+    }
+  },
+  "73": {
+    "inputs": {
+      "lora_name": "pytorch_lora_weights.safetensors",
+      "strength_model": 0.6000000000000001,
+      "model": [
+        "72",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoraLoaderModelOnly"
+    }
+  },
+  "74": {
+    "inputs": {
+      "downscale_algorithm": "bilinear",
+      "upscale_algorithm": "bicubic",
+      "preresize": false,
+      "preresize_mode": "ensure minimum resolution",
+      "preresize_min_width": 1024,
+      "preresize_min_height": 1024,
+      "preresize_max_width": 16384,
+      "preresize_max_height": 16384,
+      "mask_fill_holes": true,
+      "mask_expand_pixels": 0,
+      "mask_invert": false,
+      "mask_blend_pixels": 32,
+      "mask_hipass_filter": 0.1,
+      "extend_for_outpainting": false,
+      "extend_up_factor": 1,
+      "extend_down_factor": 1,
+      "extend_left_factor": 1,
+      "extend_right_factor": 1,
+      "context_from_mask_extend_factor": 1.2000000000000002,
+      "output_resize_to_target_size": true,
+      "output_target_width": 512,
+      "output_target_height": 512,
+      "output_padding": "128",
+      "image": [
+        "76",
+        0
+      ],
+      "mask": [
+        "76",
+        1
+      ]
+    },
+    "class_type": "InpaintCropImproved",
+    "_meta": {
+      "title": "✂️ Inpaint Crop (Improved)"
+    }
+  },
+  "75": {
+    "inputs": {
+      "image": "IMG_20250727_004653.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Other insert object"
+    }
+  },
+  "76": {
+    "inputs": {
+      "image": "clipspace/clipspace-mask-590998.7999999523.png [input]"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Other insert"
+    }
+  },
+  "78": {
+    "inputs": {
+      "scheduler": "sgm_uniform",
+      "steps": 30,
+      "denoise": 1,
+      "model": [
+        "17",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "BasicScheduler"
+    }
+  },
+  "79": {
+    "inputs": {
+      "upscale_model": "4x_NMKD-Siax_200k.pth",
+      "resampling_method": "lanczos",
+      "supersample": "true",
+      "image": [
+        "75",
+        0
+      ]
+    },
+    "class_type": "CR Upscale Image",
+    "_meta": {
+      "title": "🔍 CR Upscale Image"
+    }
+  },
+  "81": {
+    "inputs": {
+      "images": [
+        "63",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Final Output"
+    }
+  }
+};
 
 export const ComfyUITab = () => {
   const [destinationImage, setDestinationImage] = useState<File | null>(null);
   const [objectImage, setObjectImage] = useState<File | null>(null);
-  const [selectedAccessory, setSelectedAccessory] = useState<string>('none');
+  const [selectedAccessory, setSelectedAccessory] = useState<string>('watch');
   const [isGenerating, setIsGenerating] = useState(false);
   const [status, setStatus] = useState('Status: Waiting for input...');
   const [resultImage, setResultImage] = useState<string | null>(null);
@@ -1510,8 +2278,8 @@ export const ComfyUITab = () => {
     const updatedWorkflow = JSON.parse(JSON.stringify(workflow));
 
     // Different node titles based on selected accessory
-    const destinationNodeTitle = selectedAccessory === 'watch' ? "Insert hand" : "Insert destination";
-    const objectNodeTitle = selectedAccessory === 'watch' ? "Insert object" : "Insert accessory";
+    const destinationNodeTitle = selectedAccessory === 'watch' ? "Insert hand" : "Other insert object";
+    const objectNodeTitle = selectedAccessory === 'watch' ? "Insert object" : "Other Insert";
 
     let destinationNodeId, objectNodeId;
     for (const id in updatedWorkflow) {
@@ -1540,11 +2308,6 @@ export const ComfyUITab = () => {
   }, [updateStatus]);
 
   const startGeneration = useCallback(async () => {
-    if (selectedAccessory === 'none') {
-      updateStatus('Error: Please select an accessory type first.', true);
-      return;
-    }
-    
     if (!destinationImage || !objectImage) {
       updateStatus('Error: Please select both a destination and object image.', true);
       return;
@@ -1582,7 +2345,7 @@ export const ComfyUITab = () => {
             // Dynamically find the ID of the node titled "Final Image"
             const currentWorkflow = selectedAccessory === 'watch' ? WORKFLOW_JSON_1 : WORKFLOW_JSON_2;
             const finalNodeId = Object.keys(currentWorkflow).find(
-              id => (currentWorkflow as any)[id]._meta?.title === 'Final Image Upscale Last'
+              id => (currentWorkflow as any)[id]._meta?.title === 'Final Output'
             );
 
             // Check if the executed node is our final target node
@@ -1841,197 +2604,120 @@ export const ComfyUITab = () => {
     <div className="flex gap-6">
       {/* Left side - Image inputs stacked vertically */}
       <div className="flex-1 space-y-6">
-        {/* Select Accessory Type Card */}
-        <Card className="bg-slate-800/50 border-slate-700">
+        <Card className="border-border/20 bg-card/50 backdrop-blur-sm">
           <CardContent className="p-6 space-y-4">
-            <div
-              className="border-2 border-dashed border-slate-600 rounded-lg p-6 text-center transition-colors hover:border-purple-500"
-            >
-              <div className="space-y-4">
-                <div className="text-center">
-                  <Label htmlFor="accessory-select" className="text-white font-medium text-lg">
-                    Select Accessory Type
-                  </Label>
-                  <select
-                    id="accessory-select"
-                    value={selectedAccessory}
-                    onChange={(e) => setSelectedAccessory(e.target.value)}
-                    className="mt-2 w-full px-3 py-2 bg-background/50 border border-border/20 rounded-md text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                  >
-                    <option value="none">-- Select Type --</option>
-                    <option value="watch">Watch</option>
-                    <option value="cap">Cap</option>
-                    <option value="bracelet">Bracelet</option>
-                  </select>
-                  <p className="text-sm text-slate-400 mt-1">
-                    {selectedAccessory === 'none' 
-                      ? 'Please select an accessory type to proceed' 
-                      : selectedAccessory === 'watch' 
-                        ? 'Using specialized watch insertion workflow' 
-                        : 'Using general accessory insertion workflow'}
-                  </p>
-                </div>
-              </div>
+            <div>
+              <Label htmlFor="accessory-select" className="text-foreground font-medium">
+                Select Accessory Type
+              </Label>
+              <select
+                id="accessory-select"
+                value={selectedAccessory}
+                onChange={(e) => setSelectedAccessory(e.target.value)}
+                className="mt-2 w-full px-3 py-2 bg-background/50 border border-border/20 rounded-md text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              >
+                <option value="watch">Watch</option>
+                <option value="cap">Cap</option>
+                <option value="bracelet">Bracelet</option>
+              </select>
+              <p className="text-sm text-foreground/60 mt-1">
+                {selectedAccessory === 'watch' 
+                  ? 'Using specialized watch insertion workflow' 
+                  : 'Using general accessory insertion workflow'}
+              </p>
             </div>
           </CardContent>
         </Card>
 
-        {/* Hand Image Card */}
-        {selectedAccessory !== 'none' && (
-          <Card className="bg-slate-800/50 border-slate-700">
-            <CardContent className="p-6 space-y-4">
-              {!destinationImage ? (
-                <div
-                  className="border-2 border-dashed border-slate-600 rounded-lg p-8 text-center transition-colors hover:border-purple-500"
-                >
-                  <div className="w-16 h-16 text-slate-500 mx-auto mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4" />
-                    </svg>
-                  </div>
-                  <p className="text-slate-400 mb-4">
-                    {selectedAccessory === 'watch' ? 'Hand Image' : 'Destination Image'}
-                  </p>
-                  <Label htmlFor="destination-image" className="text-white font-medium">
-                    {selectedAccessory === 'watch' ? 'Hand Image (with mask)' : 'Destination Image (with mask)'}
-                  </Label>
-                  <Input
-                    id="destination-image"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleDestinationImageChange}
-                    className="mt-2 bg-background/50 border-border/20"
-                  />
-                  <p className="text-sm text-slate-400 mt-1">
-                    {selectedAccessory === 'watch' 
-                      ? 'Upload an image of a hand where you want to place the watch'
-                      : `Upload an image where you want to place the ${selectedAccessory}`}
-                  </p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <Label className="text-white font-medium">
-                      {selectedAccessory === 'watch' ? 'Hand Image' : 'Destination Image'}
-                    </Label>
-                    <div className="flex gap-2">
+        <Card className="border-border/20 bg-card/50 backdrop-blur-sm">
+          <CardContent className="p-6 space-y-4">
+            <div>
+              <Label htmlFor="destination-image" className="text-foreground font-medium">
+                {selectedAccessory === 'watch' ? 'Hand Image (with mask)' : 'Destination Image (with mask)'}
+              </Label>
+              <Input
+                id="destination-image"
+                type="file"
+                accept="image/*"
+                onChange={handleDestinationImageChange}
+                className="mt-2 bg-background/50 border-border/20"
+              />
+              <p className="text-sm text-foreground/60 mt-1">
+                {selectedAccessory === 'watch' 
+                  ? 'Upload an image of a hand where you want to place the watch'
+                  : `Upload an image where you want to place the ${selectedAccessory}`}
+              </p>
+            </div>
+
+            {destinationImage && (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={openEditor}
+                      variant="default"
+                      size="sm"
+                    >
+                      Edit Mask
+                    </Button>
+                    {editedImageData && (
                       <Button
-                        onClick={openEditor}
-                        variant="default"
+                        onClick={() => {
+                          const link = document.createElement('a');
+                          link.href = editedImageData;
+                          link.download = `edited_${destinationImage?.name || 'image'}.png`;
+                          document.body.appendChild(link);
+                          link.click();
+                          document.body.removeChild(link);
+                          toast.success('Edited image saved!');
+                        }}
+                        variant="outline"
                         size="sm"
                       >
-                        Edit Mask
+                        Save Edited Image
                       </Button>
-                      {editedImageData && (
-                        <Button
-                          onClick={() => {
-                            const link = document.createElement('a');
-                            link.href = editedImageData;
-                            link.download = `edited_${destinationImage?.name || 'image'}.png`;
-                            document.body.appendChild(link);
-                            link.click();
-                            document.body.removeChild(link);
-                            toast.success('Edited image saved!');
-                          }}
-                          variant="outline"
-                          size="sm"
-                        >
-                          Save Edited Image
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Display the current image (edited or original) */}
-                  <div className="relative">
-                    <img
-                      src={editedImageData || URL.createObjectURL(destinationImage)}
-                      alt="Destination"
-                      className="w-full h-64 object-cover rounded-lg border border-slate-600"
-                    />
-                    {editedImageData && (
-                      <div className="absolute top-2 left-2 bg-green-500/80 text-white px-2 py-1 rounded text-xs">
-                        Edited
-                      </div>
                     )}
                   </div>
-                  
-                  <Button
-                    onClick={() => {
-                      setDestinationImage(null);
-                      setEditedImageData(null);
-                    }}
-                    variant="outline"
-                    className="bg-slate-700 border-slate-600"
-                  >
-                    Replace Image
-                  </Button>
                 </div>
-              )}
-            </CardContent>
-          </Card>
-        )}
 
-        {/* Watch/Accessory to Insert Card */}
-        {selectedAccessory !== 'none' && (
-          <Card className="bg-slate-800/50 border-slate-700">
-            <CardContent className="p-6 space-y-4">
-              {!objectImage ? (
-                <div
-                  className="border-2 border-dashed border-slate-600 rounded-lg p-8 text-center transition-colors hover:border-purple-500"
-                >
-                  <div className="w-16 h-16 text-slate-500 mx-auto mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4" />
-                    </svg>
-                  </div>
-                  <p className="text-slate-400 mb-4">
-                    {selectedAccessory.charAt(0).toUpperCase() + selectedAccessory.slice(1)} to Insert
-                  </p>
-                  <Label htmlFor="object-image" className="text-white font-medium">
-                    {selectedAccessory.charAt(0).toUpperCase() + selectedAccessory.slice(1)} to Insert
-                  </Label>
-                  <Input
-                    id="object-image"
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setObjectImage(e.target.files?.[0] || null)}
-                    className="mt-2 bg-background/50 border-border/20"
+                {/* Display the current image (edited or original) */}
+                <div className="relative">
+                  <img
+                    src={editedImageData || URL.createObjectURL(destinationImage)}
+                    alt="Destination"
+                    className="max-w-full border border-border/20 rounded-lg"
+                    style={{ maxHeight: '400px' }}
                   />
-                  <p className="text-sm text-slate-400 mt-1">
-                    Upload an image of the {selectedAccessory} you want to insert
-                  </p>
+                  {editedImageData && (
+                    <div className="absolute top-2 left-2 bg-green-500/80 text-white px-2 py-1 rounded text-xs">
+                      Edited
+                    </div>
+                  )}
                 </div>
-              ) : (
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <Label className="text-white font-medium">
-                      {selectedAccessory.charAt(0).toUpperCase() + selectedAccessory.slice(1)} to Insert
-                    </Label>
-                  </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
 
-                  <div className="relative">
-                    <img
-                      src={URL.createObjectURL(objectImage)}
-                      alt="Object to insert"
-                      className="w-full h-64 object-cover rounded-lg border border-slate-600"
-                    />
-                  </div>
-                  
-                  <Button
-                    onClick={() => setObjectImage(null)}
-                    variant="outline"
-                    className="bg-slate-700 border-slate-600"
-                  >
-                    Replace Image
-                  </Button>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        )}
+        <Card className="border-border/20 bg-card/50 backdrop-blur-sm">
+          <CardContent className="p-6 space-y-4">
+            <div>
+              <Label htmlFor="object-image" className="text-foreground font-medium">
+                {selectedAccessory.charAt(0).toUpperCase() + selectedAccessory.slice(1)} to Insert
+              </Label>
+              <Input
+                id="object-image"
+                type="file"
+                accept="image/*"
+                onChange={(e) => setObjectImage(e.target.files?.[0] || null)}
+                className="mt-2 bg-background/50 border-border/20"
+              />
+              <p className="text-sm text-foreground/60 mt-1">
+                Upload an image of the {selectedAccessory} you want to insert
+              </p>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Right side - Result section */}
