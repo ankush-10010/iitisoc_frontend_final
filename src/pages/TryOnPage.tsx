@@ -29,9 +29,8 @@ const TryOnPage = () => {
       </div>
       
       <div className="min-h-screen bg-transparent relative z-10">
-        <div className="container mx-auto p-4">
-          <AppHeader />
-
+        <AppHeader />
+        <div className="container mx-auto p-4 pt-24">
           <div className="w-full">
             <div className="mb-6 flex items-center justify-between">
               <div>
