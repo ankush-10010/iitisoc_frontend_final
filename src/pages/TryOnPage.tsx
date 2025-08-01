@@ -30,7 +30,7 @@ const TryOnPage = () => {
       
       <div className="min-h-screen bg-transparent relative z-10">
         <AppHeader />
-        <div className="container mx-auto p-4 pt-24">
+        <div className="container mx-auto p-4 pt-20">
           <div className="w-full">
             <div className="mb-6 flex items-center justify-between">
               <div>
