@@ -252,7 +252,7 @@ const WORKFLOW_JSON_1: WorkflowJSON1 ={
         1
       ],
       "model": [
-        "345",
+        "344",
         0
       ]
     },
@@ -486,7 +486,7 @@ const WORKFLOW_JSON_1: WorkflowJSON1 ={
   },
   "163": {
     "inputs": {
-      "noise_seed": 919599298518172
+      "noise_seed": 993192807042492
     },
     "class_type": "RandomNoise",
     "_meta": {
@@ -509,7 +509,7 @@ const WORKFLOW_JSON_1: WorkflowJSON1 ={
   "176": {
     "inputs": {
       "scheduler": "sgm_uniform",
-      "steps": 20,
+      "steps": 15,
       "denoise": 1,
       "model": [
         "129",
@@ -592,16 +592,16 @@ const WORKFLOW_JSON_1: WorkflowJSON1 ={
       "extend_right_factor": 1,
       "context_from_mask_extend_factor": 1.2000000000000002,
       "output_resize_to_target_size": true,
-      "output_target_width": 258,
-      "output_target_height": 258,
-      "output_padding": "64",
+      "output_target_width": 512,
+      "output_target_height": 512,
+      "output_padding": "128",
       "image": [
         "200",
         0
       ],
       "mask": [
-        "200",
-        1
+        "358",
+        0
       ]
     },
     "class_type": "InpaintCropImproved",
@@ -626,7 +626,7 @@ const WORKFLOW_JSON_1: WorkflowJSON1 ={
   },
   "187": {
     "inputs": {
-      "image": "pexels-pixabay-68201 (2).jpg"
+      "image": "watch_6.jpg"
     },
     "class_type": "LoadImage",
     "_meta": {
@@ -685,7 +685,7 @@ const WORKFLOW_JSON_1: WorkflowJSON1 ={
   },
   "200": {
     "inputs": {
-      "image": "clipspace/clipspace-mask-340120.90000003576.png [input]"
+      "image": "clipspace/clipspace-mask-15698059.599999964.png [input]"
     },
     "class_type": "LoadImage",
     "_meta": {
@@ -738,7 +738,7 @@ const WORKFLOW_JSON_1: WorkflowJSON1 ={
     "inputs": {
       "image_strength": "high",
       "conditioning": [
-        "327",
+        "351",
         0
       ],
       "style_model": [
@@ -856,7 +856,7 @@ const WORKFLOW_JSON_1: WorkflowJSON1 ={
   },
   "225": {
     "inputs": {
-      "noise_seed": 58511487100677
+      "noise_seed": 883063622390318
     },
     "class_type": "RandomNoise",
     "_meta": {
@@ -957,7 +957,7 @@ const WORKFLOW_JSON_1: WorkflowJSON1 ={
         1
       ],
       "model": [
-        "345",
+        "344",
         0
       ]
     },
@@ -1136,7 +1136,7 @@ const WORKFLOW_JSON_1: WorkflowJSON1 ={
         0
       ],
       "mask": [
-        "312",
+        "356",
         0
       ]
     },
@@ -1247,7 +1247,7 @@ const WORKFLOW_JSON_1: WorkflowJSON1 ={
   "287": {
     "inputs": {
       "mask": [
-        "312",
+        "356",
         0
       ]
     },
@@ -1292,34 +1292,8 @@ const WORKFLOW_JSON_1: WorkflowJSON1 ={
       "title": "Preview Image"
     }
   },
-  "312": {
-    "inputs": {
-      "dp": 1.2,
-      "param1": 100,
-      "param2": 80,
-      "min_dist_factor": 0.2,
-      "min_radius_factor": 0.010000000000000002,
-      "max_radius_factor": 0.4,
-      "bg_red": 220,
-      "bg_green": 220,
-      "bg_blue": 220,
-      "image": [
-        "186",
-        0
-      ]
-    },
-    "class_type": "WatchDetector",
-    "_meta": {
-      "title": "Watch Detector"
-    }
-  },
   "316": {
-    "inputs": {
-      "images": [
-        "312",
-        1
-      ]
-    },
+    "inputs": {},
     "class_type": "PreviewImage",
     "_meta": {
       "title": "Preview Image"
@@ -1443,18 +1417,104 @@ const WORKFLOW_JSON_1: WorkflowJSON1 ={
       "title": "LoraLoaderModelOnly"
     }
   },
-  "345": {
+  "347": {
     "inputs": {
-      "lora_name": "pytorch_lora_weights.safetensors",
-      "strength_model": 0.6000000000000001,
-      "model": [
-        "344",
+      "filename_prefix": "Image Pipeline 1",
+      "images": [
+        "334",
         0
       ]
     },
-    "class_type": "LoraLoaderModelOnly",
+    "class_type": "SaveImage",
     "_meta": {
-      "title": "LoraLoaderModelOnly"
+      "title": "Save Image"
+    }
+  },
+  "350": {
+    "inputs": {
+      "clip_name1": "t5xxl_fp8_e4m3fn.safetensors",
+      "clip_name2": "clip_l.safetensors",
+      "type": "flux",
+      "device": "default"
+    },
+    "class_type": "DualCLIPLoader",
+    "_meta": {
+      "title": "DualCLIPLoader"
+    }
+  },
+  "351": {
+    "inputs": {
+      "text": [
+        "352",
+        0
+      ],
+      "clip": [
+        "350",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "352": {
+    "inputs": {
+      "value": "'BALMAIN' text is above part of the watch inside and 'SWISS MADE' is below inside the watch face in clear, detailed text. The positions of the text are same as the image. The numbers and other features are highly detailed too."
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "String"
+    }
+  },
+  "353": {
+    "inputs": {
+      "image": "1.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Insert Mask"
+    }
+  },
+  "356": {
+    "inputs": {
+      "prompt": "",
+      "threshold": 0.4,
+      "smooth": 9,
+      "dilate": 0,
+      "blur": 0,
+      "clip_seg": [
+        "357",
+        0
+      ],
+      "image": [
+        "186",
+        0
+      ]
+    },
+    "class_type": "ApplyCLIPSeg+",
+    "_meta": {
+      "title": "🔧 Apply CLIPSeg"
+    }
+  },
+  "357": {
+    "inputs": {},
+    "class_type": "LoadCLIPSegModels+",
+    "_meta": {
+      "title": "🔧 Load CLIPSeg Models"
+    }
+  },
+  "358": {
+    "inputs": {
+      "channel": "red",
+      "image": [
+        "353",
+        0
+      ]
+    },
+    "class_type": "ImageToMask",
+    "_meta": {
+      "title": "Convert Image to Mask"
     }
   }
 };
@@ -1505,7 +1565,7 @@ const WORKFLOW_JSON_2: WorkflowJSON2={
     "inputs": {
       "image_strength": "high",
       "conditioning": [
-        "58",
+        "88",
         0
       ],
       "style_model": [
@@ -1587,7 +1647,7 @@ const WORKFLOW_JSON_2: WorkflowJSON2={
   "13": {
     "inputs": {
       "conditioning_to": [
-        "58",
+        "88",
         0
       ],
       "conditioning_from": [
@@ -2055,7 +2115,7 @@ const WORKFLOW_JSON_2: WorkflowJSON2={
   },
   "68": {
     "inputs": {
-      "noise_seed": 771836408692557
+      "noise_seed": 1002766470811437
     },
     "class_type": "RandomNoise",
     "_meta": {
@@ -2149,16 +2209,16 @@ const WORKFLOW_JSON_2: WorkflowJSON2={
       "extend_right_factor": 1,
       "context_from_mask_extend_factor": 1.2000000000000002,
       "output_resize_to_target_size": true,
-      "output_target_width": 512,
-      "output_target_height": 512,
+      "output_target_width": 720,
+      "output_target_height": 720,
       "output_padding": "128",
       "image": [
-        "76",
+        "83",
         0
       ],
       "mask": [
-        "76",
-        1
+        "84",
+        0
       ]
     },
     "class_type": "InpaintCropImproved",
@@ -2177,7 +2237,7 @@ const WORKFLOW_JSON_2: WorkflowJSON2={
   },
   "76": {
     "inputs": {
-      "image": "clipspace/clipspace-mask-590998.7999999523.png [input]"
+      "image": "download.png"
     },
     "class_type": "LoadImage",
     "_meta": {
@@ -2203,11 +2263,7 @@ const WORKFLOW_JSON_2: WorkflowJSON2={
     "inputs": {
       "upscale_model": "4x_NMKD-Siax_200k.pth",
       "resampling_method": "lanczos",
-      "supersample": "true",
-      "image": [
-        "75",
-        0
-      ]
+      "supersample": "true"
     },
     "class_type": "CR Upscale Image",
     "_meta": {
@@ -2225,11 +2281,125 @@ const WORKFLOW_JSON_2: WorkflowJSON2={
     "_meta": {
       "title": "Final Output"
     }
+  },
+  "83": {
+    "inputs": {
+      "upscale_model": "4x_NMKD-Siax_200k.pth",
+      "resampling_method": "lanczos",
+      "supersample": "true",
+      "image": [
+        "76",
+        0
+      ]
+    },
+    "class_type": "CR Upscale Image",
+    "_meta": {
+      "title": "🔍 CR Upscale Image"
+    }
+  },
+  "84": {
+    "inputs": {
+      "channel": "red",
+      "image": [
+        "86",
+        0
+      ]
+    },
+    "class_type": "ImageToMask",
+    "_meta": {
+      "title": "Convert Image to Mask"
+    }
+  },
+  "85": {
+    "inputs": {
+      "mask": [
+        "91",
+        0
+      ]
+    },
+    "class_type": "MaskToImage",
+    "_meta": {
+      "title": "Convert Mask to Image"
+    }
+  },
+  "86": {
+    "inputs": {
+      "upscale_model": "4x_NMKD-Siax_200k.pth",
+      "resampling_method": "lanczos",
+      "supersample": "true",
+      "image": [
+        "85",
+        0
+      ]
+    },
+    "class_type": "CR Upscale Image",
+    "_meta": {
+      "title": "🔍 CR Upscale Image"
+    }
+  },
+  "87": {
+    "inputs": {
+      "clip_name1": "clip_l.safetensors",
+      "clip_name2": "t5xxl_fp8_e4m3fn.safetensors",
+      "type": "flux",
+      "device": "default"
+    },
+    "class_type": "DualCLIPLoader",
+    "_meta": {
+      "title": "DualCLIPLoader"
+    }
+  },
+  "88": {
+    "inputs": {
+      "text": "cap on head of the men",
+      "clip": [
+        "87",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "89": {
+    "inputs": {
+      "images": [
+        "86",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "90": {
+    "inputs": {
+      "image": "1.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Other Mask"
+    }
+  },
+  "91": {
+    "inputs": {
+      "channel": "red",
+      "image": [
+        "90",
+        0
+      ]
+    },
+    "class_type": "ImageToMask",
+    "_meta": {
+      "title": "Convert Image to Mask"
+    }
   }
 };
-
 export const ComfyUITab = () => {
   const [destinationImage, setDestinationImage] = useState<File | null>(null);
+  const [maskImage, setMaskImage] = useState<File | null>(null);
   const [objectImage, setObjectImage] = useState<File | null>(null);
   const [selectedAccessory, setSelectedAccessory] = useState<string>('');
   const [isGenerating, setIsGenerating] = useState(false);
@@ -2274,22 +2444,25 @@ export const ComfyUITab = () => {
     return response.json();
   }, [updateStatus]);
 
-  const getModifiedWorkflow = useCallback((workflow: any, destinationImageName: string, objectImageName: string) => {
+  const getModifiedWorkflow = useCallback((workflow: any, destinationImageName: string, objectImageName: string, maskImageName: string | null) => {
     const updatedWorkflow = JSON.parse(JSON.stringify(workflow));
 
     // Different node titles based on selected accessory
     const destinationNodeTitle = selectedAccessory === 'watch' ? "Insert hand" : "Other insert object";
     const objectNodeTitle = selectedAccessory === 'watch' ? "Insert object" : "Other Insert";
-
-    let destinationNodeId, objectNodeId;
+    const maskNodeTitle = selectedAccessory === 'watch' ? "Insert Mask" : "Load Other Mask";
+    let destinationNodeId, objectNodeId, maskNodeId;
     for (const id in updatedWorkflow) {
       if (updatedWorkflow[id]._meta?.title === destinationNodeTitle) destinationNodeId = id;
       if (updatedWorkflow[id]._meta?.title === objectNodeTitle) objectNodeId = id;
+      if(updatedWorkflow[id]._meta?.title ==maskNodeTitle) maskNodeId =id;
     }
 
     if (destinationNodeId) updatedWorkflow[destinationNodeId].inputs.image = destinationImageName;
     if (objectNodeId) updatedWorkflow[objectNodeId].inputs.image = objectImageName;
-
+    if (maskNodeId && maskImageName) {
+      updatedWorkflow[maskNodeId].inputs.image = maskImageName;
+    }
     return updatedWorkflow;
   }, [selectedAccessory]);
 
@@ -2318,16 +2491,30 @@ export const ComfyUITab = () => {
     setProgress(0);
 
     try {
+      // *** NEW: Upload the mask image first if it exists ***
+      let maskFileInfo = null;
+      if (maskImage) {
+        updateStatus(`Uploading mask...`);
+        maskFileInfo = await uploadImage(maskImage);
+      }
+
       const destFileInfo = await uploadImage(destinationImage);
       const objFileInfo = await uploadImage(objectImage);
       updateStatus('Uploads complete. Preparing workflow...');
 
-      // Choose workflow based on selected accessory
       const selectedWorkflow = selectedAccessory === 'watch' ? WORKFLOW_JSON_1 : WORKFLOW_JSON_2;
-      const modifiedWorkflow = getModifiedWorkflow(selectedWorkflow, destFileInfo.name, objFileInfo.name);
+      
+      // *** MODIFIED: Pass the mask filename to the workflow function ***
+      const modifiedWorkflow = getModifiedWorkflow(
+        selectedWorkflow,
+        destFileInfo.name,
+        objFileInfo.name,
+        maskFileInfo ? maskFileInfo.name : null
+      );
 
       const clientId = Math.random().toString(36).substring(7);
       const wsUrl = BACKEND_COMFYUI_URL.replace(/^http/, 'ws');
+      // ... rest of the try block
       const ws = new WebSocket(`${wsUrl}/ws?clientId=${clientId}`);
       wsRef.current = ws;
 
@@ -2400,7 +2587,7 @@ export const ComfyUITab = () => {
       setIsGenerating(false);
       setProgress(0);
     }
-  }, [destinationImage, objectImage, selectedAccessory, uploadImage, getModifiedWorkflow, queuePrompt, updateStatus]);
+  }, [destinationImage, objectImage, maskImage, selectedAccessory, uploadImage, getModifiedWorkflow, queuePrompt, updateStatus]);
 
   // Canvas setup and drawing functions
   const setupCanvas = useCallback((image: HTMLImageElement) => {
@@ -2421,8 +2608,48 @@ export const ComfyUITab = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setDestinationImage(file);
-    setEditedImageData(null); // Reset edited data when new image is selected
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        // Create a canvas to draw the image, which strips EXIF data
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          toast.error("Could not process image.");
+          return;
+        }
+
+        // *** NEW: Ensure dimensions are even numbers to prevent rounding errors ***
+        // This subtracts 1 from any odd dimension, leaving even dimensions unchanged.
+        const sanitizedWidth = img.width - (img.width % 2);
+        const sanitizedHeight = img.height - (img.height % 2);
+
+        canvas.width = sanitizedWidth;
+        canvas.height = sanitizedHeight;
+
+        // Draw the image, scaling it to the new even dimensions
+        ctx.drawImage(img, 0, 0, sanitizedWidth, sanitizedHeight);
+
+        // Create a new file from the canvas blob
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const sanitizedFile = new File([blob], file.name.replace(/(\.[\w\d_-]+)$/i, '.png'), {
+              type: 'image/png',
+            });
+            
+            // Set the new, sanitized file as the destination image
+            setDestinationImage(sanitizedFile);
+            setMaskImage(null);
+            setEditedImageData(null);
+            
+            toast.success("Image processed and ready.");
+          }
+        }, 'image/png');
+      };
+      img.src = event.target?.result as string;
+    };
+    reader.readAsDataURL(file);
   }, []);
 
   const openEditor = useCallback(() => {
@@ -2445,13 +2672,6 @@ export const ComfyUITab = () => {
       img.src = URL.createObjectURL(destinationImage);
     }, 100);
   }, [destinationImage, setupCanvas]);
-
-  const startDrawing = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
-    if (!contextRef.current) return;
-    setIsDrawing(true);
-    draw(e);
-  }, []);
-
   const draw = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
     if (!isDrawing || !contextRef.current || !canvasRef.current || !originalImageRef.current) return;
 
@@ -2489,6 +2709,14 @@ export const ComfyUITab = () => {
       context.restore();
     }
   }, [isDrawing, brushColor, brushType, brushSize]);
+
+  const startDrawing = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (!contextRef.current) return;
+    setIsDrawing(true);
+    draw(e);
+  }, [draw]);
+
+  
   const getBrushPosition = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
     if (!canvasRef.current) return { x: 0, y: 0 };
     const rect = canvasRef.current.getBoundingClientRect();
@@ -2532,73 +2760,57 @@ export const ComfyUITab = () => {
 
     // --- Start of Final, Pixel-by-Pixel Saving Logic ---
 
-    try {
-      // 1. Create two in-memory canvases: one for the original image, one for the mask.
-      const originalCanvas = document.createElement('canvas');
-      const originalCtx = originalCanvas.getContext('2d', { willReadFrequently: true });
-      const maskCanvas = document.createElement('canvas');
-      const maskCtx = maskCanvas.getContext('2d', { willReadFrequently: true });
-
-      if (!originalCtx || !maskCtx) {
-        toast.error("Could not create processing canvases.");
+    const maskCanvas = document.createElement('canvas');
+    const maskCtx = maskCanvas.getContext('2d');
+    if (!maskCtx) {
+        toast.error("Could not create mask canvas.");
         return;
-      }
-
-      const width = originalImageRef.current.naturalWidth;
-      const height = originalImageRef.current.naturalHeight;
-
-      // 2. Prepare the original image data
-      originalCanvas.width = width;
-      originalCanvas.height = height;
-      originalCtx.drawImage(originalImageRef.current, 0, 0);
-      const originalImageData = originalCtx.getImageData(0, 0, width, height);
-
-      // 3. Prepare the mask data from the user's edited canvas
-      maskCanvas.width = width;
-      maskCanvas.height = height;
-      maskCtx.drawImage(canvasRef.current, 0, 0);
-      const maskImageData = maskCtx.getImageData(0, 0, width, height);
-
-      // 4. Manually combine the data: Use RGB from original, but Alpha from the mask.
-      // This is the key step. We loop through every pixel.
-      for (let i = 0; i < originalImageData.data.length; i += 4) {
-        // Get the alpha value from the mask (at position i+3)
-        const alpha = maskImageData.data[i + 3];
-        // Apply the mask's alpha to the original image's data
-        originalImageData.data[i + 3] = alpha;
-      }
-
-      // 5. Put the newly combined pixel data back onto the original canvas
-      originalCtx.putImageData(originalImageData, 0, 0);
-
-      // 6. Convert the final, perfected canvas to a Blob for saving
-      originalCanvas.toBlob((blob) => {
-        if (blob) {
-          const finalFile = new File([blob], destinationImage.name, { type: 'image/png' });
-          setDestinationImage(finalFile);
-          toast.success('Mask perfected! Ready for generation.');
-        } else {
-          toast.error('Failed to create final image blob.');
-        }
-      }, 'image/png');
-
-    } catch (e) {
-      console.error("Error during mask processing:", e);
-      toast.error("An error occurred while processing the mask.");
     }
 
-    // --- End of Final Saving Logic ---
+    const width = canvasRef.current.width;
+    const height = canvasRef.current.height;
+    maskCanvas.width = width;
+    maskCanvas.height = height;
 
-    setIsEditorOpen(false);
+    const editedCtx = canvasRef.current.getContext('2d', { willReadFrequently: true });
+    if (!editedCtx) return;
+    const editedImageData = editedCtx.getImageData(0, 0, width, height);
+    const editedData = editedImageData.data;
+
+    const maskOutputImageData = maskCtx.createImageData(width, height);
+    const maskData = maskOutputImageData.data;
+
+    for (let i = 0; i < editedData.length; i += 4) {
+        // If the pixel in the edited canvas is transparent, it's the masked area.
+        // In our mask file, the masked area should be WHITE.
+        if (editedData[i + 3] < 128) {
+            maskData[i] = 255; maskData[i + 1] = 255; maskData[i + 2] = 255; maskData[i + 3] = 255;
+        } else {
+            maskData[i] = 0; maskData[i + 1] = 0; maskData[i + 2] = 0; maskData[i + 3] = 255;
+        }
+    }
+
+    maskCtx.putImageData(maskOutputImageData, 0, 0);
+
+    maskCanvas.toBlob((blob) => {
+        if (blob) {
+            const maskFile = new File([blob], `mask_${destinationImage.name.replace(/(\.[\w\d_-]+)$/i, '.png')}`, { type: 'image/png' });
+            setMaskImage(maskFile);
+            toast.success('Mask created successfully!');
+            setIsEditorOpen(false);
+        } else {
+            toast.error('Failed to create mask file.');
+        }
+    }, 'image/png');
   }, [destinationImage]);
 
-  // Custom cursor style based on brush size
   const getCursorStyle = useCallback(() => {
-    const size = Math.max(brushSize, 8); // Minimum visible size
+    const size = Math.max(brushSize, 8);
     return {
       cursor: `url("data:image/svg+xml,%3csvg width='${size}' height='${size}' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='${size / 2}' cy='${size / 2}' r='${size / 2 - 1}' fill='none' stroke='%23000' stroke-width='1'/%3e%3c/svg%3e") ${size / 2} ${size / 2}, crosshair`
     };
   }, [brushSize]);
+
 
 
   return (
@@ -2615,7 +2827,7 @@ export const ComfyUITab = () => {
                 id="accessory-select"
                 value={selectedAccessory}
                 onChange={(e) => setSelectedAccessory(e.target.value)}
-                className="mt-2 w-full px-3 py-2 bg-slate-700/60 border border-slate-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="mt-2 w-full px-3 py-2 bg-slate-900/50 border border-slate-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
               >
                 <option value="">--Select an accessory--</option>
                 <option value="watch">Watch</option>
@@ -2734,7 +2946,7 @@ export const ComfyUITab = () => {
                   className="max-w-full rounded-lg border border-border/20 shadow-lg"
                 />
               ) : (
-                <div className="flex items-center justify-center h-[340px] border-slate-700 border-2 border-dashed border-border/20 rounded-lg transition-all hover:border-red-700 hover:shadow-lg hover:shadow-red-700/40">
+                <div className="flex items-center justify-center h-[340px] border-2 border-dashed border-border/20 rounded-lg transition-all hover:border-red-700 hover:shadow-lg hover:shadow-red-700/40">
                   <p className="text-foreground/60">Generated image will appear here</p>
                 </div>
               )}
