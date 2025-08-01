@@ -1463,7 +1463,7 @@ const WORKFLOW_JSON_2: WorkflowJSON2={};
 export const ComfyUITab = () => {
   const [destinationImage, setDestinationImage] = useState<File | null>(null);
   const [objectImage, setObjectImage] = useState<File | null>(null);
-  const [selectedAccessory, setSelectedAccessory] = useState<string>('watch');
+  const [selectedAccessory, setSelectedAccessory] = useState<string>('none');
   const [isGenerating, setIsGenerating] = useState(false);
   const [status, setStatus] = useState('Status: Waiting for input...');
   const [resultImage, setResultImage] = useState<string | null>(null);
@@ -1540,6 +1540,11 @@ export const ComfyUITab = () => {
   }, [updateStatus]);
 
   const startGeneration = useCallback(async () => {
+    if (selectedAccessory === 'none') {
+      updateStatus('Error: Please select an accessory type first.', true);
+      return;
+    }
+    
     if (!destinationImage || !objectImage) {
       updateStatus('Error: Please select both a destination and object image.', true);
       return;
@@ -1836,120 +1841,197 @@ export const ComfyUITab = () => {
     <div className="flex gap-6">
       {/* Left side - Image inputs stacked vertically */}
       <div className="flex-1 space-y-6">
-        <Card className="border-border/20 bg-card/50 backdrop-blur-sm">
+        {/* Select Accessory Type Card */}
+        <Card className="bg-slate-800/50 border-slate-700">
           <CardContent className="p-6 space-y-4">
-            <div>
-              <Label htmlFor="accessory-select" className="text-foreground font-medium">
-                Select Accessory Type
-              </Label>
-              <select
-                id="accessory-select"
-                value={selectedAccessory}
-                onChange={(e) => setSelectedAccessory(e.target.value)}
-                className="mt-2 w-full px-3 py-2 bg-background/50 border border-border/20 rounded-md text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              >
-                <option value="watch">Watch</option>
-                <option value="cap">Cap</option>
-                <option value="bracelet">Bracelet</option>
-              </select>
-              <p className="text-sm text-foreground/60 mt-1">
-                {selectedAccessory === 'watch' 
-                  ? 'Using specialized watch insertion workflow' 
-                  : 'Using general accessory insertion workflow'}
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-border/20 bg-card/50 backdrop-blur-sm">
-          <CardContent className="p-6 space-y-4">
-            <div>
-              <Label htmlFor="destination-image" className="text-foreground font-medium">
-                {selectedAccessory === 'watch' ? 'Hand Image (with mask)' : 'Destination Image (with mask)'}
-              </Label>
-              <Input
-                id="destination-image"
-                type="file"
-                accept="image/*"
-                onChange={handleDestinationImageChange}
-                className="mt-2 bg-background/50 border-border/20"
-              />
-              <p className="text-sm text-foreground/60 mt-1">
-                {selectedAccessory === 'watch' 
-                  ? 'Upload an image of a hand where you want to place the watch'
-                  : `Upload an image where you want to place the ${selectedAccessory}`}
-              </p>
-            </div>
-
-            {destinationImage && (
+            <div
+              className="border-2 border-dashed border-slate-600 rounded-lg p-6 text-center transition-colors hover:border-purple-500"
+            >
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex gap-2">
-                    <Button
-                      onClick={openEditor}
-                      variant="default"
-                      size="sm"
-                    >
-                      Edit Mask
-                    </Button>
-                    {editedImageData && (
-                      <Button
-                        onClick={() => {
-                          const link = document.createElement('a');
-                          link.href = editedImageData;
-                          link.download = `edited_${destinationImage?.name || 'image'}.png`;
-                          document.body.appendChild(link);
-                          link.click();
-                          document.body.removeChild(link);
-                          toast.success('Edited image saved!');
-                        }}
-                        variant="outline"
-                        size="sm"
-                      >
-                        Save Edited Image
-                      </Button>
-                    )}
-                  </div>
-                </div>
-
-                {/* Display the current image (edited or original) */}
-                <div className="relative">
-                  <img
-                    src={editedImageData || URL.createObjectURL(destinationImage)}
-                    alt="Destination"
-                    className="max-w-full border border-border/20 rounded-lg"
-                    style={{ maxHeight: '400px' }}
-                  />
-                  {editedImageData && (
-                    <div className="absolute top-2 left-2 bg-green-500/80 text-white px-2 py-1 rounded text-xs">
-                      Edited
-                    </div>
-                  )}
+                <div className="text-center">
+                  <Label htmlFor="accessory-select" className="text-white font-medium text-lg">
+                    Select Accessory Type
+                  </Label>
+                  <select
+                    id="accessory-select"
+                    value={selectedAccessory}
+                    onChange={(e) => setSelectedAccessory(e.target.value)}
+                    className="mt-2 w-full px-3 py-2 bg-background/50 border border-border/20 rounded-md text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  >
+                    <option value="none">-- Select Type --</option>
+                    <option value="watch">Watch</option>
+                    <option value="cap">Cap</option>
+                    <option value="bracelet">Bracelet</option>
+                  </select>
+                  <p className="text-sm text-slate-400 mt-1">
+                    {selectedAccessory === 'none' 
+                      ? 'Please select an accessory type to proceed' 
+                      : selectedAccessory === 'watch' 
+                        ? 'Using specialized watch insertion workflow' 
+                        : 'Using general accessory insertion workflow'}
+                  </p>
                 </div>
               </div>
-            )}
-          </CardContent>
-        </Card>
-
-        <Card className="border-border/20 bg-card/50 backdrop-blur-sm">
-          <CardContent className="p-6 space-y-4">
-            <div>
-              <Label htmlFor="object-image" className="text-foreground font-medium">
-                {selectedAccessory.charAt(0).toUpperCase() + selectedAccessory.slice(1)} to Insert
-              </Label>
-              <Input
-                id="object-image"
-                type="file"
-                accept="image/*"
-                onChange={(e) => setObjectImage(e.target.files?.[0] || null)}
-                className="mt-2 bg-background/50 border-border/20"
-              />
-              <p className="text-sm text-foreground/60 mt-1">
-                Upload an image of the {selectedAccessory} you want to insert
-              </p>
             </div>
           </CardContent>
         </Card>
+
+        {/* Hand Image Card */}
+        {selectedAccessory !== 'none' && (
+          <Card className="bg-slate-800/50 border-slate-700">
+            <CardContent className="p-6 space-y-4">
+              {!destinationImage ? (
+                <div
+                  className="border-2 border-dashed border-slate-600 rounded-lg p-8 text-center transition-colors hover:border-purple-500"
+                >
+                  <div className="w-16 h-16 text-slate-500 mx-auto mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4" />
+                    </svg>
+                  </div>
+                  <p className="text-slate-400 mb-4">
+                    {selectedAccessory === 'watch' ? 'Hand Image' : 'Destination Image'}
+                  </p>
+                  <Label htmlFor="destination-image" className="text-white font-medium">
+                    {selectedAccessory === 'watch' ? 'Hand Image (with mask)' : 'Destination Image (with mask)'}
+                  </Label>
+                  <Input
+                    id="destination-image"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleDestinationImageChange}
+                    className="mt-2 bg-background/50 border-border/20"
+                  />
+                  <p className="text-sm text-slate-400 mt-1">
+                    {selectedAccessory === 'watch' 
+                      ? 'Upload an image of a hand where you want to place the watch'
+                      : `Upload an image where you want to place the ${selectedAccessory}`}
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <Label className="text-white font-medium">
+                      {selectedAccessory === 'watch' ? 'Hand Image' : 'Destination Image'}
+                    </Label>
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={openEditor}
+                        variant="default"
+                        size="sm"
+                      >
+                        Edit Mask
+                      </Button>
+                      {editedImageData && (
+                        <Button
+                          onClick={() => {
+                            const link = document.createElement('a');
+                            link.href = editedImageData;
+                            link.download = `edited_${destinationImage?.name || 'image'}.png`;
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            toast.success('Edited image saved!');
+                          }}
+                          variant="outline"
+                          size="sm"
+                        >
+                          Save Edited Image
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Display the current image (edited or original) */}
+                  <div className="relative">
+                    <img
+                      src={editedImageData || URL.createObjectURL(destinationImage)}
+                      alt="Destination"
+                      className="w-full h-64 object-cover rounded-lg border border-slate-600"
+                    />
+                    {editedImageData && (
+                      <div className="absolute top-2 left-2 bg-green-500/80 text-white px-2 py-1 rounded text-xs">
+                        Edited
+                      </div>
+                    )}
+                  </div>
+                  
+                  <Button
+                    onClick={() => {
+                      setDestinationImage(null);
+                      setEditedImageData(null);
+                    }}
+                    variant="outline"
+                    className="bg-slate-700 border-slate-600"
+                  >
+                    Replace Image
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Watch/Accessory to Insert Card */}
+        {selectedAccessory !== 'none' && (
+          <Card className="bg-slate-800/50 border-slate-700">
+            <CardContent className="p-6 space-y-4">
+              {!objectImage ? (
+                <div
+                  className="border-2 border-dashed border-slate-600 rounded-lg p-8 text-center transition-colors hover:border-purple-500"
+                >
+                  <div className="w-16 h-16 text-slate-500 mx-auto mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4" />
+                    </svg>
+                  </div>
+                  <p className="text-slate-400 mb-4">
+                    {selectedAccessory.charAt(0).toUpperCase() + selectedAccessory.slice(1)} to Insert
+                  </p>
+                  <Label htmlFor="object-image" className="text-white font-medium">
+                    {selectedAccessory.charAt(0).toUpperCase() + selectedAccessory.slice(1)} to Insert
+                  </Label>
+                  <Input
+                    id="object-image"
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setObjectImage(e.target.files?.[0] || null)}
+                    className="mt-2 bg-background/50 border-border/20"
+                  />
+                  <p className="text-sm text-slate-400 mt-1">
+                    Upload an image of the {selectedAccessory} you want to insert
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <Label className="text-white font-medium">
+                      {selectedAccessory.charAt(0).toUpperCase() + selectedAccessory.slice(1)} to Insert
+                    </Label>
+                  </div>
+
+                  <div className="relative">
+                    <img
+                      src={URL.createObjectURL(objectImage)}
+                      alt="Object to insert"
+                      className="w-full h-64 object-cover rounded-lg border border-slate-600"
+                    />
+                  </div>
+                  
+                  <Button
+                    onClick={() => setObjectImage(null)}
+                    variant="outline"
+                    className="bg-slate-700 border-slate-600"
+                  >
+                    Replace Image
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        )}
       </div>
 
       {/* Right side - Result section */}
