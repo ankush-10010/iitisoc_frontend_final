@@ -2642,7 +2642,7 @@ export const ComfyUITab = () => {
                 type="file"
                 accept="image/*"
                 onChange={handleDestinationImageChange}
-                className="mt-2 bg-background/50 border-border/20"
+                className="mt-2 bg-background/50 border-border/20 bg-slate-700/60"
               />
               <p className="text-sm text-foreground/60 mt-1">
                 {selectedAccessory === 'watch' 
@@ -2712,7 +2712,7 @@ export const ComfyUITab = () => {
                 type="file"
                 accept="image/*"
                 onChange={(e) => setObjectImage(e.target.files?.[0] || null)}
-                className="mt-2 bg-background/50 border-border/20"
+                className="mt-2 bg-background/50 bg-slate-700/60 border-border/20"
               />
               <p className="text-sm text-foreground/60 mt-1">
                 Upload an image of the {selectedAccessory} you want to insert
