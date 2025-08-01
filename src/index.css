@@ -1,9 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-* {
+/* * {
   font-family: 'Press Start 2P', cursive !important;
-}
+} */
 @layer base {
   :root {
     --background: 0 0% 0%;
