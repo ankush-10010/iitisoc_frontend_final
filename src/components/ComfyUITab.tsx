@@ -2615,7 +2615,7 @@ export const ComfyUITab = () => {
                 id="accessory-select"
                 value={selectedAccessory}
                 onChange={(e) => setSelectedAccessory(e.target.value)}
-                className="mt-2 w-full px-3 py-2 bg-slate-900/50 border border-slate-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="mt-2 w-full px-3 py-2 bg-slate-700/60 border border-slate-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
               >
                 <option value="">--Select an accessory--</option>
                 <option value="watch">Watch</option>
