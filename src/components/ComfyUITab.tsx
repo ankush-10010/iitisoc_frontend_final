@@ -2734,7 +2734,7 @@ export const ComfyUITab = () => {
                   className="max-w-full rounded-lg border border-border/20 shadow-lg"
                 />
               ) : (
-                <div className="flex items-center justify-center h-[340px] border-2 border-dashed border-border/20 rounded-lg transition-all hover:border-red-700 hover:shadow-lg hover:shadow-red-700/40">
+                <div className="flex items-center justify-center h-[340px] border-slate-700 border-2 border-dashed border-border/20 rounded-lg transition-all hover:border-red-700 hover:shadow-lg hover:shadow-red-700/40">
                   <p className="text-foreground/60">Generated image will appear here</p>
                 </div>
               )}
