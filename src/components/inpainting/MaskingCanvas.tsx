@@ -75,7 +75,7 @@ const MaskingCanvas = ({ inputImage, mode, onMaskChange }: MaskingCanvasProps) =
       <CardHeader>
         <CardTitle className="text-white flex items-center gap-2">
           <Brush className="w-5 h-5" />
-          Step 3: Masking Canvas
+          Masking Canvas
           <Badge variant="secondary" className="ml-auto bg-slate-700 text-slate-300">
             {mode === 'inpainting' ? 'Paint areas to replace (white)' : 'Paint areas to extend (white)'}
           </Badge>
