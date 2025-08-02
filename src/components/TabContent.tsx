@@ -66,28 +66,28 @@ const TabContent = ({
           <TabsList className="grid w-full grid-cols-4 bg-slate-800/50 border-slate-700 mb-6">
             <TabsTrigger 
               value="txtTOimg" 
-              className="data-[state=active]:bg-[#16a34a]/40 data-[state=active]:text-green-100 text-slate-400"
+              className="data-[state=active]:bg-[#A3E635]/40 data-[state=active]:text-green-100 text-slate-400"
             >
               <Play className="w-4 h-4 mr-2" />
               txtTOimg
             </TabsTrigger>
             <TabsTrigger 
               value="inoutpainting" 
-              className="data-[state=active]:bg-[#16a34a]/40 data-[state=active]:text-green-100 text-slate-400"
+              className="data-[state=active]:bg-[#A3E635]/40 data-[state=active]:text-green-100 text-slate-400"
             >
               <Palette className="w-4 h-4 mr-2" />
               Inpainting
             </TabsTrigger>
             <TabsTrigger 
               value="img2img" 
-              className="data-[state=active]:bg-[#16a34a]/40 data-[state=active]:text-green-100 text-slate-400"
+              className="data-[state=active]:bg-[#A3E635]/40 data-[state=active]:text-green-100 text-slate-400"
             >
               <Image className="w-4 h-4 mr-2" />
               img2img
             </TabsTrigger>
             <TabsTrigger 
               value="comfyui" 
-              className="data-[state=active]:bg-[#16a34a]/40 data-[state=active]:text-green-100 text-slate-400"
+              className="data-[state=active]:bg-[#A3E635]/40 data-[state=active]:text-green-100 text-slate-400"
             >
               <Workflow className="w-4 h-4 mr-2" />
               TryOn
