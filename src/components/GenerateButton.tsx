@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import { Play, Check } from 'lucide-react';
 
-// Note: In a real project, you would install these dependencies:
-// npm install react styled-components lucide-react
-// For this example, we assume they are available.
-
-// --- 1. Define all the keyframe animations for the circle effects ---
+// Define all the keyframe animations for the circle effects
 const circle1 = keyframes`33% {transform: translate(0px, 16px) translateZ(0);} 66% {transform: translate(12px, 64px) translateZ(0);}`;
 const circle2 = keyframes`33% {transform: translate(80px, -10px) translateZ(0);} 66% {transform: translate(72px, -48px) translateZ(0);}`;
 const circle3 = keyframes`33% {transform: translate(20px, 12px) translateZ(0);} 66% {transform: translate(12px, 4px) translateZ(0);}`;
@@ -20,7 +16,7 @@ const circle10 = keyframes`33% {transform: translate(68px, 20px) translateZ(0);}
 const circle11 = keyframes`33% {transform: translate(4px, 4px) translateZ(0);} 66% {transform: translate(68px, 20px) translateZ(0);}`;
 const circle12 = keyframes`33% {transform: translate(56px, 0px) translateZ(0);} 66% {transform: translate(60px, -32px) translateZ(0);}`;
 
-// --- 2. Create the main styled-component for the button ---
+// Create the main styled-component for the button
 interface StyledButtonProps {
   $isGenerating?: boolean;
 }
@@ -28,18 +24,17 @@ interface StyledButtonProps {
 const StyledButton = styled.button<StyledButtonProps>`
   --duration: 7s;
   --easing: linear;
-  --c-color-1: rgba(34, 197, 94, 0.7);    /* Bright Green */
-  --c-color-2: rgba(22, 163, 74, 0.8);    /* Medium Green */
-  --c-color-3: rgba(21, 128, 61, 0.9);    /* Dark Green */
-  --c-color-4: rgba(74, 222, 128, 0.7);   /* Light Green */
-  --c-shadow: rgba(22, 101, 52, 0.5);     /* Dark Green outer glow */
-  --c-shadow-inset-top: rgba(134, 239, 172, 0.9); /* Light mint top inset shadow */
-  --c-shadow-inset-bottom: rgba(187, 247, 208, 0.8); /* Very light mint bottom inset shadow */
-  --c-radial-inner: #16a34a;              /* Darker green for inner gradient */
-  --c-radial-outer: #4ade80;              /* Lighter green for outer gradient */
-  --c-color: #fff;       
+  --c-color-1: rgba(34, 197, 94, 0.7);
+  --c-color-2: rgba(22, 163, 74, 0.8);
+  --c-color-3: rgba(21, 128, 61, 0.9);
+  --c-color-4: rgba(74, 222, 128, 0.7);
+  --c-shadow: rgba(22, 101, 52, 0.5);
+  --c-shadow-inset-top: rgba(134, 239, 172, 0.9);
+  --c-shadow-inset-bottom: rgba(187, 247, 208, 0.8);
+  --c-radial-inner: #16a34a;
+  --c-radial-outer: #4ade80;
+  --c-color: #fff;
 
-  /* Base button styles */
   -webkit-tap-highlight-color: transparent;
   -webkit-appearance: none;
   outline: none;
@@ -60,7 +55,6 @@ const StyledButton = styled.button<StyledButtonProps>`
   box-shadow: 0 0 14px var(--c-shadow);
   transition: filter 0.3s, opacity 0.3s;
 
-  /* Inset shadow effect */
   &::before {
     content: "";
     pointer-events: none;
@@ -74,19 +68,16 @@ const StyledButton = styled.button<StyledButtonProps>`
     box-shadow: inset 0 3px 12px var(--c-shadow-inset-top), inset 0 -3px 4px var(--c-shadow-inset-bottom);
   }
 
-  /* Speed up animation on hover */
   &:not(:disabled):hover {
     --duration: 1400ms;
   }
 
-  /* Styles for the disabled state */
   &:disabled {
     cursor: not-allowed;
     filter: grayscale(80%);
     opacity: 0.6;
   }
 
-  /* Wrapper for the animated circles */
   .wrapper {
     -webkit-mask-image: -webkit-radial-gradient(white, black);
     overflow: hidden;
@@ -98,7 +89,6 @@ const StyledButton = styled.button<StyledButtonProps>`
     justify-content: center;
   }
 
-  /* Container for the button's text and icon */
   .wrapper span {
     display: inline-flex;
     align-items: center;
@@ -107,7 +97,6 @@ const StyledButton = styled.button<StyledButtonProps>`
     z-index: 1;
   }
 
-  /* Base styles for each animated circle */
   .wrapper .circle {
     position: absolute;
     left: 0;
@@ -121,7 +110,6 @@ const StyledButton = styled.button<StyledButtonProps>`
     animation: var(--animation, none) var(--duration) var(--easing) infinite;
   }
 
-  /* Specific properties and animations for each of the 12 circles */
   .wrapper .circle.circle-1 { --background: var(--c-color-4); --x: 0; --y: -40px; animation-name: ${circle1}; }
   .wrapper .circle.circle-2 { --background: var(--c-color-1); --blur: 12px; --x: 92px; --y: 8px; animation-name: ${circle2}; }
   .wrapper .circle.circle-3 { --background: var(--c-color-2); --blur: 14px; --x: -12px; --y: -12px; animation-name: ${circle3}; }
@@ -135,7 +123,6 @@ const StyledButton = styled.button<StyledButtonProps>`
   .wrapper .circle.circle-11 { --background: var(--c-color-1); --blur: 12px; --x: 4px; --y: 4px; animation-name: ${circle11}; }
   .wrapper .circle.circle-12 { --background: var(--c-color-1); --blur: 14px; --x: 52px; --y: 4px; animation-name: ${circle12}; }
 
-  /* Add a pulse animation to the text when generating */
   ${props => props.$isGenerating && css`
     .wrapper span {
       animation: pulse 1.5s infinite;
@@ -147,7 +134,6 @@ const StyledButton = styled.button<StyledButtonProps>`
   `}
 `;
 
-// --- 3. Create a styled component for the loading spinner ---
 const Spinner = styled.div`
   width: 16px;
   height: 16px;
@@ -162,16 +148,15 @@ const Spinner = styled.div`
   }
 `;
 
-// --- 4. Create a styled component for the success overlay ---
 const SuccessOverlay = styled.div`
   position: absolute;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(16, 185, 129, 0.4); /* Tailwind's green-500 with opacity */
+  background-color: rgba(16, 185, 129, 0.4);
   border-radius: 24px;
-  pointer-events: none; /* Allow clicks to pass through if needed */
+  pointer-events: none;
   animation: fadeIn 0.3s ease-in-out;
 
   @keyframes fadeIn {
@@ -180,7 +165,7 @@ const SuccessOverlay = styled.div`
   }
 
   .check-icon {
-    color: #6ee7b7; /* Tailwind's green-300 */
+    color: #6ee7b7;
     width: 28px;
     height: 28px;
     animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -192,7 +177,6 @@ const SuccessOverlay = styled.div`
   }
 `;
 
-// --- 5. Define the props interface for type safety ---
 interface GenerateButtonProps {
   isGenerating: boolean;
   canGenerate: boolean;
@@ -200,7 +184,6 @@ interface GenerateButtonProps {
   onGenerate: () => void;
 }
 
-// --- 6. The final, merged GenerateButton component ---
 const GenerateButton = ({ isGenerating, canGenerate, showSuccess, onGenerate }: GenerateButtonProps) => {
   return (
     <div style={{ position: 'relative' }}>
@@ -210,7 +193,6 @@ const GenerateButton = ({ isGenerating, canGenerate, showSuccess, onGenerate }: 
         $isGenerating={isGenerating}
       >
         <div className="wrapper">
-          {/* Conditionally render content based on state */}
           <span>
             {isGenerating ? (
               <>
@@ -225,7 +207,6 @@ const GenerateButton = ({ isGenerating, canGenerate, showSuccess, onGenerate }: 
             )}
           </span>
           
-          {/* The 12 divs that create the animated circle effect */}
           <div className="circle circle-12" />
           <div className="circle circle-11" />
           <div className="circle circle-10" />
@@ -241,7 +222,6 @@ const GenerateButton = ({ isGenerating, canGenerate, showSuccess, onGenerate }: 
         </div>
       </StyledButton>
 
-      {/* Show success checkmark overlay when needed */}
       {showSuccess && (
         <SuccessOverlay>
           <Check className="check-icon" />
