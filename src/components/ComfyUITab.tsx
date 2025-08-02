@@ -3043,12 +3043,26 @@ export const ComfyUITab = () => {
                 </div>
               )}
               <Button
-                onClick={startGeneration}
-                disabled={isGenerating || !destinationImage || !objectImage}
-                className="w-full"
-              >
-                {isGenerating ? 'Processing...' : 'Generate Image'}
-              </Button>
+    onClick={startGeneration}
+    disabled={isGenerating || !destinationImage || !objectImage}
+    className={`w-full py-3 text-white font-medium
+      transition-all duration-300 hover:scale-105 active:scale-95
+      relative flex items-center justify-center
+      ${isGenerating
+        ? 'bg-[#A3E635]/90'
+        : 'bg-[#A3E635]/80 hover:bg-green-700'
+      }
+    `}
+>
+    {isGenerating ? (
+        <>
+            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
+            <span className="animate-pulse">Processing...</span>
+        </>
+    ) : (
+        'Generate Image'
+    )}
+</Button>
             </div>
           </CardContent>
         </Card>
