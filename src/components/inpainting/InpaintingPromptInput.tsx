@@ -23,7 +23,7 @@ const InpaintingPromptInput = ({
       <CardHeader>
         <CardTitle className="text-white flex items-center gap-2">
           <FileText className="w-5 h-5" />
-          Step 4: Prompt Input
+          Prompt Input
         </CardTitle>
       </CardHeader>
       <CardContent>
