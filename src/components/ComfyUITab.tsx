@@ -2904,7 +2904,7 @@ export const ComfyUITab = () => {
               id="accessory-select"
               value={selectedAccessory}
               onChange={(e) => setSelectedAccessory(e.target.value)}
-              className="mt-2 w-full px-3 py-2 bg-slate-900/50 border border-slate-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="mt-2 w-full px-3 py-2 bg-[#A3E635]/80 hover:bg-green-700 border border-slate-600 rounded-md text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             >
               <option value="">--Select an accessory--</option>
               <option value="watch">Watch</option>
@@ -2987,7 +2987,7 @@ export const ComfyUITab = () => {
                 type="file"
                 accept="image/*"
                 onChange={(e) => setObjectImage(e.target.files?.[0] || null)}
-                className="mt-2 bg-background/50 bg-slate-00/60 border-border/20"
+                className="mt-2 bg-background/50 bg-slate-00/60 border-border/20 file:bg-[#A3E635]/80 file:hover:bg-green-700 file:text-slate-900 file:border-0 file:px-4 file:py-1.5 file:rounded-md file:mr-4"
               />
               <p className="text-sm text-foreground/60 mt-1">
                 Upload an image of the {selectedAccessory} you want to insert
