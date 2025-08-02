@@ -1,17 +1,22 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Tabs } from "@/components/ui/tabs";
-import TabNavigation from "@/components/TabNavigation";
-import TabContent from "@/components/TabContent";
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import AppHeader from "@/components/AppHeader";
 import ErrorManager from "@/components/ErrorManager";
 import { useErrorManager } from "@/hooks/useErrorManager";
 import { useImageGeneration } from "@/hooks/useImageGeneration";
+import PlaygroundContent from "@/components/PlaygroundContent";
+import InOutpaintingTab from "@/components/InOutpaintingTab";
+import Img2ImgTab from "@/components/Img2ImgTab";
+import { ComfyUITab } from "@/components/ComfyUITab";
+import SystemDashboard from "@/components/SystemDashboard";
+import { Button } from "@/components/ui/button";
+import { Play, Image, Paintbrush, Zap, Monitor } from "lucide-react";
 
 const AppPage = () => {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [activeTab, setActiveTab] = useState("playground");
-  const [activeSubTab, setActiveSubTab] = useState("txtTOimg");
+  const [activeTab, setActiveTab] = useState("txtTOimg");
   const { errors, addError, clearError, clearAllErrors } = useErrorManager();
   const {
     prompt,
@@ -38,30 +43,26 @@ const AppPage = () => {
 
   useEffect(() => {
     const tabParam = searchParams.get('tab');
-    const subtabParam = searchParams.get('subtab');
     
     if (tabParam) {
-      setActiveTab(tabParam);
-    }
-    
-    // Map subtab names to the correct playground sub-tabs
-    if (subtabParam) {
-      const subtabMapping: { [key: string]: string } = {
+      const tabMapping: { [key: string]: string } = {
         'txt2img': 'txtTOimg',
         'img2img': 'imgTOimg', 
         'inpainting': 'inpainting',
         'tryon': 'comfyui'
       };
       
-      const mappedSubtab = subtabMapping[subtabParam];
-      if (mappedSubtab) {
-        setActiveSubTab(mappedSubtab);
-      }
+      const mappedTab = tabMapping[tabParam] || tabParam;
+      setActiveTab(mappedTab);
     }
   }, [searchParams]);
 
   const onGenerate = (selectedModel?: string) => {
     handleGenerate(addError, selectedModel);
+  };
+
+  const handleSystemDashboard = () => {
+    navigate('/systemdashboard');
   };
 
   return (
@@ -74,41 +75,149 @@ const AppPage = () => {
               width='100%' 
               height='100%' 
               className="pointer-events-none"
-          />
-      </div>
+          />
+      </div>
       
       <div className="min-h-screen bg-transparent relative z-10">
         <AppHeader />
         
         <div className="container mx-auto p-4 pt-20">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabNavigation activeTab={activeTab} />
+            <TabsList className="grid w-full grid-cols-4 bg-slate-800/50 border-slate-700">
+              <TabsTrigger 
+                value="txtTOimg" 
+                className="data-[state=active]:bg-purple-600/20 data-[state=active]:text-purple-300 text-slate-400"
+              >
+                <Play className="w-4 h-4 mr-2" />
+                Text to Image
+              </TabsTrigger>
+              <TabsTrigger 
+                value="inpainting" 
+                className="data-[state=active]:bg-purple-600/20 data-[state=active]:text-purple-300 text-slate-400"
+              >
+                <Paintbrush className="w-4 h-4 mr-2" />
+                Inpainting
+              </TabsTrigger>
+              <TabsTrigger 
+                value="imgTOimg" 
+                className="data-[state=active]:bg-purple-600/20 data-[state=active]:text-purple-300 text-slate-400"
+              >
+                <Image className="w-4 h-4 mr-2" />
+                Image to Image
+              </TabsTrigger>
+              <TabsTrigger 
+                value="comfyui" 
+                className="data-[state=active]:bg-purple-600/20 data-[state=active]:text-purple-300 text-slate-400"
+              >
+                <Zap className="w-4 h-4 mr-2" />
+                Try-On
+              </TabsTrigger>
+            </TabsList>
 
-            <TabContent
-              prompt={prompt}
-              onPromptChange={setPrompt}
-              controlImage={controlImage}
-              onControlImageChange={setControlImage}
-              width={width}
-              height={height}
-              numInferenceSteps={numInferenceSteps}
-              guidanceScale={guidanceScale}
-              loraScales={loraScales}
-              onWidthChange={setWidth}
-              onHeightChange={setHeight}
-              onStepsChange={setNumInferenceSteps}
-              onGuidanceScaleChange={setGuidanceScale}
-              onLoraScalesChange={setLoraScales}
-              isGenerating={isGenerating}
-              generatedImage={generatedImage}
-              showSuccess={showSuccess}
-              onGenerate={onGenerate}
-              onImageLoad={handleImageLoad}
-              onImageError={handleImageError}
-              onError={addError}
-              activeSubTab={activeSubTab}
-              setActiveSubTab={setActiveSubTab}
-            />
+            <TabsContent value="txtTOimg" className="space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2">
+                  <div className="mb-6 flex items-center justify-between">
+                    <div>
+                      <h1 className="text-3xl font-bold text-white mb-2">Text to Image</h1>
+                      <p className="text-gray-300">Generate stunning images from text prompts with advanced AI models and creative control.</p>
+                    </div>
+                    <Button
+                      onClick={handleSystemDashboard}
+                      className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium transition-all bg-green-600/20 text-green-300 hover:bg-green-600/30"
+                    >
+                      <Monitor className="w-4 h-4 mr-2" />
+                      System Dashboard
+                    </Button>
+                  </div>
+                  <PlaygroundContent
+                    prompt={prompt}
+                    onPromptChange={setPrompt}
+                    controlImage={controlImage}
+                    onControlImageChange={setControlImage}
+                    width={width}
+                    height={height}
+                    numInferenceSteps={numInferenceSteps}
+                    guidanceScale={guidanceScale}
+                    loraScales={loraScales}
+                    onWidthChange={setWidth}
+                    onHeightChange={setHeight}
+                    onStepsChange={setNumInferenceSteps}
+                    onGuidanceScaleChange={setGuidanceScale}
+                    onLoraScalesChange={setLoraScales}
+                    isGenerating={isGenerating}
+                    generatedImage={generatedImage}
+                    showSuccess={showSuccess}
+                    onGenerate={onGenerate}
+                    onImageLoad={handleImageLoad}
+                    onImageError={handleImageError}
+                    onError={addError}
+                  />
+                </div>
+                <div className="lg:col-span-1">
+                  <SystemDashboard />
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="inpainting" className="space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2">
+                  <div className="mb-6 flex items-center justify-between">
+                    <div>
+                      <h1 className="text-3xl font-bold text-white mb-2">Inpainting & Outpainting</h1>
+                      <p className="text-gray-300">Intelligently fill, edit, and enhance specific regions of your images with precision.</p>
+                    </div>
+                    <Button
+                      onClick={handleSystemDashboard}
+                      className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium transition-all bg-green-600/20 text-green-300 hover:bg-green-600/30"
+                    >
+                      <Monitor className="w-4 h-4 mr-2" />
+                      System Dashboard
+                    </Button>
+                  </div>
+                  <InOutpaintingTab 
+                    generatedImage={generatedImage}
+                    onError={addError} 
+                  />
+                </div>
+                <div className="lg:col-span-1">
+                  <SystemDashboard />
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="imgTOimg" className="space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2">
+                  <div className="mb-6 flex items-center justify-between">
+                    <div>
+                      <h1 className="text-3xl font-bold text-white mb-2">Image to Image</h1>
+                      <p className="text-gray-300">Transform existing images with AI-powered modifications and style transfers.</p>
+                    </div>
+                    <Button
+                      onClick={handleSystemDashboard}
+                      className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium transition-all bg-green-600/20 text-green-300 hover:bg-green-600/30"
+                    >
+                      <Monitor className="w-4 h-4 mr-2" />
+                      System Dashboard
+                    </Button>
+                  </div>
+                  <Img2ImgTab onError={addError} />
+                </div>
+                <div className="lg:col-span-1">
+                  <SystemDashboard />
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="comfyui" className="space-y-6">
+              <div className="mb-6">
+                <h1 className="text-3xl font-bold text-white mb-2">Virtual Try-On</h1>
+                <p className="text-gray-300">Experience advanced virtual try-on capabilities with ComfyUI workflows.</p>
+              </div>
+              <ComfyUITab />
+            </TabsContent>
           </Tabs>
         </div>
 
