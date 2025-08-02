@@ -42,7 +42,7 @@ const InpaintingGenerateButton = ({
           relative overflow-hidden border border-primary/20
           ${isGenerating 
             ? 'bg-[#A3E635]/90 animate-pulse' 
-            : 'bg-violet-600 hover:bg-violet-700'
+            : 'bg-[#A3E635]/80 hover:bg-green-700'
           }
         `}
         style={{
