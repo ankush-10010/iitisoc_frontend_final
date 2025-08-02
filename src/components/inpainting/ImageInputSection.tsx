@@ -69,7 +69,7 @@ const ImageInputSection = ({
       <CardHeader>
         <CardTitle className="text-white flex items-center gap-2">
           <ImageIcon className="w-5 h-5" />
-          Step 1: Image Input
+          Image Input
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
