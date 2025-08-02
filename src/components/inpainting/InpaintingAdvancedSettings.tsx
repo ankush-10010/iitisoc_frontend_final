@@ -24,7 +24,7 @@ const InpaintingAdvancedSettings = ({
 }: InpaintingAdvancedSettingsProps) => {
   return (
     <CollapsibleSection
-      title="Step 5: Advanced Settings"
+      title="Advanced Settings"
       icon={<Settings className="w-5 h-5" />}
       defaultOpen={false}
     >
