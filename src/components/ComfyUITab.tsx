@@ -2897,7 +2897,7 @@ export const ComfyUITab = () => {
       <Card className="bg-slate-00/50 border-slate-700">
         <CardContent className="p-6">
           <div>
-            <Label htmlFor="accessory-select" className="text-foreground font-medium">
+            <Label htmlFor="accessory-select" className="text-white font-medium">
               Select Accessory Type
             </Label>
             <select
