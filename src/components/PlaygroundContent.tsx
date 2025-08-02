@@ -92,6 +92,7 @@ const PlaygroundContent = ({
       {/* Result Section */}
       <PlaygroundResultSection
         isGenerating={isGenerating}
+        canGenerate={prompt.trim() !== ''}
         generatedImage={generatedImageState}
         onImageLoad={onImageLoad}
         onImageError={onImageError}

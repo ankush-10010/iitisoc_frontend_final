@@ -21,7 +21,11 @@ const circle11 = keyframes`33% {transform: translate(4px, 4px) translateZ(0);} 6
 const circle12 = keyframes`33% {transform: translate(56px, 0px) translateZ(0);} 66% {transform: translate(60px, -32px) translateZ(0);}`;
 
 // --- 2. Create the main styled-component for the button ---
-const StyledButton = styled.button`
+interface StyledButtonProps {
+  $isGenerating?: boolean;
+}
+
+const StyledButton = styled.button<StyledButtonProps>`
   --duration: 7s;
   --easing: linear;
   --c-color-1: rgba(34, 197, 94, 0.7);    /* Bright Green */
@@ -132,7 +136,7 @@ const StyledButton = styled.button`
   .wrapper .circle.circle-12 { --background: var(--c-color-1); --blur: 14px; --x: 52px; --y: 4px; animation-name: ${circle12}; }
 
   /* Add a pulse animation to the text when generating */
-  ${props => props.isGenerating && css`
+  ${props => props.$isGenerating && css`
     .wrapper span {
       animation: pulse 1.5s infinite;
     }
@@ -203,7 +207,7 @@ const GenerateButton = ({ isGenerating, canGenerate, showSuccess, onGenerate }: 
       <StyledButton
         onClick={onGenerate}
         disabled={isGenerating || !canGenerate}
-        isGenerating={isGenerating}
+        $isGenerating={isGenerating}
       >
         <div className="wrapper">
           {/* Conditionally render content based on state */}
@@ -247,65 +251,4 @@ const GenerateButton = ({ isGenerating, canGenerate, showSuccess, onGenerate }: 
   );
 };
 
-
-// --- 7. Example App showing how to use the button ---
-// This would typically be in its own file, like App.js
-const App = () => {
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
-  // Example: Disable button until some condition is met (e.g., user types in a prompt)
-  const [canGenerate, setCanGenerate] = useState(true); 
-
-  // This function is passed to the button.
-  // It controls the logic for what happens when you click "Generate".
-  const handleGenerate = async () => {
-    if (isGenerating || !canGenerate) return;
-
-    console.log("Starting generation...");
-    setIsGenerating(true);
-    setShowSuccess(false);
-
-    // --- THIS IS WHERE YOUR API CALL GOES ---
-    // The button itself is agnostic. It just calls this function.
-    // You define the endpoint and data payload here.
-    try {
-      // Simulate an API call that takes 2 seconds
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // On successful generation:
-      console.log("Generation successful!");
-      setShowSuccess(true);
-
-      // Hide the success checkmark after 1.5 seconds
-      setTimeout(() => {
-        setShowSuccess(false);
-      }, 1500);
-
-    } catch (error) {
-      console.error("Generation failed:", error);
-      // Handle error state here (e.g., show an error message)
-    } finally {
-      // Reset the button state after the process is complete
-      setIsGenerating(false);
-    }
-  };
-
-  return (
-    <div style={{ 
-      display: 'flex', 
-      justifyContent: 'center', 
-      alignItems: 'center', 
-      height: '9vh', 
-      // background: '#111' 
-    }}>
-      <GenerateButton
-        isGenerating={isGenerating}
-        canGenerate={canGenerate}
-        showSuccess={showSuccess}
-        onGenerate={handleGenerate}
-      />
-    </div>
-  );
-};
-
-export default App;
+export default GenerateButton;

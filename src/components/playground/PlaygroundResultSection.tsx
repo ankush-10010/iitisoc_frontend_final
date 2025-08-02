@@ -3,6 +3,7 @@ import GenerateButton from "../GenerateButton";
 
 interface PlaygroundResultSectionProps {
   isGenerating: boolean;
+  canGenerate: boolean;
   generatedImage: string | null;
   onImageLoad: () => void;
   onImageError: (e: React.SyntheticEvent<HTMLImageElement, Event>) => void;
@@ -15,6 +16,7 @@ interface PlaygroundResultSectionProps {
 
 const PlaygroundResultSection = ({
   isGenerating,
+  canGenerate,
   generatedImage,
   onImageLoad,
   onImageError,
@@ -35,7 +37,7 @@ const PlaygroundResultSection = ({
       
       <GenerateButton
         isGenerating={isGenerating}
-        canGenerate={prompt.trim() !== ''}
+        canGenerate={canGenerate}
         showSuccess={showSuccess}
         onGenerate={() => onGenerate(selectedModel)}
       />
