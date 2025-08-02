@@ -2904,14 +2904,14 @@ export const ComfyUITab = () => {
               id="accessory-select"
               value={selectedAccessory}
               onChange={(e) => setSelectedAccessory(e.target.value)}
-              className="mt-2 w-full px-3 py-2 bg-[#A3E635]/80 hover:bg-green-700 border border-slate-600 rounded-md text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="mt-2 w-full px-3 py-2 bg-[#A3E635]/80 hover:bg-green-700 border border-slate-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             >
               <option value="">--Select an accessory--</option>
               <option value="watch">Watch</option>
               <option value="cap">Cap</option>
               <option value="bracelet">Bracelet</option>
             </select>
-            <p className="text-sm text-foreground/60 mt-1">
+            <p className="text-sm text-white mt-1">
               {selectedAccessory === 'watch'
                 ? 'Using specialized watch insertion workflow'
                 : 'Using general accessory insertion workflow'}
