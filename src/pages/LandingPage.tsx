@@ -189,7 +189,7 @@ const LandingPage = () => {
                                 >
                                   System Dashboard
                                 </button>
-                                <Button onClick={() => navigate('/app')} variant="inverse">Get started</Button>
+                                <Button onClick={() => navigate('/app')} variant="inverse" className="">Get started</Button>
                             </div>
                             <div className="-mr-2 flex md:hidden">
                                 <button onClick={() => setIsNavOpen(!isNavOpen)} type="button" className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700">
@@ -247,7 +247,7 @@ const LandingPage = () => {
                         </AnimateOnScroll>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {features.map((feature, index) => (
-                                <AnimateOnScroll key={index} delay={index * 100}>
+                                <AnimateOnScroll key={index} delay={index * 100} className="">
                                     <FeatureCard icon={feature.icon} title={feature.title}>
                                         {feature.description}
                                     </FeatureCard>
@@ -255,7 +255,7 @@ const LandingPage = () => {
                             ))}
                         </div>
                         <AnimateOnScroll className="text-center mt-12">
-                            <Button onClick={() => navigate('/app')} variant="secondary">Start now</Button>
+                            <Button onClick={() => navigate('/app')} variant="secondary" className="">Start now</Button>
                         </AnimateOnScroll>
                     </div>
                 </section>
@@ -270,7 +270,7 @@ const LandingPage = () => {
                             <h2 className="text-4xl md:text-5xl font-bold mt-2">Create. Remix. Imagine. Repeat.</h2>
                         </AnimateOnScroll>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                            <AnimateOnScroll delay={0}>
+                            <AnimateOnScroll delay={0} className="">
                                 <div className="bg-[#1A1A1A] border border-gray-800 rounded-2xl overflow-hidden cursor-pointer group h-full" onClick={() => navigateToTab('txt2img')}>
                                     <img alt="Text to image" src="https://cdn.prod.website-files.com/688c8514da41a37b753b0f46/688c858a1f3801d9bc0667b0_b99d530e-71ed-4879-80fa-c224e1ace121.avif" className="w-full h-40 object-cover" />
                                     <div className="p-6">
@@ -279,7 +279,7 @@ const LandingPage = () => {
                                     </div>
                                 </div>
                             </AnimateOnScroll>
-                             <AnimateOnScroll delay={100}>
+                             <AnimateOnScroll delay={100} className="">
                                 <div className="bg-[#1A1A1A] border border-gray-800 rounded-2xl overflow-hidden cursor-pointer group h-full" onClick={() => navigateToTab('img2img')}>
                                     <img alt="Image to image" src="https://cdn.prod.website-files.com/688c8514da41a37b753b0f46/688c858a486abff2e1440652_790c606f-174d-4d00-9306-cf0c566ab4a4.avif" className="w-full h-40 object-cover" />
                                     <div className="p-6">
@@ -288,7 +288,7 @@ const LandingPage = () => {
                                     </div>
                                 </div>
                             </AnimateOnScroll>
-                             <AnimateOnScroll delay={200}>
+                             <AnimateOnScroll delay={200} className="">
                                 <div className="bg-[#1A1A1A] border border-gray-800 rounded-2xl overflow-hidden cursor-pointer group h-full" onClick={() => navigateToTab('inpainting')}>
                                     <img alt="Inpainting" src="https://cdn.prod.website-files.com/688c8514da41a37b753b0f46/688c858a59f4367fc7148114_de676cec-8bc7-4fc7-82da-20204212547b.avif" className="w-full h-40 object-cover" />
                                     <div className="p-6">
@@ -297,7 +297,7 @@ const LandingPage = () => {
                                     </div>
                                 </div>
                             </AnimateOnScroll>
-                            <AnimateOnScroll delay={300}>
+                            <AnimateOnScroll delay={300} className="">
                                 <div className="bg-[#1A1A1A] border border-gray-800 rounded-2xl overflow-hidden cursor-pointer group h-full" onClick={() => navigateToTab('tryon')}>
                                     <img alt="Try-on accessories" src="https://cdn.prod.website-files.com/688c8514da41a37b753b0f46/688c858a4770292a94846e2f_39668da0-9fdd-4c85-be49-5b669438b5ba.avif" className="w-full h-40 object-cover" />
                                     <div className="p-6">
@@ -320,25 +320,25 @@ const LandingPage = () => {
                             <h2 className="text-4xl font-bold mt-2">Image magic, demystified fast</h2>
                         </AnimateOnScroll>
                         <div className="space-y-8 max-w-4xl mx-auto">
-                            <AnimateOnScroll>
+                            <AnimateOnScroll className="">
                                 <div className="grid md:grid-cols-3 gap-8 border-b border-gray-800 pb-8">
                                     <h4 className="text-xl font-semibold md:col-span-1">How do I make an image?</h4>
                                     <p className="text-gray-400 md:col-span-2">Choose a mode—txt2img, img2img, inpainting, or try-on. Type your prompt or upload a pic, then hit generate. Watch your vision come to life in seconds!</p>
                                 </div>
                             </AnimateOnScroll>
-                            <AnimateOnScroll delay={100}>
+                            <AnimateOnScroll delay={100} className="">
                                 <div className="grid md:grid-cols-3 gap-8 border-b border-gray-800 pb-8">
                                     <h4 className="text-xl font-semibold md:col-span-1">What do the modes do?</h4>
                                     <p className="text-gray-400 md:col-span-2">Txt2img turns words into art. Img2img remixes your photos. Inpainting edits just what you want. Try-on adds accessories—no design skills needed.</p>
                                 </div>
                             </AnimateOnScroll>
-                            <AnimateOnScroll delay={200}>
+                            <AnimateOnScroll delay={200} className="">
                                 <div className="grid md:grid-cols-3 gap-8 border-b border-gray-800 pb-8">
                                     <h4 className="text-xl font-semibold md:col-span-1">Can I upload my own pics?</h4>
                                     <p className="text-gray-400 md:col-span-2">You bet! Upload your photo for img2img, inpainting, or try-on. The model keeps your style while working its magic.</p>
                                 </div>
                             </AnimateOnScroll>
-                            <AnimateOnScroll delay={300}>
+                            <AnimateOnScroll delay={300} className="">
                                 <div className="grid md:grid-cols-3 gap-8">
                                     <h4 className="text-xl font-semibold md:col-span-1">Is it easy for beginners?</h4>
                                     <p className="text-gray-400 md:col-span-2">Absolutely! The interface is a breeze—just follow the prompts. No experience needed, just your ideas and a click.</p>
@@ -357,11 +357,11 @@ const LandingPage = () => {
                         <source src="https://cdn.prod.website-files.com/688c8514da41a37b753b0f46%2F688cd5879eebc8c4debf8261_Scene-transcode.webm" type="video/webm" />
                     </video>
                     <div className="relative z-10 px-6">
-                        <AnimateOnScroll initial="opacity-0 scale-90" animate="opacity-100 scale-100">
+                        <AnimateOnScroll initial="opacity-0 scale-90" animate="opacity-100 scale-100" className="">
                             <h2 className="text-5xl md:text-7xl font-bold leading-tight">Your image,<br />your rules. <br />Go wild.</h2>
                             <p className="text-lg text-gray-300 max-w-2xl mx-auto mt-6">Ready to play? Generate, remix, and transform images in seconds. No limits, just pure creative power. Dive in and see what you can make.</p>
                             <div className="mt-8">
-                                <Button onClick={() => navigate('/app')} variant="inverse">Get started</Button>
+                                <Button onClick={() => navigate('/app')} variant="inverse" className="">Get started</Button>
                             </div>
                         </AnimateOnScroll>
                     </div>
@@ -375,22 +375,22 @@ const LandingPage = () => {
                 <div className="max-w-7xl mx-auto px-6 py-20">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
                         <div className="col-span-1 md:col-span-2">
-                             <AnimateOnScroll initial="opacity-0 -translate-x-8" animate="opacity-100 translate-x-0">
+                             <AnimateOnScroll initial="opacity-0 -translate-x-8" animate="opacity-100 translate-x-0" className="">
                                 <h2 className="text-4xl font-bold leading-tight">Images reimagined.<br />Creativity unleashed.</h2>
                             </AnimateOnScroll>
                         </div>
                         <div className="col-span-1">
                             <ul className="grid grid-cols-2 gap-x-8">
-                                <AnimateOnScroll initial="opacity-0 -translate-x-8" animate="opacity-100 translate-x-0" delay={100}><li><a href="#" className="text-2xl font-bold text-gray-300 hover:text-white">Home</a></li></AnimateOnScroll>
-                                <AnimateOnScroll initial="opacity-0 -translate-x-8" animate="opacity-100 translate-x-0" delay={400}><li><a href="#" className="text-2xl font-bold text-gray-300 hover:text-white">EdiGen AI</a></li></AnimateOnScroll>
-                                <AnimateOnScroll initial="opacity-0 -translate-x-8" animate="opacity-100 translate-x-0" delay={200}><li className="mt-3"><a href="#" className="text-2xl font-bold text-gray-300 hover:text-white">Get Started</a></li></AnimateOnScroll>
-                                <AnimateOnScroll initial="opacity-0 -translate-x-8" animate="opacity-100 translate-x-0" delay={500}><li className="mt-3"><a href="#" className="text-2xl font-bold text-gray-300 hover:text-white">Docs</a></li></AnimateOnScroll>
-                                <AnimateOnScroll initial="opacity-0 -translate-x-8" animate="opacity-100 translate-x-0" delay={300}><li className="mt-3"><a href="#" className="text-2xl font-bold text-gray-300 hover:text-white">Features</a></li></AnimateOnScroll>
-                                <AnimateOnScroll initial="opacity-0 -translate-x-8" animate="opacity-100 translate-x-0" delay={600}><li className="mt-3"><a href="#" className="text-2xl font-bold text-gray-300 hover:text-white">FAQs</a></li></AnimateOnScroll>
+                                <AnimateOnScroll initial="opacity-0 -translate-x-8" animate="opacity-100 translate-x-0" delay={100} className=""><li><a href="#" className="text-2xl font-bold text-gray-300 hover:text-white">Home</a></li></AnimateOnScroll>
+                                <AnimateOnScroll initial="opacity-0 -translate-x-8" animate="opacity-100 translate-x-0" delay={400} className=""><li><a href="#" className="text-2xl font-bold text-gray-300 hover:text-white">EdiGen AI</a></li></AnimateOnScroll>
+                                <AnimateOnScroll initial="opacity-0 -translate-x-8" animate="opacity-100 translate-x-0" delay={200} className=""><li className="mt-3"><a href="#" className="text-2xl font-bold text-gray-300 hover:text-white">Get Started</a></li></AnimateOnScroll>
+                                <AnimateOnScroll initial="opacity-0 -translate-x-8" animate="opacity-100 translate-x-0" delay={500} className=""><li className="mt-3"><a href="#" className="text-2xl font-bold text-gray-300 hover:text-white">Docs</a></li></AnimateOnScroll>
+                                <AnimateOnScroll initial="opacity-0 -translate-x-8" animate="opacity-100 translate-x-0" delay={300} className=""><li className="mt-3"><a href="#" className="text-2xl font-bold text-gray-300 hover:text-white">Features</a></li></AnimateOnScroll>
+                                <AnimateOnScroll initial="opacity-0 -translate-x-8" animate="opacity-100 translate-x-0" delay={600} className=""><li className="mt-3"><a href="#" className="text-2xl font-bold text-gray-300 hover:text-white">FAQs</a></li></AnimateOnScroll>
                             </ul>
                         </div>
                         <div className="col-span-1">
-                            <AnimateOnScroll>
+                            <AnimateOnScroll className="">
                                 <div className="text-lg text-gray-400">+91 9760239905</div>
                                 <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-lg text-gray-400 hover:text-white">github.com</a>
                                 <div className="flex space-x-4 mt-6">
