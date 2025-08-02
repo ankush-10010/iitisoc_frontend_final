@@ -28,6 +28,7 @@ const AppPage = () => {
     guidanceScale,
     controlImage,
     loraScales,
+    selectedModel,
     setPrompt,
     setWidth,
     setHeight,
@@ -35,6 +36,7 @@ const AppPage = () => {
     setGuidanceScale,
     setControlImage,
     setLoraScales,
+    setSelectedModel,
     handleGenerate,
     handleImageLoad,
     handleImageError
@@ -149,6 +151,8 @@ const AppPage = () => {
                 onImageLoad={handleImageLoad}
                 onImageError={handleImageError}
                 onError={addError}
+                selectedModel={selectedModel}
+                setSelectedModel={setSelectedModel}
               />
             </TabsContent>
 

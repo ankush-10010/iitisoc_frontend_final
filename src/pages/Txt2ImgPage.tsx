@@ -22,6 +22,7 @@ const Txt2ImgPage = () => {
     guidanceScale,
     controlImage,
     loraScales,
+    selectedModel,
     setPrompt,
     setWidth,
     setHeight,
@@ -29,6 +30,7 @@ const Txt2ImgPage = () => {
     setGuidanceScale,
     setControlImage,
     setLoraScales,
+    setSelectedModel,
     handleGenerate,
     handleImageLoad,
     handleImageError
@@ -96,6 +98,8 @@ const Txt2ImgPage = () => {
               onImageLoad={handleImageLoad}
               onImageError={handleImageError}
               onError={addError}
+              selectedModel={selectedModel}
+              setSelectedModel={setSelectedModel}
             />
           </div>
         </div>
