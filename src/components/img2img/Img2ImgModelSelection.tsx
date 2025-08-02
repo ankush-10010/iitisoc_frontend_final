@@ -75,7 +75,7 @@ const Img2ImgModelSelection = ({
   return (
     // To manually adjust the height of this section, change the h-[450px] value below.
     // For example, use h-[500px] to make it taller or h-auto to fit content automatically.
-    <Card className="bg-slate-800/50 border-slate-700">
+    <Card className="bg-slate-00/50 border-slate-700">
       <CardHeader>
         <CardTitle className="text-white flex items-center gap-2">
           <Settings className="w-5 h-5" />
@@ -87,7 +87,7 @@ const Img2ImgModelSelection = ({
         <div className="space-y-2">
           <Label className="text-slate-300">Base Model</Label>
           <Select value={selectedModel} onValueChange={onModelChange}>
-            <SelectTrigger className="bg-slate-900/50 border-slate-600 text-white">
+            <SelectTrigger className="bg-slate-00/50 border-slate-600 text-white">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-slate-800 border-slate-600">

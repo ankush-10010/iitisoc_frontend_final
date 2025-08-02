@@ -20,7 +20,7 @@ const Img2ImgPage = () => {
       {/* Background Spline 3D iframe */}
       <div className="fixed inset-0 z-0">
         <iframe 
-          src='https://my.spline.design/dotwaves-FR8HGbfFmjLusADTS6cmnWBP/' 
+          src='https://my.spline.design/retrofuturisticcircuitloop-mMGk86WKmMW9qCpLyPQkAZR0/' 
           frameBorder='0' 
           width='100%' 
           height='100%'
@@ -40,7 +40,7 @@ const Img2ImgPage = () => {
               </div>
               <Button
                 onClick={handleSystemDashboard}
-                className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium transition-all bg-purple-600/20 text-purple-300 hover:bg-purple-600/30"
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium transition-all bg-green-600/20 text-green-300 hover:bg-green-600/30"
               >
                 <Monitor className="w-4 h-4 mr-2" />
                 System Dashboard

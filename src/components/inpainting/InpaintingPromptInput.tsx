@@ -19,7 +19,7 @@ const InpaintingPromptInput = ({
     : "Describe what you want to extend beyond the image borders...";
 
   return (
-    <Card className="bg-slate-800/50 border-slate-700">
+    <Card className="bg-slate-00/50 border-slate-700">
       <CardHeader>
         <CardTitle className="text-white flex items-center gap-2">
           <FileText className="w-5 h-5" />

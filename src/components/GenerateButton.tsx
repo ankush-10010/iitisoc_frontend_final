@@ -24,16 +24,16 @@ const circle12 = keyframes`33% {transform: translate(56px, 0px) translateZ(0);} 
 const StyledButton = styled.button`
   --duration: 7s;
   --easing: linear;
-  --c-color-1: rgba(255, 163, 26, 0.7); /* Kept for variety in circles */
-  --c-color-2: #1a23ff;                /* Kept for variety in circles */
-  --c-color-3: #e21bda;                /* Kept for variety in circles */
-  --c-color-4: rgba(167, 139, 250, 0.7); /* Changed to Purple for animated circles */
-  --c-shadow: rgba(139, 92, 246, 0.5);  /* Purple outer glow */
-  --c-shadow-inset-top: rgba(196, 181, 253, 0.9); /* Light purple top inset shadow */
-  --c-shadow-inset-bottom: rgba(221, 214, 254, 0.8); /* Very light purple bottom inset shadow */
-  --c-radial-inner: #8b5cf6;          /* Darker purple for inner gradient */
-  --c-radial-outer: #c4b5fd;          /* Lighter purple for outer gradient */
-  --c-color: #fff;
+  --c-color-1: rgba(34, 197, 94, 0.7);    /* Bright Green */
+  --c-color-2: rgba(22, 163, 74, 0.8);    /* Medium Green */
+  --c-color-3: rgba(21, 128, 61, 0.9);    /* Dark Green */
+  --c-color-4: rgba(74, 222, 128, 0.7);   /* Light Green */
+  --c-shadow: rgba(22, 101, 52, 0.5);     /* Dark Green outer glow */
+  --c-shadow-inset-top: rgba(134, 239, 172, 0.9); /* Light mint top inset shadow */
+  --c-shadow-inset-bottom: rgba(187, 247, 208, 0.8); /* Very light mint bottom inset shadow */
+  --c-radial-inner: #16a34a;              /* Darker green for inner gradient */
+  --c-radial-outer: #4ade80;              /* Lighter green for outer gradient */
+  --c-color: #fff;       
 
   /* Base button styles */
   -webkit-tap-highlight-color: transparent;

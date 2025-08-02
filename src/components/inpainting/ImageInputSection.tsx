@@ -65,7 +65,7 @@ const ImageInputSection = ({
   };
 
   return (
-    <Card className="bg-slate-800/50 border-slate-700">
+    <Card className="bg-slate-00/50 border-slate-700">
       <CardHeader>
         <CardTitle className="text-white flex items-center gap-2">
           <ImageIcon className="w-5 h-5" />
@@ -77,7 +77,7 @@ const ImageInputSection = ({
           <Button
             onClick={() => fileInputRef.current?.click()}
             variant="outline"
-            className="bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600"
+            className="bg-slate-00 border-slate-600 text-slate-300 hover:bg-slate-600"
           >
             <Upload className="w-4 h-4 mr-2" />
             Upload Image
@@ -87,7 +87,7 @@ const ImageInputSection = ({
             onClick={handleUseLastGenerated}
             disabled={!generatedImage}
             variant="outline"
-            className="bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600 disabled:opacity-50"
+            className="bg-slate-00 border-slate-600 text-slate-300 hover:bg-slate-600 disabled:opacity-50"
           >
             <ImageIcon className="w-4 h-4 mr-2" />
             Use Last Generated
@@ -96,7 +96,7 @@ const ImageInputSection = ({
           <Button
             onClick={handlePasteFromClipboard}
             variant="outline"
-            className="bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600"
+            className="bg-slate-00 border-slate-600 text-slate-300 hover:bg-slate-600"
           >
             <Clipboard className="w-4 h-4 mr-2" />
             Paste from Clipboard

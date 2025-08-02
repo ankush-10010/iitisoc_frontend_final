@@ -77,7 +77,7 @@ const Img2ImgImageInput = ({ inputImage, onImageChange, onError }: Img2ImgImageI
   };
 
   return (
-    <Card className="bg-slate-800/50 border-slate-700">
+    <Card className="bg-slate-00/70 border-slate-700">
       <CardHeader>
         <CardTitle className="text-white flex items-center gap-2">
           <ImageIcon className="w-5 h-5" />
@@ -90,7 +90,7 @@ const Img2ImgImageInput = ({ inputImage, onImageChange, onError }: Img2ImgImageI
       <CardContent className="space-y-4">
         {!inputImage ? (
           <div
-            className="border-2 border-dashed border-slate-600 rounded-lg p-8 text-center transition-colors hover:border-purple-500"
+            className="border-2 border-dashed border-slate-600 rounded-lg p-8 text-center transition-colors hover:border-green-500"
             onDrop={handleDrop}
             onDragOver={handleDragOver}
           >
@@ -101,7 +101,7 @@ const Img2ImgImageInput = ({ inputImage, onImageChange, onError }: Img2ImgImageI
             <div className="flex flex-wrap gap-2 justify-center">
               <Button
                 onClick={() => fileInputRef.current?.click()}
-                className="bg-purple-600 hover:bg-purple-700"
+                className="bg-[#A3E635]/80 hover:bg-green-700"
               >
                 <Upload className="w-4 h-4 mr-2" />
                 Browse Files

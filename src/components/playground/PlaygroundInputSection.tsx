@@ -88,23 +88,23 @@ const PlaygroundInputSection = ({
         {/* Dropdown Button */}
         <Button
           variant={openPanel === 'model' ? 'secondary' : 'outline'}
-          className="w-1/2 flex items-center justify-between bg-slate-800/50 border border-slate-700 hover:bg-slate-700/50 text-white"
+          className="w-1/2 flex items-center justify-between bg-slate-00/50 border border-slate-700 hover:bg-slate-700/50 text-white"
           onClick={() => setOpenPanel(openPanel === 'model' ? null : 'model')}
         >
           <span className="flex items-center gap-2">
-            <ChevronDown className="w-4 h-4 text-purple-400" />
+            <ChevronDown className="w-4 h-4 text-[#A3E635]" />
             <span className="text-sm font-medium">Select Model</span>
           </span>
-          <span className="ml-2 text-xs text-purple-300">{selectedModel}</span>
+          <span className="ml-2 text-xs text-[#A3E635]">{selectedModel}</span>
         </Button>
         {/* Automatic Generation Button */}
         <Button
           variant={openPanel === 'auto' ? 'secondary' : 'outline'}
-          className="w-1/2 flex items-center justify-between bg-slate-800/50 border border-slate-700 hover:bg-slate-700/50 text-white"
+          className="w-1/2 flex items-center justify-between bg-slate-00/50 border border-slate-700 hover:bg-slate-700/50 text-white"
           onClick={() => setOpenPanel(openPanel === 'auto' ? null : 'auto')}
         >
           <span className="flex items-center gap-2">
-            <Zap className="w-4 h-4 text-purple-400" />
+            <Zap className="w-4 h-4 text-[#A3E635]" />
             <span className="text-sm font-medium">Automatic Generation</span>
           </span>
         </Button>

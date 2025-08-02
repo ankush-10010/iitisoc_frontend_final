@@ -12,7 +12,7 @@ interface ImageDisplayProps {
 
 const ImageDisplay = ({ isGenerating, generatedImage, onImageLoad, onImageError }: ImageDisplayProps) => {
   return (
-    <Card className="bg-slate-800/50 border-slate-700 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300">
+    <Card className="bg-slate-00/50 border-slate-700 hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-300">
       <CardHeader>
         <CardTitle className="scale-x-[0.90] text-white flex items-center gap-2">
           <ImageIcon className="w-5 h-5" />

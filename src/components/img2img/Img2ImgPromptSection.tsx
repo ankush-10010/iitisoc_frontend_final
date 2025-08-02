@@ -36,7 +36,7 @@ const Img2ImgPromptSection = ({
   onStyleChange
 }: Img2ImgPromptSectionProps) => {
   return (
-    <Card className="bg-slate-800/50 border-slate-700">
+    <Card className="bg-slate-00/50 border-slate-700">
       <CardHeader>
         <CardTitle className="text-white flex items-center gap-2">
           <Type className="w-5 h-5" />

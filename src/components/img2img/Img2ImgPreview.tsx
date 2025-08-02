@@ -44,7 +44,7 @@ const Img2ImgPreview = ({
         <div className="w-full h-96 bg-slate-900/50 rounded-lg flex items-center justify-center relative overflow-hidden">
           <div className="absolute inset-0 shimmer-bg animate-shimmer" />
           <div className="text-center relative z-10">
-            <Loader2 className="w-16 h-16 text-purple-400 mx-auto mb-4 animate-spin" />
+            <Loader2 className="w-16 h-16 text-green-400 mx-auto mb-4 animate-spin" />
             <p className="text-slate-400">Generating your image...</p>
           </div>
         </div>
@@ -111,7 +111,7 @@ const Img2ImgPreview = ({
         />
         {generatedImage && (
           <div className="absolute top-2 left-2">
-            <Badge className="bg-purple-600/80 text-white">
+            <Badge className="bg-green-600/80 text-white">
               Generated
             </Badge>
           </div>
@@ -121,7 +121,7 @@ const Img2ImgPreview = ({
   };
 
   return (
-    <Card className="bg-slate-800/50 border-slate-700">
+    <Card className="bg-slate-00/50 border-slate-700">
       <CardHeader>
         <CardTitle className="text-white flex items-center gap-2">
           <Eye className="w-5 h-5" />
@@ -145,7 +145,7 @@ const Img2ImgPreview = ({
             onClick={() => onPreviewModeChange('side-by-side')}
             variant={previewMode === 'side-by-side' ? 'default' : 'outline'}
             size="sm"
-            className={previewMode === 'side-by-side' ? 'bg-purple-600' : 'bg-slate-700 border-slate-600'}
+            className={previewMode === 'side-by-side' ? 'bg-[#A3E635]/80' : 'bg-slate-700 border-slate-600'}
           >
             Side-by-Side
           </Button>
@@ -153,7 +153,7 @@ const Img2ImgPreview = ({
             onClick={() => onPreviewModeChange('overlay')}
             variant={previewMode === 'overlay' ? 'default' : 'outline'}
             size="sm"
-            className={previewMode === 'overlay' ? 'bg-purple-600' : 'bg-slate-700 border-slate-600'}
+            className={previewMode === 'overlay' ? 'bg-[#A3E635]/80' : 'bg-slate-700 border-slate-600'}
           >
             Overlay
           </Button>
@@ -161,7 +161,7 @@ const Img2ImgPreview = ({
             onClick={() => onPreviewModeChange('stacked')}
             variant={previewMode === 'stacked' ? 'default' : 'outline'}
             size="sm"
-            className={previewMode === 'stacked' ? 'bg-purple-600' : 'bg-slate-700 border-slate-600'}
+            className={previewMode === 'stacked' ? 'bg-[#A3E635]/80' : 'bg-slate-700 border-slate-600'}
           >
             Stacked
           </Button>
@@ -175,7 +175,7 @@ const Img2ImgPreview = ({
           <Button
             onClick={onGenerate}
             disabled={!canGenerate || isGenerating}
-            className="w-full bg-purple-600 hover:bg-purple-700 disabled:opacity-50 h-12"
+            className="w-full bg-[#A3E635]/80 hover:bg-green-700 disabled:opacity-50 h-12"
           >
             {isGenerating ? (
               <>

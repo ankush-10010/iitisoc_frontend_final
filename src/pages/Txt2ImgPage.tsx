@@ -45,15 +45,15 @@ const Txt2ImgPage = () => {
   return (
     <>
       {/* Background Spline 3D iframe */}
-      <div className="fixed inset-0 z-0">
-        <iframe 
-          src='https://my.spline.design/dotwaves-FR8HGbfFmjLusADTS6cmnWBP/' 
-          frameBorder='0' 
-          width='100%' 
-          height='100%'
-          className="pointer-events-none"
-        />
-      </div>
+      <div className="fixed top-[10px] left-[-86px] w-[120%] h-[120%] z-0">
+          <iframe 
+              src='https://my.spline.design/retrofuturisticcircuitloop-mMGk86WKmMW9qCpLyPQkAZR0/' 
+              frameBorder='0' 
+              width='100%' 
+              height='100%' 
+              className="pointer-events-none"
+          />
+      </div>
       <AppHeader />
       <div className="min-h-screen bg-transparent relative z-10">
         <div className="container mx-auto p-4 pt-20">
@@ -67,7 +67,7 @@ const Txt2ImgPage = () => {
               </div>
               <Button
                 onClick={handleSystemDashboard}
-                className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium transition-all bg-purple-600/20 text-purple-300 hover:bg-purple-600/30"
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium transition-all bg-green-600/20 text-green-300 hover:bg-green-600/30"
               >
                 <Monitor className="w-4 h-4 mr-2" />
                 System Dashboard
