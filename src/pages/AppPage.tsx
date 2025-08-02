@@ -78,9 +78,9 @@ const AppPage = () => {
       </div>
       
       <div className="min-h-screen bg-transparent relative z-10">
-        <div className="container mx-auto p-4">
-          <AppHeader />
-
+        <AppHeader />
+        
+        <div className="container mx-auto p-4 pt-20">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabNavigation activeTab={activeTab} />
 
