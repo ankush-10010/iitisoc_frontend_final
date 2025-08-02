@@ -85,28 +85,28 @@ const AppPage = () => {
             <TabsList className="grid w-full grid-cols-4 bg-slate-800/50 border-slate-700">
               <TabsTrigger 
                 value="txtTOimg" 
-                className="data-[state=active]:bg-purple-600/20 data-[state=active]:text-purple-300 text-slate-400"
+                className="data-[state=active]:bg-[#A3E635]/40 data-[state=active]:text-green-100 text-slate-400"
               >
                 <Play className="w-4 h-4 mr-2" />
                 Text to Image
               </TabsTrigger>
               <TabsTrigger 
                 value="inpainting" 
-                className="data-[state=active]:bg-purple-600/20 data-[state=active]:text-purple-300 text-slate-400"
+                className="data-[state=active]:bg-[#A3E635]/40 data-[state=active]:text-green-100 text-slate-400"
               >
                 <Paintbrush className="w-4 h-4 mr-2" />
                 Inpainting
               </TabsTrigger>
               <TabsTrigger 
                 value="imgTOimg" 
-                className="data-[state=active]:bg-purple-600/20 data-[state=active]:text-purple-300 text-slate-400"
+                className="data-[state=active]:bg-[#A3E635]/40 data-[state=active]:text-green-100 text-slate-400"
               >
                 <Image className="w-4 h-4 mr-2" />
                 Image to Image
               </TabsTrigger>
               <TabsTrigger 
                 value="comfyui" 
-                className="data-[state=active]:bg-purple-600/20 data-[state=active]:text-purple-300 text-slate-400"
+                className="data-[state=active]:bg-[#A3E635]/40 data-[state=active]:text-green-100 text-slate-400"
               >
                 <Zap className="w-4 h-4 mr-2" />
                 Try-On
