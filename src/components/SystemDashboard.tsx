@@ -54,12 +54,8 @@ const SystemDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 p-4">
-      <div className="container mx-auto space-y-6">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">System Dashboard</h1>
-          <p className="text-slate-300">Real-time system performance monitoring</p>
-        </div>
+    <div className="space-y-6">
+      <div className="space-y-6">
 
         {/* Stats Cards */}
         {stats && (

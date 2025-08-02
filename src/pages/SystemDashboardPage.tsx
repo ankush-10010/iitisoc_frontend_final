@@ -16,17 +16,15 @@ const SystemDashboardPage = () => {
       </div>
       
       <div className="min-h-screen bg-transparent relative z-10">
-        <div className="container mx-auto p-4">
-          <AppHeader />
-
-          <div className="w-full">
-            <div className="mb-6">
-              <h1 className="text-3xl font-bold text-white mb-2">System Dashboard</h1>
-              <p className="text-gray-300">Monitor real-time system performance, GPU usage, and resource utilization.</p>
-            </div>
-
-            <SystemDashboard />
+        <AppHeader />
+        
+        <div className="container mx-auto p-4 pt-20">
+          <div className="mb-6 text-center">
+            <h1 className="text-4xl font-bold text-white mb-2">System Dashboard</h1>
+            <p className="text-slate-300">Monitor real-time system performance, GPU usage, and resource utilization.</p>
           </div>
+
+          <SystemDashboard />
         </div>
       </div>
     </>
