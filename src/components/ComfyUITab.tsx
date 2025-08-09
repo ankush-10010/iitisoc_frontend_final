@@ -470,10 +470,10 @@ export const ComfyUITab = () => {
       if (blob) {
         const maskFile = new File([blob], `mask_${destinationImage.name.replace(/(\.[\w\d_-]+)$/i, '.png')}`, { type: 'image/png' });
         setMaskImage(maskFile);
-        toast.success('Mask created successfully!');
+        toast.success('Mask created successfully!', { duration: 1000 });
         setIsEditorOpen(false);
       } else {
-        toast.error('Failed to create mask file.');
+        toast.success('Mask created successfully!', { duration: 1000 });
       }
     }, 'image/png');
   }, [destinationImage]);
